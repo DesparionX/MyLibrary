@@ -1,0 +1,6 @@
+@MyLibrary.Server_HostAddress = http://localhost:5042
+
+GET {{MyLibrary.Server_HostAddress}}/
+Accept: application/json
+
+###
