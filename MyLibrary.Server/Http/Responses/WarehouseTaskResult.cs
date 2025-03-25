@@ -2,7 +2,7 @@
 
 namespace MyLibrary.Server.Http.Responses
 {
-    public class WarehouseTaskResponse : ITaskResponse
+    public class WarehouseTaskResult : ITaskResult
     {
         public string? Message { get; }
 
@@ -11,7 +11,7 @@ namespace MyLibrary.Server.Http.Responses
         public int StatusCode { get; }
         public IWarehouseDTO? Warehouse { get; }
 
-        public WarehouseTaskResponse(bool succeeded, int statusCode, string? message = "", IWarehouseDTO? warehouseDto = null)
+        public WarehouseTaskResult(bool succeeded, int statusCode, string? message = "", IWarehouseDTO? warehouseDto = null)
         {
             Succeeded = succeeded;
             StatusCode = statusCode;

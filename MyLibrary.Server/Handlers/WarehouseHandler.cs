@@ -4,6 +4,7 @@ using Microsoft.Net.Http.Headers;
 using MyLibrary.Server.Data;
 using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Data.Entities;
+using MyLibrary.Server.Events;
 using MyLibrary.Server.Http.Responses;
 
 namespace MyLibrary.Server.Handlers
@@ -20,17 +21,41 @@ namespace MyLibrary.Server.Handlers
             _logger = logger;
             _mapper = mapper;
         }
-        public Task<ITaskResponse> CreateStockAsync<TId>(IWarehouseDTO<TId> warehouseDTO) where TId : IEquatable<TId>
+        public async Task<ITaskResult> CreateStockAsync<TId>(IWarehouseDTO<TId> warehouseDTO) where TId : IEquatable<TId>
         {
-            throw new NotImplementedException();
+            // TODO: Implement this method later.
+            return new WarehouseTaskResult(succeeded: false, message: "Not implemented yet.", statusCode: StatusCodes.Status501NotImplemented);
         }
 
-        public Task<ITaskResponse> CreateStockAsync(IWarehouseDTO warehouseDTO)
+        public async Task<ITaskResult> CreateStockAsync(IWarehouseDTO warehouseDTO)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if(await _context.Warehouse.AnyAsync(w => w.ISBN.Equals(warehouseDTO.ISBN)))
+                {
+                    return new WarehouseTaskResult(succeeded: false, message: "Item already exists.", statusCode: StatusCodes.Status409Conflict);
+                }
+
+                var itemToAdd = _mapper.Map<Warehouse>(warehouseDTO);
+                await _context.Warehouse.AddAsync(itemToAdd);
+
+                var itemAdded = await _context.SaveChangesAsync();
+                if (itemAdded > 0)
+                {
+                    _logger.LogInformation($"[INFO] Item with ISBN: {warehouseDTO.ISBN} was created.");
+                    return new WarehouseTaskResult(succeeded: true, message: "Item was added.", statusCode: StatusCodes.Status200OK);
+                }
+
+                return new WarehouseTaskResult(succeeded: false, message: "Item was not added.", statusCode: StatusCodes.Status400BadRequest);
+            }
+            catch(Exception err)
+            {
+                _logger.LogError(err, $"[ERROR]\n{err.Message}");
+                return new WarehouseTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
+            }
         }
 
-        public async Task<ITaskResponse> DeleteStockAsync<TId>(TId id)
+        public async Task<ITaskResult> DeleteStockAsync<TId>(TId id)
         {
             try
             {
@@ -39,24 +64,25 @@ namespace MyLibrary.Server.Handlers
                     .ExecuteDeleteAsync();
                 if (itemToDelete > 0)
                 {
-                    return new WarehouseTaskResponse(succeeded: true, message: "Item was deleted.", statusCode: StatusCodes.Status200OK);
+                    _logger.LogInformation($"[INFO] Item with ID: {id} was deleted.");
+                    return new WarehouseTaskResult(succeeded: true, message: "Item was deleted.", statusCode: StatusCodes.Status200OK);
                 }
-                return new WarehouseTaskResponse(succeeded: false, message: "Item was not found.", statusCode: StatusCodes.Status404NotFound);
+                return new WarehouseTaskResult(succeeded: false, message: "Item was not found.", statusCode: StatusCodes.Status404NotFound);
             }
             catch (Exception err)
             {
                 _logger.LogError(err, $"[ERROR]\n{err.Message}");
-                return new WarehouseTaskResponse(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
+                return new WarehouseTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
 
-        public async Task<ITaskResponse> AddStockAsync<TId>(IWarehouseDTO<TId> warehouseDTO) where TId : IEquatable<TId>
+        public async Task<ITaskResult> AddStockAsync<TId>(IWarehouseDTO<TId> warehouseDTO) where TId : IEquatable<TId>
         {
             // TODO: Implement this method later.
-            return new WarehouseTaskResponse(succeeded: false, message: "Not implemented yet.", statusCode: StatusCodes.Status501NotImplemented);
+            return new WarehouseTaskResult(succeeded: false, message: "Not implemented yet.", statusCode: StatusCodes.Status501NotImplemented);
         }
 
-        public async Task<ITaskResponse> AddStockAsync(IWarehouseDTO warehouseDTO)
+        public async Task<ITaskResult> AddStockAsync(IWarehouseDTO warehouseDTO)
         {
             try
             {
@@ -65,23 +91,25 @@ namespace MyLibrary.Server.Handlers
                     .ExecuteUpdateAsync(w => w.SetProperty(w => w.Quantity, + warehouseDTO.Quantity));
                 if (itemToUpdate > 0)
                 {
-                    return new WarehouseTaskResponse(succeeded: false, message: "0 items were added.", statusCode: StatusCodes.Status304NotModified);
+                    _logger.LogInformation($"[INFO] {warehouseDTO.Quantity} items were added to the stock.");
+                    return new WarehouseTaskResult(succeeded: true, message: $"{warehouseDTO.Quantity} items were added.", statusCode: StatusCodes.Status200OK);
+                    
                 }
-                return new WarehouseTaskResponse(succeeded: true, message: $"{warehouseDTO.Quantity} items were added.", statusCode: StatusCodes.Status200OK);
+                return new WarehouseTaskResult(succeeded: false, message: "0 items were added.", statusCode: StatusCodes.Status304NotModified);
             }
             catch(Exception err)
             {
                 _logger.LogError(err, $"[ERROR]\n{err.Message}");
-                return new WarehouseTaskResponse(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
+                return new WarehouseTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
 
-        public Task<ITaskResponse> RemoveStockAsync<TId>(IWarehouseDTO<TId> warehouseDTO) where TId : IEquatable<TId>
+        public Task<ITaskResult> RemoveStockAsync<TId>(IWarehouseDTO<TId> warehouseDTO) where TId : IEquatable<TId>
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ITaskResponse> RemoveStockAsync(IWarehouseDTO warehouseDTO)
+        public async Task<ITaskResult> RemoveStockAsync(IWarehouseDTO warehouseDTO)
         {
             try
             {
@@ -90,7 +118,7 @@ namespace MyLibrary.Server.Handlers
 
                 if(itemInDb!.Quantity < warehouseDTO.Quantity)
                 {
-                    return new WarehouseTaskResponse(succeeded: false, message: "Not enough items in stock.", statusCode: StatusCodes.Status400BadRequest);
+                    return new WarehouseTaskResult(succeeded: false, message: "Not enough items in stock.", statusCode: StatusCodes.Status400BadRequest);
                 }
 
                 var itemToUpdate = await _context.Warehouse
@@ -98,14 +126,15 @@ namespace MyLibrary.Server.Handlers
                     .ExecuteUpdateAsync(w => w.SetProperty(w => w.Quantity, - warehouseDTO.Quantity));
                 if (itemToUpdate > 0)
                 {
-                    return new WarehouseTaskResponse(succeeded: false, message: "0 items were removed.", statusCode: StatusCodes.Status304NotModified);
+                    _logger.LogInformation($"[INFO] {warehouseDTO.Quantity} items were removed from the stock.");
+                    return new WarehouseTaskResult(succeeded: true, message: $"{warehouseDTO.Quantity} items were removed.", statusCode: StatusCodes.Status200OK);
                 }
-                return new WarehouseTaskResponse(succeeded: true, message: $"{warehouseDTO.Quantity} items were removed.", statusCode: StatusCodes.Status200OK);
+                return new WarehouseTaskResult(succeeded: false, message: "0 items were removed.", statusCode: StatusCodes.Status304NotModified);
             }
             catch (Exception err)
             {
                 _logger.LogError(err, $"[ERROR]\n{err.Message}");
-                return new WarehouseTaskResponse(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
+                return new WarehouseTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
 

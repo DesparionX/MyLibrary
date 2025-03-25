@@ -1,6 +1,6 @@
 ﻿namespace MyLibrary.Server.Http.Responses
 {
-    public interface ITaskResponse
+    public interface ITaskResult
     {
         string? Message { get; }
         bool Succeeded { get; }

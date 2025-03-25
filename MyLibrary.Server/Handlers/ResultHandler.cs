@@ -3,9 +3,9 @@ using MyLibrary.Server.Http.Responses;
 
 namespace MyLibrary.Server.Handlers
 {
-    public class ResultHandler : ControllerBase, IResultHandler<ITaskResponse>
+    public class ResultHandler : ControllerBase, IResultHandler<ITaskResult>
     {
-        public IActionResult ReadResult(ITaskResponse response)
+        public IActionResult ReadResult(ITaskResult response)
         {
             return response.StatusCode switch
             {
@@ -16,6 +16,7 @@ namespace MyLibrary.Server.Handlers
                 StatusCodes.Status401Unauthorized => Unauthorized(response),
                 StatusCodes.Status403Forbidden => Forbid(),
                 StatusCodes.Status404NotFound => NotFound(response),
+                StatusCodes.Status409Conflict => Conflict(response),
                 StatusCodes.Status500InternalServerError => BadRequest(response),
                 StatusCodes.Status501NotImplemented => BadRequest(response),
                 _ => BadRequest("Status code does not exist !")

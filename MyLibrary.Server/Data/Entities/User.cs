@@ -5,25 +5,29 @@ namespace MyLibrary.Server.Data.Entities
     public class User : IdentityUser, IUser<string>
     {
         public override string Id { get; set; } = Guid.NewGuid().ToString();
+
         public override string? UserName { get; set; }
-        public string? FirstName { get; }
 
-        public string? LastName { get; }
+        public string? FirstName { get; set; }
 
-        public DateTime? BirthDate { get; }
+        public string? LastName { get; set; }
 
-        public string? Avatar { get; }
+        public DateTime? BirthDate { get; set; }
+
+        public string? Avatar { get; set; }
+
         public override string? Email { get; set; }
+
         public override string? PhoneNumber { get; set; }
 
-        public string? Country { get; }
+        public string? Country { get; set; }
 
-        public string? City { get; }
+        public string? City { get; set; }
 
-        public string? Address { get; }
+        public string? Address { get; set; }
 
-        public int BookLimit { get; }
+        public int BookLimit { get; set; }
 
-        public int Rating { get; }
+        public int Rating { get; set; }
     }
 }

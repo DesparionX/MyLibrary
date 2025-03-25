@@ -1,7 +1,11 @@
+using DotNetEnv;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MyLibrary.Server.Configs;
 using MyLibrary.Server.Data;
 using MyLibrary.Server.Data.Entities;
 using MyLibrary.Server.Handlers;
@@ -9,14 +13,45 @@ using MyLibrary.Server.Http.Responses;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
+using System.Text;
 
+Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
 config.AddUserSecrets<Program>();
-// Add services to the container.
 
+
+// Add services to the container.
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
+    {
+        options.RequireHttpsMetadata = false;
+        options.SaveToken = false;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtConfig.JwtKey)),
+            ValidIssuer = JwtConfig.JwtIssuer,
+            ValidAudience = JwtConfig.JwtAudience,
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ClockSkew = TimeSpan.Zero,
+            ValidateLifetime = true
+        };
+    });
+
+builder.Services.AddAuthorization();
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => {
@@ -30,6 +65,29 @@ builder.Services.AddSwaggerGen(options => {
     options.CustomOperationIds(e =>
     {
         return e.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null;
+    });
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] { }
+        }
     });
 });
 builder.Services.AddOpenApiDocument(config =>
@@ -47,6 +105,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         builder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
     });
 });
+
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.Password.RequiredUniqueChars = 0;
@@ -67,7 +126,7 @@ builder.Services.AddLogging();
 builder.Services.AddScoped<DbContext, AppDbContext>();
 builder.Services.AddScoped<IBookHandler<Book>, BookHandler>();
 builder.Services.AddAutoMapper(typeof(MapHandler));
-builder.Services.AddScoped<IResultHandler<ITaskResponse>, ResultHandler>();
+builder.Services.AddScoped<IResultHandler<ITaskResult>, ResultHandler>();
 
 builder.Host.UseSerilog();
 var app = builder.Build();
@@ -92,6 +151,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

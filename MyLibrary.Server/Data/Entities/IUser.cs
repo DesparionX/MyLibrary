@@ -2,18 +2,18 @@
 {
     public interface IUser<TId> : IEntity<TId> where TId : IEquatable<TId>
     {
-        string? UserName { get; }
-        string? FirstName { get; }
-        string? LastName { get; }
-        public DateTime? BirthDate { get; }
-        string? Avatar {  get; }
-        string? Email { get; }
-        string? PhoneNumber { get; }
-        string? Country { get; }
-        string? City { get; }
-        string? Address { get; }
-        int BookLimit { get; }
-        int Rating { get; }
+        string? UserName { get; set; }
+        string? FirstName { get; set; }
+        string? LastName { get; set; }
+        public DateTime? BirthDate { get; set; }
+        string? Avatar {  get; set; }
+        string? Email { get; set; }
+        string? PhoneNumber { get; set; }
+        string? Country { get; set; }
+        string? City { get; set; }
+        string? Address { get; set; }
+        int BookLimit { get; set; }
+        int Rating { get; set; }
 
     }
 }

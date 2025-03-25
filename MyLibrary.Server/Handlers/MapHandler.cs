@@ -9,6 +9,11 @@ namespace MyLibrary.Server.Handlers
         public MapHandler()
         {
             CreateMap<Book, BookDTO>().ReverseMap();
+            CreateMap<Warehouse, WarehouseDTO>().ReverseMap();
+            CreateMap<Operation, OperationDTO>().ReverseMap();
+            CreateMap<User, UserDTO>()
+                .ForMember(dest => dest.Avatar, opt => opt.Ignore())
+                .ReverseMap();
         }
     }
 }

@@ -5,14 +5,14 @@ namespace MyLibrary.Server.Handlers
 {
     public interface IBookHandler<IBook>
     {
-        public Task<ITaskResponse> GetAllBooks();
-        public Task<ITaskResponse> FindBookByISBN(string ISBN);
-        public Task<ITaskResponse> FindBookById<TId>(TId id);
-        public Task<ITaskResponse> AddBookAsync(INewBookDTO newBookDto);
-        public Task<ITaskResponse> AddBookAsync<TId>(INewBookDTO<TId> newBookDto) where TId : IEquatable<TId>;
-        public Task<ITaskResponse> UpdateBookAsync(IBookDTO bookDto);
-        public Task<ITaskResponse> UpdateBookAsync<TId>(IBookDTO<TId> bookDto) where TId : IEquatable<TId>;
-        public Task<ITaskResponse> DeleteBookAsync(Guid id);
-        public Task<ITaskResponse> DeleteBookAsync<TId>(TId id);
+        public Task<ITaskResult> GetAllBooks();
+        public Task<ITaskResult> FindBookByISBN(string ISBN);
+        public Task<ITaskResult> FindBookById<TId>(TId id);
+        public Task<ITaskResult> AddBookAsync(INewBookDTO newBookDto);
+        public Task<ITaskResult> AddBookAsync<TId>(INewBookDTO<TId> newBookDto) where TId : IEquatable<TId>;
+        public Task<ITaskResult> UpdateBookAsync(IBookDTO bookDto);
+        public Task<ITaskResult> UpdateBookAsync<TId>(IBookDTO<TId> bookDto) where TId : IEquatable<TId>;
+        public Task<ITaskResult> DeleteBookAsync(Guid id);
+        public Task<ITaskResult> DeleteBookAsync<TId>(TId id);
     }
 }
