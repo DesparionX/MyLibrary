@@ -59,7 +59,7 @@ namespace MyLibrary.Server.Handlers
             }
         }
 
-        public async Task<ITaskResult> LogOut(IIdentity userIdentity)
+        public async Task<ITaskResult> LogOutAsync(IIdentity userIdentity)
         {
             try
             {

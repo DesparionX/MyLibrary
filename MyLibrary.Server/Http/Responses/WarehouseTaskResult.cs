@@ -9,14 +9,16 @@ namespace MyLibrary.Server.Http.Responses
         public bool Succeeded { get; }
 
         public int StatusCode { get; }
-        public IWarehouseDTO? Warehouse { get; }
+        public IWarehouseDTO? StockDTO { get; }
+        public ICollection<IWarehouseDTO>? StockDTOs { get; set; }
 
-        public WarehouseTaskResult(bool succeeded, int statusCode, string? message = "", IWarehouseDTO? warehouseDto = null)
+        public WarehouseTaskResult(bool succeeded, int statusCode, string? message = "", IWarehouseDTO? stockDto = null, ICollection<IWarehouseDTO>? stockDtos = null)
         {
             Succeeded = succeeded;
             StatusCode = statusCode;
             Message = message;
-            Warehouse = warehouseDto;
+            StockDTO = stockDto;
+            StockDTOs = stockDtos;
         }
     }
 }

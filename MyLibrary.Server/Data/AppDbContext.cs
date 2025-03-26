@@ -36,7 +36,7 @@ namespace MyLibrary.Server.Data
 
             builder.Entity<Warehouse>(w =>
             {
-                w.ToTable("Warehouse");
+                w.ToTable("StockDTO");
                 w.HasKey(w => w.Id);
             });
 

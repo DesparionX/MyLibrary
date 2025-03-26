@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using MyLibrary.Server.Data;
@@ -20,6 +21,49 @@ namespace MyLibrary.Server.Handlers
             _context = context;
             _logger = logger;
             _mapper = mapper;
+        }
+
+        public async Task<ITaskResult> GetStockAsync(string isbn)
+        {
+            try
+            {
+                var stock = await _context.Warehouse.Where(w => w.ISBN.Equals(isbn)).FirstOrDefaultAsync();
+                if (stock == null)
+                {
+                    _logger.LogInformation($"[INFO] Item with ISBN: {isbn} was not found.");
+                    return new WarehouseTaskResult(succeeded: false, message: "Item not found.", statusCode: StatusCodes.Status404NotFound);
+                }
+
+                var stockDTO = _mapper.Map<WarehouseDTO>(stock);
+                _logger.LogInformation($"[INFO] Item with ISBN: {isbn} was found.");
+                return new WarehouseTaskResult(succeeded: true, message: "Item found.", statusCode: StatusCodes.Status200OK, warehouseDto: (IWarehouseDTO)stockDTO);
+            }
+            catch (Exception err)
+            {
+                _logger.LogError(err, $"[ERROR]\n{err.Message}");
+                return new WarehouseTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
+            }
+        }
+        public async Task<ITaskResult> GetAllStocksAsync()
+        {
+            try
+            {
+                var stocks = await _context.Warehouse.ToListAsync();
+                if(stocks.Count == 0)
+                {
+                    _logger.LogInformation($"[INFO] No items found.");
+                    return new WarehouseTaskResult(succeeded: false, message: "No items found.", statusCode: StatusCodes.Status404NotFound);
+                }
+
+                var stockDTOs = _mapper.Map<ICollection<WarehouseDTO>>(stocks);
+                _logger.LogInformation($"[INFO] Items found.");
+                return new WarehouseTaskResult(succeeded: true, message: "Items found.", statusCode: StatusCodes.Status200OK, stockDtos: (ICollection<IWarehouseDTO>)stockDTOs);
+            }
+            catch (Exception err)
+            {
+                _logger.LogError(err, $"[ERROR]\n{err.Message}");
+                return new WarehouseTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
+            }
         }
         public async Task<ITaskResult> CreateStockAsync<TId>(IWarehouseDTO<TId> warehouseDTO) where TId : IEquatable<TId>
         {
@@ -55,12 +99,33 @@ namespace MyLibrary.Server.Handlers
             }
         }
 
-        public async Task<ITaskResult> DeleteStockAsync<TId>(TId id)
+        public async Task<ITaskResult> DeleteStockAsync<TId>(TId id) where TId : IEquatable<TId>
         {
             try
             {
                 var itemToDelete = await _context.Warehouse
-                    .Where(w => w.ISBN.Equals(id))
+                    .Where(w => w.Id.Equals(id))
+                    .ExecuteDeleteAsync();
+                if (itemToDelete > 0)
+                {
+                    _logger.LogInformation($"[INFO] Item with ID: {id} was deleted.");
+                    return new WarehouseTaskResult(succeeded: true, message: "Item was deleted.", statusCode: StatusCodes.Status200OK);
+                }
+                return new WarehouseTaskResult(succeeded: false, message: "Item was not found.", statusCode: StatusCodes.Status404NotFound);
+            }
+            catch (Exception err)
+            {
+                _logger.LogError(err, $"[ERROR]\n{err.Message}");
+                return new WarehouseTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        public async Task<ITaskResult> DeleteStockAsync(int id)
+        {
+            try
+            {
+                var itemToDelete = await _context.Warehouse
+                    .Where(w => w.Id.Equals(id))
                     .ExecuteDeleteAsync();
                 if (itemToDelete > 0)
                 {
@@ -86,6 +151,12 @@ namespace MyLibrary.Server.Handlers
         {
             try
             {
+                // Check if the stock exist, if not create it.
+                if (!await _context.Warehouse.AnyAsync(w => w.ISBN.Equals(warehouseDTO.ISBN)))
+                {
+                    return await CreateStockAsync(warehouseDTO);
+                }
+
                 var itemToUpdate = await _context.Warehouse
                     .Where(w => w.ISBN.Equals(warehouseDTO.ISBN))
                     .ExecuteUpdateAsync(w => w.SetProperty(w => w.Quantity, + warehouseDTO.Quantity));

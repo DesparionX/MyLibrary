@@ -34,9 +34,7 @@ namespace MyLibrary.Server.Controllers
         {
             if (id == null || string.IsNullOrWhiteSpace(id.ToString()))
             {
-                return BadRequest(
-                    new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "ID cannot be null or empty.")
-                    );
+                return BadRequest(new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "ID cannot be null or empty."));
             }
             var response = await _bookHandler.FindBookById(id);
 
@@ -54,9 +52,7 @@ namespace MyLibrary.Server.Controllers
         {
             if (isbn == null || string.IsNullOrWhiteSpace(isbn))
             {
-                return BadRequest(
-                    new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "ISBN cannot be null or empty.")
-                    );
+                return BadRequest(new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "ISBN cannot be null or empty."));
             }
             var response = await _bookHandler.FindBookByISBN(isbn);
             return _resultHandler.ReadResult(response);
@@ -84,9 +80,7 @@ namespace MyLibrary.Server.Controllers
         {
             if (newBookDto == null)
             {
-                return BadRequest(
-                    new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "Book cannot be null.")
-                    );
+                return BadRequest(new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "Book cannot be null."));
             }
             var response = await _bookHandler.AddBookAsync(newBookDto);
             return _resultHandler.ReadResult(response);
@@ -102,9 +96,7 @@ namespace MyLibrary.Server.Controllers
         {
             if (id == null || string.IsNullOrWhiteSpace(id.ToString()))
             {
-                return BadRequest(
-                    new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "ISBN cannot be null or empty.")
-                    );
+                return BadRequest(new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "ISBN cannot be null or empty."));
             }
             var response = await _bookHandler.DeleteBookAsync(id.ToString());
             return _resultHandler.ReadResult(response);
@@ -120,9 +112,7 @@ namespace MyLibrary.Server.Controllers
         {
             if (bookDto == null)
             {
-                return BadRequest(
-                    new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "Book cannot be null.")
-                    );
+                return BadRequest(new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "Book cannot be null."));
             }
             var response = await _bookHandler.UpdateBookAsync(bookDto);
             return _resultHandler.ReadResult(response);

@@ -12,17 +12,13 @@ namespace MyLibrary.Server.Handlers
     {
         private readonly IMapper _mapper;
         private readonly ILogger<UserHandler> _logger;
-        private readonly AppDbContext _context;
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
 
-        public UserHandler(IMapper mapper, ILogger<UserHandler> logger, AppDbContext context, UserManager<User> userManager, SignInManager<User> signInManager)
+        public UserHandler(IMapper mapper, ILogger<UserHandler> logger, UserManager<User> userManager)
         {
             _mapper = mapper;
             _logger = logger;
-            _context = context;
             _userManager = userManager;
-            _signInManager = signInManager;
 
         }
 

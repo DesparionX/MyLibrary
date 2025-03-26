@@ -81,24 +81,29 @@ namespace MyLibrary.Server.Handlers
             }
         }
 
-        public async Task<ITaskResult> AddBookAsync(INewBookDTO newBookDTO)
+        public async Task<ITaskResult> AddBookAsync(INewBookDTO newBookDto)
         {
             try
             {
-                if(await BookAlreadyExistAsync(newBookDTO.Book))
+                if(await BookAlreadyExistAsync(newBookDto.Book))
                 {
                     return new BookTaskResult(succeeded: false, message: "Book already exist in the database.", statusCode: StatusCodes.Status409Conflict);
                 }
 
-                var addedBooks = await CreateNewBooksAsync(existingBook: newBookDTO.Book, quantity: newBookDTO.Quantity);
-                if (addedBooks != newBookDTO.Quantity)
+                var addedBooks = await CreateNewBooksAsync(existingBook: newBookDto.Book, quantity: newBookDto.Quantity);
+                if (addedBooks != newBookDto.Quantity)
                 {
-                    return new BookTaskResult(succeeded: false, message: "Added books differs from requested quantity.", statusCode: StatusCodes.Status400BadRequest)
+                    return new BookTaskResult(succeeded: false, message: "Added books differs from requested quantity.", statusCode: StatusCodes.Status400BadRequest);
                 }
 
                 _logger.LogInformation($"{addedBooks} books added to the database.");
-                EventBus.Publish(new ItemAddedEvent(newBookDTO.Book.ISBN, newBookDTO.Book.Title, newBookDTO.Quantity));
+                EventBus.Publish(new ItemAddedEvent(newBookDto.Book.ISBN, newBookDto.Book.Title, newBookDto.Quantity));
                 return new BookTaskResult(succeeded: true, message: $"{addedBooks} books added successfully.", statusCode: StatusCodes.Status201Created);
+            }
+            catch(Exception err)
+            {
+                _logger.LogError($"[ERROR] {err.Message}\n{err.StackTrace}", err);
+                return new BookTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
 

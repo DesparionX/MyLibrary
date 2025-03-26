@@ -8,7 +8,7 @@ namespace MyLibrary.Server.Handlers
     public interface IAuthHandler
     {
         Task<ITaskResult> LoginUserAsync(ILoginRequest request);
-        Task<ITaskResult> LogOut(IIdentity userIdentity);
+        Task<ITaskResult> LogOutAsync(IIdentity userIdentity);
         Task<ITaskResult> GetIdentityAsync(IIdentity userIdentity);
     }
 }

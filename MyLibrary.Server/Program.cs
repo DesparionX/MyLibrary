@@ -99,7 +99,7 @@ builder.Services.AddOpenApiDocument(config =>
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(config.GetConnectionString("DefaultConnection"), builder =>
+    options.UseSqlServer(DbConfig.ConnectionString, builder =>
     {
         builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
         builder.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
@@ -124,8 +124,12 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 // Custom services
 builder.Services.AddLogging();
 builder.Services.AddScoped<DbContext, AppDbContext>();
-builder.Services.AddScoped<IBookHandler<Book>, BookHandler>();
 builder.Services.AddAutoMapper(typeof(MapHandler));
+builder.Services.AddScoped<IBookHandler<Book>, BookHandler>();
+builder.Services.AddScoped<IWarehouseHandler<Warehouse>, WarehouseHandler>();
+builder.Services.AddScoped<IOperationHandler, OperationHandler>();
+builder.Services.AddScoped<IAuthHandler, AuthHandler>();
+builder.Services.AddScoped<IUserHandler, UserHandler>();
 builder.Services.AddScoped<IResultHandler<ITaskResult>, ResultHandler>();
 
 builder.Host.UseSerilog();
