@@ -6,8 +6,6 @@ namespace MyLibrary.Server.Data.DTOs
     {
         public string Id { get; set; }
 
-        public IUser<string> Entity { get; set; }
-
         public string? UserName { get; set; }
 
         public string? FirstName { get; set; }

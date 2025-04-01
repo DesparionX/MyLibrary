@@ -56,7 +56,7 @@ namespace MyLibrary.Server.Controllers
         [ProducesResponseType<ITaskResult>(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status404NotFound)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateStock([FromBody] IWarehouseDTO warehouseDto)
+        public async Task<IActionResult> CreateStock([FromBody] WarehouseDTO warehouseDto)
         {
             if (warehouseDto == null)
             {
@@ -73,33 +73,13 @@ namespace MyLibrary.Server.Controllers
         [ProducesResponseType<ITaskResult>(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status404NotFound)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> AddStock([FromBody] IWarehouseDTO warehouseDto)
+        public async Task<IActionResult> AddStock([FromBody] WarehouseDTO warehouseDto)
         {
             if (warehouseDto == null)
             {
                 return BadRequest(new WarehouseTaskResult(succeeded: false, message: "Warehouse cannot be null.", statusCode: StatusCodes.Status400BadRequest));
             }
             var result = await _warehouseHandler.AddStockAsync(warehouseDto);
-            return _resultHandler.ReadResult(result);
-        }
-
-
-        // DELETES a stock from the warehouse.
-        // THIS IS A TEST METHOD ТО TEST GENERIC TYPE ID.
-        // SHOULD NOT BE USED IN PRODUCTION FOR NOW.
-        [HttpDelete("deleteStock")]
-        [ProducesResponseType<ITaskResult>(StatusCodes.Status200OK)]
-        [ProducesResponseType<ITaskResult>(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType<ITaskResult>(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType<ITaskResult>(StatusCodes.Status404NotFound)]
-        [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteStock<TId>([FromQuery] TId id) where TId : IEquatable<TId>
-        {
-            if (id is null || (id is int intIsbn && intIsbn <= 0) || string.IsNullOrWhiteSpace(id?.ToString()))
-            {
-                return BadRequest(new WarehouseTaskResult(succeeded: false, message: "ISBN cannot be null.", statusCode: StatusCodes.Status400BadRequest));
-            }
-            var result = await _warehouseHandler.DeleteStockAsync(id);
             return _resultHandler.ReadResult(result);
         }
 
@@ -126,7 +106,7 @@ namespace MyLibrary.Server.Controllers
         [ProducesResponseType<ITaskResult>(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status404NotFound)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> RemoveStock(IWarehouseDTO warehouseDto)
+        public async Task<IActionResult> RemoveStock(WarehouseDTO warehouseDto)
         {
             if (warehouseDto == null)
             {

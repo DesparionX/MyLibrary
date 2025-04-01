@@ -2,13 +2,23 @@
 
 namespace MyLibrary.Server.Data.DTOs
 {
-    public interface IBookDTO<TId> : IDTO<TId, IBook<TId>>, IBook<TId> where TId : IEquatable<TId>
+    // Full generic interface definition for IBookDTO
+    public interface IBookDTO<TEntity,TId> : IDTO<TEntity, TId>, IBook<TId>
+        where TEntity : class, IEntity<TId>
+        where TId : IEquatable<TId>
     {
 
     }
-    public interface IBookDTO : IDTO<Guid, IBook<Guid>>, IBook<Guid>
+
+    // Partial generic interface with fixed ID type.
+    public interface IBookDTO<TEntity> : IDTO<TEntity,Guid>, IBook<Guid>
+        where TEntity : class, IEntity<Guid>
     {
 
     }
-    
+
+    // Fixed interface implementing IBook with fixed ID type.
+    public interface IBookDTO : IDTO<IBook<Guid>, Guid>, IBook<Guid>
+    {
+    }
 }

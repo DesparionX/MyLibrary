@@ -1,6 +1,6 @@
 ﻿namespace MyLibrary.Server.Handlers.EventHandlers
 {
-    public interface IOperationsEventHandler : IBookEvents
+    public interface IOperationsEventHandler : IBookEvents, IItemEvents
     {
     }
 }

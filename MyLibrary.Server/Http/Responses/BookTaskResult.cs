@@ -8,10 +8,10 @@ namespace MyLibrary.Server.Http.Responses
         public string? Message { get; }
         public bool Succeeded { get; }
         public int StatusCode { get; }
-        public ICollection<IBookDTO>? Books { get; }
-        public IBookDTO? Book { get; }
+        public ICollection<BookDTO>? Books { get; }
+        public BookDTO? Book { get; }
 
-        public BookTaskResult(bool succeeded, int statusCode, string? message = "", ICollection<IBookDTO>? books = null, IBookDTO? book = null)
+        public BookTaskResult(bool succeeded, int statusCode, string? message = "", ICollection<BookDTO>? books = null, BookDTO? book = null)
         {
             Succeeded = succeeded;
             Message = message;

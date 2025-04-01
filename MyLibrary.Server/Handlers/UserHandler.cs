@@ -31,7 +31,7 @@ namespace MyLibrary.Server.Handlers
                 {
                     return new UserTaskResult(succeeded: false, message: "There are no users in db.", statusCode: StatusCodes.Status404NotFound);
                 }
-                var userDTOs = _mapper.Map<ICollection<IUserDTO>>(users);
+                var userDTOs = _mapper.Map<ICollection<UserDTO>>(users);
                 _logger.LogInformation("Users fetched successfully.");
                 return new UserTaskResult(succeeded: true, message: "Users fetched successfully.", statusCode: StatusCodes.Status200OK, users: userDTOs);
             }
@@ -52,7 +52,7 @@ namespace MyLibrary.Server.Handlers
                     return new UserTaskResult(succeeded: false, message: "User not found.", statusCode: StatusCodes.Status404NotFound);
                 }
 
-                var userDTO = _mapper.Map<IUserDTO>(user);
+                var userDTO = _mapper.Map<UserDTO>(user);
                 _logger.LogInformation("User found.");
                 return new UserTaskResult(succeeded: true, message: "User found.", statusCode: StatusCodes.Status200OK, user: userDTO);
             }
@@ -63,7 +63,7 @@ namespace MyLibrary.Server.Handlers
             }
         }
 
-        public async Task<ITaskResult> RegisterUserAsync(INewUser newUserDTO)
+        public async Task<ITaskResult> RegisterUserAsync(INewUser<User> newUserDTO)
         {
             try
             {

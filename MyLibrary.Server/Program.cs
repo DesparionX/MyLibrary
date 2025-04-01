@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyLibrary.Server.Configs;
 using MyLibrary.Server.Data;
+using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Data.Entities;
 using MyLibrary.Server.Handlers;
 using MyLibrary.Server.Http.Responses;
@@ -50,7 +51,11 @@ builder.Services.AddAuthentication(options =>
     });
 
 builder.Services.AddAuthorization();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+    });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -89,7 +94,10 @@ builder.Services.AddSwaggerGen(options => {
             new string[] { }
         }
     });
-});
+
+})
+    .AddSwaggerGenNewtonsoftSupport();
+
 builder.Services.AddOpenApiDocument(config =>
 {
     config.Title = "Library API";

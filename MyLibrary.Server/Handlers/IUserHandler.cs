@@ -8,7 +8,7 @@ namespace MyLibrary.Server.Handlers
     {
         Task<ITaskResult> GetUserAsync(string userId);
         Task<ITaskResult> GetAllUsers();
-        Task<ITaskResult> RegisterUserAsync(INewUser newUserDTO);
+        Task<ITaskResult> RegisterUserAsync(INewUser<User> newUserDTO);
         Task<ITaskResult> UpdateUserAsync(IUserDTO userDTO);
         Task<ITaskResult> DeleteUserAsync(string userId);
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyLibrary.Server.Data.DTOs;
+using MyLibrary.Server.Data.Entities;
 using MyLibrary.Server.Handlers;
 using MyLibrary.Server.Http.Requests;
 using MyLibrary.Server.Http.Responses;
@@ -56,13 +57,13 @@ namespace MyLibrary.Server.Controllers
         [ProducesResponseType<ITaskResult>(StatusCodes.Status201Created)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status400BadRequest)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Register([FromBody] INewUser newUserDto)
+        public async Task<IActionResult> Register([FromBody] NewUser newUserDto)
         {
             if (newUserDto == null)
             {
                 return BadRequest(new UserTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "RegisterDTO cannot be null."));
             }
-            var response = await _userHandler.RegisterUserAsync(newUserDto);
+            var response = await _userHandler.RegisterUserAsync((INewUser<User>)newUserDto);
             return _resultHandler.ReadResult(response);
         }
 
@@ -70,7 +71,7 @@ namespace MyLibrary.Server.Controllers
         [ProducesResponseType<ITaskResult>(StatusCodes.Status200OK)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status400BadRequest)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateUser([FromBody] IUserDTO userDto)
+        public async Task<IActionResult> UpdateUser([FromBody] UserDTO userDto)
         {
             if (userDto == null)
             {
@@ -101,7 +102,7 @@ namespace MyLibrary.Server.Controllers
         [ProducesResponseType<ITaskResult>(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status404NotFound)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Login([FromBody] ILoginRequest request)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             if (request == null)
             {

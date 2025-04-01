@@ -6,8 +6,6 @@ namespace MyLibrary.Server.Data.DTOs
     {
         public int Id { get; set; }
 
-        public IOperation<int> Entity { get; set; }
-
         public string? OperationName { get; set; }
 
         public string? ArticleId { get; set; }

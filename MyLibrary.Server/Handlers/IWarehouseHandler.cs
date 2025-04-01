@@ -8,13 +8,9 @@ namespace MyLibrary.Server.Handlers
     {
         public Task<ITaskResult> GetStockAsync(string isbn);
         public Task<ITaskResult> GetAllStocksAsync();
-        public Task<ITaskResult> CreateStockAsync<TId>(IWarehouseDTO<TId> warehouseDTO) where TId : IEquatable<TId>;
         public Task<ITaskResult> CreateStockAsync(IWarehouseDTO warehouseDTO);
-        public Task<ITaskResult> AddStockAsync<TId>(IWarehouseDTO<TId> warehouseDTO) where TId : IEquatable<TId>;
         public Task<ITaskResult> AddStockAsync(IWarehouseDTO warehouseDTO);
-        public Task<ITaskResult> RemoveStockAsync<TId>(IWarehouseDTO<TId> warehouseDTO) where TId : IEquatable<TId>;
         public Task<ITaskResult> RemoveStockAsync(IWarehouseDTO warehouseDTO);
-        public Task<ITaskResult> DeleteStockAsync<TId>(TId id) where TId : IEquatable<TId>;
         public Task<ITaskResult> DeleteStockAsync(int id);
     }
 }

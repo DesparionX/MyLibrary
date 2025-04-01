@@ -1,11 +1,9 @@
 ﻿using MyLibrary.Server.Data.Entities;
 namespace MyLibrary.Server.Data.DTOs
 {
-    public class BookDTO : IBookDTO<Guid>
+    public class BookDTO : IBookDTO
     {
         public Guid Id { get; set; }
-
-        public IBook<Guid> Entity { get; set; }
 
         public string ISBN { get; set; }
 

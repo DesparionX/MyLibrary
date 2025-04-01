@@ -34,7 +34,7 @@ namespace MyLibrary.Server.Handlers
                 }
                 var bookDto = _mapper.Map<BookDTO>(book);
 
-                return new BookTaskResult(succeeded: true, message: "Book found !", statusCode: StatusCodes.Status302Found, book: (IBookDTO)bookDto);
+                return new BookTaskResult(succeeded: true, message: "Book found !", statusCode: StatusCodes.Status302Found, book: bookDto);
             }
             catch (Exception err)
             {
@@ -53,7 +53,7 @@ namespace MyLibrary.Server.Handlers
                     return new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status404NotFound, "There is no books with given ISBN.");
                 }
                 var bookDto = _mapper.Map<BookDTO>(book);
-                return new BookTaskResult(succeeded: true, statusCode: StatusCodes.Status302Found, "Book found !", book: (IBookDTO)bookDto);
+                return new BookTaskResult(succeeded: true, statusCode: StatusCodes.Status302Found, "Book found !", book: bookDto);
             }
             catch (Exception err)
             {
@@ -72,7 +72,7 @@ namespace MyLibrary.Server.Handlers
                     return new BookTaskResult(succeeded: false, message: "No books found.", statusCode: StatusCodes.Status404NotFound);
                 }
                 var bookDtos = _mapper.Map<ICollection<BookDTO>>(books);
-                return new BookTaskResult(succeeded: true, message: "Books found !", statusCode: StatusCodes.Status302Found, books: (ICollection<IBookDTO>)bookDtos);
+                return new BookTaskResult(succeeded: true, message: "Books found !", statusCode: StatusCodes.Status302Found, books: bookDtos);
             }
             catch (Exception err)
             {
@@ -81,7 +81,7 @@ namespace MyLibrary.Server.Handlers
             }
         }
 
-        public async Task<ITaskResult> AddBookAsync(INewBookDTO newBookDto)
+        public async Task<ITaskResult> AddBookAsync(INewBook newBookDto)
         {
             try
             {
@@ -105,12 +105,6 @@ namespace MyLibrary.Server.Handlers
                 _logger.LogError($"[ERROR] {err.Message}\n{err.StackTrace}", err);
                 return new BookTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
-        }
-
-        public async Task<ITaskResult> AddBookAsync<TId>(INewBookDTO<TId> bookDto) where TId : IEquatable<TId>
-        {
-            // TODO: Implement this method later.
-            return new BookTaskResult(succeeded: false, message: "Not implemented yet.", statusCode: StatusCodes.Status501NotImplemented);
         }
 
         public async Task<ITaskResult> DeleteBookAsync(Guid id)
@@ -140,12 +134,6 @@ namespace MyLibrary.Server.Handlers
                 _logger.LogError($"[ERROR] {err.Message}\n{err.StackTrace}", err);
                 return new BookTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
-        }
-
-        public async Task<ITaskResult> DeleteBookAsync<TId>(TId id)
-        {
-            // TODO: Implement this method later.
-            return new BookTaskResult(succeeded: false, message: "Not implemented yet.", statusCode: StatusCodes.Status501NotImplemented);
         }
 
         public async Task<ITaskResult> UpdateBookAsync(IBookDTO bookDto)
@@ -178,12 +166,6 @@ namespace MyLibrary.Server.Handlers
                 _logger.LogError($"[ERROR] {err.Message}\n{err.StackTrace}", err);
                 return new BookTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
-        }
-
-        public async Task<ITaskResult> UpdateBookAsync<TId>(IBookDTO<TId> bookDto) where TId : IEquatable<TId>
-        {
-            // TODO: Implement this method later.
-            return new BookTaskResult(succeeded: false, message: "Not implemented yet.", statusCode: StatusCodes.Status501NotImplemented);
         }
 
         // Private methods

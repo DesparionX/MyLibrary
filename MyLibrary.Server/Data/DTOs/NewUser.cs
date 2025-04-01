@@ -1,8 +1,8 @@
 ﻿namespace MyLibrary.Server.Data.DTOs
 {
-    public class NewUser : INewUser
+    public class NewUser : INewUser<UserDTO>
     {
-        public IUserDTO UserDTO { get; set; }
+        public UserDTO UserDTO { get; set; }
         public string Password { get; set; }
     }
 }

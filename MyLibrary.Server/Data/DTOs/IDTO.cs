@@ -2,10 +2,10 @@
 
 namespace MyLibrary.Server.Data.DTOs
 {
-    public interface IDTO<TId, TEntity>
+    public interface IDTO<TEntity, TId>
+        where TEntity : class, IEntity<TId> 
         where TId : IEquatable<TId>
-        where TEntity : class, IEntity<TId>
     {
-        public TEntity Entity { get; }
+
     }
 }

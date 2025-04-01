@@ -11,10 +11,10 @@ namespace MyLibrary.Server.Http.Responses
 
         public int StatusCode { get; }
 
-        public ICollection<IUserDTO>? Users { get; }
-        public IUserDTO? User { get; }
+        public ICollection<UserDTO>? Users { get; }
+        public UserDTO? User { get; }
 
-        public UserTaskResult(bool succeeded, int statusCode, string? message, ICollection<IUserDTO>? users = null, IUserDTO? user = null)
+        public UserTaskResult(bool succeeded, int statusCode, string? message, ICollection<UserDTO>? users = null, UserDTO? user = null)
         {
             Succeeded = succeeded;
             StatusCode = statusCode;

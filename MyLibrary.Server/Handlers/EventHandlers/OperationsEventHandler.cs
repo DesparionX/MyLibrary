@@ -4,7 +4,7 @@ using MyLibrary.Server.Events;
 
 namespace MyLibrary.Server.Handlers.EventHandlers
 {
-    public class OperationsEventHandler : IOperationsEventHandler
+    public class OperationsEventHandler : IOperationsEventHandler, IItemEvents
     {
         private readonly IWarehouseHandler<Warehouse> _warehouseHandler;
         private readonly ILogger<OperationsEventHandler> _logger;
@@ -14,42 +14,72 @@ namespace MyLibrary.Server.Handlers.EventHandlers
             _warehouseHandler = warehouseHandler;
             _logger = logger;
 
-            EventBus.Subscribe<ItemAddedEvent>(OnBookAdded);
-            
+            EventBus.Subscribe<ItemAddedEvent>(OnItemAdded);
+            EventBus.Subscribe<ItemRemovedEvent>(OnItemRemoved);
+            EventBus.Subscribe<ItemSoldEvent>(OnItemSold);
+            EventBus.Subscribe<ItemBorrowedEvent>(OnBookBorrowed);
+            EventBus.Subscribe<ItemReturnedEvent>(OnBookReturned);
+
         }
-
-
-        public void OnBookAdded(IItemOperationEvent e)
+        public async void OnItemAdded(IItemOperationEvent e)
         {
             try
             {
-                _warehouseHandler.AddStockAsync(new WarehouseDTO { ISBN = e.ISBN, Name = e.Name, Quantity = e.Quantity });
-                _logger.LogInformation($"{e.Quantity}x {e.Name}({e.ISBN}) added to warehouse.");
+                _logger.LogInformation($"{e.Quantity}x {e.Name}({e.ISBN}) send to warehouse handler.");
+                await _warehouseHandler.AddStockAsync(new WarehouseDTO { ISBN = e.ISBN, Name = e.Name, Quantity = e.Quantity });
             }
-            catch(Exception err)
+            catch (Exception err)
             {
-                _logger.LogError(err, $"Error adding {e.Quantity}x {e.Name}({e.ISBN}) to warehouse.");
+                _logger.LogError(err, $"Error sending {e.Quantity}x {e.Name}({e.ISBN}) to warehouse handler.");
             }
         }
-
-        public void OnBookBorrowed(IItemOperationEvent e)
+        public async void OnItemRemoved(IItemOperationEvent e)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _logger.LogInformation($"{e.Quantity}x {e.Name}({e.ISBN}) send to warehouse handler.");
+                await _warehouseHandler.RemoveStockAsync(new WarehouseDTO { ISBN = e.ISBN, Name = e.Name, Quantity = e.Quantity });
+            }
+            catch (Exception err)
+            {
+                _logger.LogError(err, $"Error sending {e.Quantity}x {e.Name}({e.ISBN}) to warehouse handler.");
+            }
         }
-
-        public void OnBookDeleted(IItemOperationEvent e)
+        public async void OnItemSold(IItemOperationEvent e)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _logger.LogInformation($"{e.Quantity}x {e.Name}({e.ISBN}) send to warehouse handler.");
+                await _warehouseHandler.RemoveStockAsync(new WarehouseDTO { ISBN = e.ISBN, Name = e.Name, Quantity = e.Quantity });
+            }
+            catch (Exception err)
+            {
+                _logger.LogError(err, $"Error sending {e.Quantity}x {e.Name}({e.ISBN}) to warehouse handler.");
+            }
         }
-
-        public void OnBookReturned(IItemOperationEvent e)
+        public async void OnBookBorrowed(IItemOperationEvent e)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _logger.LogInformation($"{e.Quantity}x {e.Name}({e.ISBN}) send to warehouse handler.");
+                await _warehouseHandler.RemoveStockAsync(new WarehouseDTO { ISBN = e.ISBN, Name = e.Name, Quantity = e.Quantity });
+            }
+            catch (Exception err)
+            {
+                _logger.LogError(err, $"Error sending {e.Quantity}x {e.Name}({e.ISBN}) to warehouse handler.");
+            }
         }
-
-        public void OnBookUpdated(IItemOperationEvent e)
+        public async void OnBookReturned(IItemOperationEvent e)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _logger.LogInformation($"{e.Quantity}x {e.Name}({e.ISBN}) send to warehouse handler.");
+                await _warehouseHandler.AddStockAsync(new WarehouseDTO { ISBN = e.ISBN, Name = e.Name, Quantity = e.Quantity });
+            }
+            catch (Exception err)
+            {
+                _logger.LogError(err, $"Error sending {e.Quantity}x {e.Name}({e.ISBN}) to warehouse handler.");
+            }
         }
     }
 }

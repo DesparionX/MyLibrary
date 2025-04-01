@@ -76,7 +76,7 @@ namespace MyLibrary.Server.Controllers
         [ProducesResponseType<ITaskResult>(StatusCodes.Status400BadRequest)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status502BadGateway)]
-        public async Task<IActionResult> AddBook([FromBody] INewBookDTO newBookDto)
+        public async Task<IActionResult> AddBook([FromBody] NewBook newBookDto)
         {
             if (newBookDto == null)
             {
@@ -98,7 +98,7 @@ namespace MyLibrary.Server.Controllers
             {
                 return BadRequest(new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "ISBN cannot be null or empty."));
             }
-            var response = await _bookHandler.DeleteBookAsync(id.ToString());
+            var response = await _bookHandler.DeleteBookAsync(id);
             return _resultHandler.ReadResult(response);
         }
 
@@ -108,7 +108,7 @@ namespace MyLibrary.Server.Controllers
         [ProducesResponseType<ITaskResult>(StatusCodes.Status404NotFound)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status502BadGateway)]
-        public async Task<IActionResult> UpdateBookAsync([FromBody] IBookDTO bookDto)
+        public async Task<IActionResult> UpdateBookAsync([FromBody] BookDTO bookDto)
         {
             if (bookDto == null)
             {

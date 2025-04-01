@@ -36,7 +36,7 @@ namespace MyLibrary.Server.Handlers
 
                 var stockDTO = _mapper.Map<WarehouseDTO>(stock);
                 _logger.LogInformation($"[INFO] Item with ISBN: {isbn} was found.");
-                return new WarehouseTaskResult(succeeded: true, message: "Item found.", statusCode: StatusCodes.Status200OK, warehouseDto: (IWarehouseDTO)stockDTO);
+                return new WarehouseTaskResult(succeeded: true, message: "Item found.", statusCode: StatusCodes.Status200OK, stockDto: stockDTO);
             }
             catch (Exception err)
             {
@@ -44,6 +44,7 @@ namespace MyLibrary.Server.Handlers
                 return new WarehouseTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
+
         public async Task<ITaskResult> GetAllStocksAsync()
         {
             try
@@ -57,18 +58,13 @@ namespace MyLibrary.Server.Handlers
 
                 var stockDTOs = _mapper.Map<ICollection<WarehouseDTO>>(stocks);
                 _logger.LogInformation($"[INFO] Items found.");
-                return new WarehouseTaskResult(succeeded: true, message: "Items found.", statusCode: StatusCodes.Status200OK, stockDtos: (ICollection<IWarehouseDTO>)stockDTOs);
+                return new WarehouseTaskResult(succeeded: true, message: "Items found.", statusCode: StatusCodes.Status200OK, stockDtos: stockDTOs);
             }
             catch (Exception err)
             {
                 _logger.LogError(err, $"[ERROR]\n{err.Message}");
                 return new WarehouseTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
-        }
-        public async Task<ITaskResult> CreateStockAsync<TId>(IWarehouseDTO<TId> warehouseDTO) where TId : IEquatable<TId>
-        {
-            // TODO: Implement this method later.
-            return new WarehouseTaskResult(succeeded: false, message: "Not implemented yet.", statusCode: StatusCodes.Status501NotImplemented);
         }
 
         public async Task<ITaskResult> CreateStockAsync(IWarehouseDTO warehouseDTO)
@@ -141,12 +137,6 @@ namespace MyLibrary.Server.Handlers
             }
         }
 
-        public async Task<ITaskResult> AddStockAsync<TId>(IWarehouseDTO<TId> warehouseDTO) where TId : IEquatable<TId>
-        {
-            // TODO: Implement this method later.
-            return new WarehouseTaskResult(succeeded: false, message: "Not implemented yet.", statusCode: StatusCodes.Status501NotImplemented);
-        }
-
         public async Task<ITaskResult> AddStockAsync(IWarehouseDTO warehouseDTO)
         {
             try
@@ -173,11 +163,6 @@ namespace MyLibrary.Server.Handlers
                 _logger.LogError(err, $"[ERROR]\n{err.Message}");
                 return new WarehouseTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
-        }
-
-        public Task<ITaskResult> RemoveStockAsync<TId>(IWarehouseDTO<TId> warehouseDTO) where TId : IEquatable<TId>
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<ITaskResult> RemoveStockAsync(IWarehouseDTO warehouseDTO)
