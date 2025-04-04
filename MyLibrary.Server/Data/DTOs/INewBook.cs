@@ -2,9 +2,9 @@
 
 namespace MyLibrary.Server.Data.DTOs
 {
-    public interface INewBook
+    public interface INewBook<TBookDTO> where TBookDTO : IBookDTO
     {
-        IBookDTO Book { get; }
+        TBookDTO Book { get; }
         int Quantity { get; }
     }
 }

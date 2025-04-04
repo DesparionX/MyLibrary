@@ -10,6 +10,7 @@ namespace MyLibrary.Server.Handlers
             return response.StatusCode switch
             {
                 StatusCodes.Status200OK => Ok(response),
+                StatusCodes.Status201Created => Ok(response),
                 StatusCodes.Status302Found => Ok(response),
                 StatusCodes.Status304NotModified => BadRequest(response),
                 StatusCodes.Status400BadRequest => BadRequest(response),

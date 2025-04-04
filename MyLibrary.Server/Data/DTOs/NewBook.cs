@@ -1,8 +1,8 @@
 ﻿namespace MyLibrary.Server.Data.DTOs
 {
-    public class NewBook : INewBook
+    public class NewBook : INewBook<BookDTO>
     {
-        public IBookDTO Book {get; set; }
+        public BookDTO Book {get; set; }
 
         public int Quantity { get; set; }
     }

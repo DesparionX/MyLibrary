@@ -63,7 +63,7 @@ namespace MyLibrary.Server.Handlers
             }
         }
 
-        public async Task<ITaskResult> RegisterUserAsync(INewUser<User> newUserDTO)
+        public async Task<ITaskResult> RegisterUserAsync(INewUser<UserDTO> newUserDTO)
         {
             try
             {

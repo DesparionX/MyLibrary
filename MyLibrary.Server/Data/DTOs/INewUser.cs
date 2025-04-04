@@ -8,4 +8,9 @@ namespace MyLibrary.Server.Data.DTOs
         public TUserDTO UserDTO { get; set; }
         public string Password { get; set; }
     }
+    public interface INewUser
+    {
+        public UserDTO UserDTO { get; set; }
+        public string Password { get; set; }
+    }
 }

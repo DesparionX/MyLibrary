@@ -6,5 +6,6 @@ namespace MyLibrary.Server.Handlers
     public interface IOperationHandler
     {
         public Task<ITaskResult> PerformOperationAsync(IOperationDTO operationDTO);
+        public Task<ITaskResult> GetOperationHistoryAsync();
     }
 }

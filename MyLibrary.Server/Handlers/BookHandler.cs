@@ -5,18 +5,23 @@ using MyLibrary.Server.Data;
 using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Data.Entities;
 using MyLibrary.Server.Events;
+using MyLibrary.Server.Handlers.EventHandlers;
 using MyLibrary.Server.Http.Responses;
 
 namespace MyLibrary.Server.Handlers
 {
     public class BookHandler : IBookHandler<Book>
     {
+        private readonly EventBus _eventBus;
+        private readonly IOperationsEventHandler _eventHandler;
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILogger<BookHandler> _logger;
 
-        public BookHandler(AppDbContext context, IMapper mapper, ILogger<BookHandler> logger)
+        public BookHandler(EventBus eventBus, IOperationsEventHandler eventHandler, AppDbContext context, IMapper mapper, ILogger<BookHandler> logger)
         {
+            _eventBus = eventBus;
+            _eventHandler = eventHandler;
             _context = context;
             _mapper = mapper;
             _logger = logger;
@@ -81,7 +86,7 @@ namespace MyLibrary.Server.Handlers
             }
         }
 
-        public async Task<ITaskResult> AddBookAsync(INewBook newBookDto)
+        public async Task<ITaskResult> AddBookAsync(INewBook<BookDTO> newBookDto)
         {
             try
             {
@@ -97,7 +102,7 @@ namespace MyLibrary.Server.Handlers
                 }
 
                 _logger.LogInformation($"{addedBooks} books added to the database.");
-                EventBus.Publish(new ItemAddedEvent(newBookDto.Book.ISBN, newBookDto.Book.Title, newBookDto.Quantity));
+                _eventBus.Publish(new ItemAddedEvent(newBookDto.Book.ISBN, newBookDto.Book.Title, newBookDto.Quantity));
                 return new BookTaskResult(succeeded: true, message: $"{addedBooks} books added successfully.", statusCode: StatusCodes.Status201Created);
             }
             catch(Exception err)
@@ -126,7 +131,7 @@ namespace MyLibrary.Server.Handlers
                 }
 
                 _logger.LogInformation($"{removedBooks} books removed from the database.");
-                EventBus.Publish(new ItemRemovedEvent(bookToRemove.ISBN, bookToRemove.Title, removedBooks));
+                _eventBus.Publish(new ItemRemovedEvent(bookToRemove.ISBN, bookToRemove.Title, removedBooks));
                 return new BookTaskResult(succeeded: true, message: $"{removedBooks} books removed successfully.", statusCode: StatusCodes.Status200OK);
             }
             catch(Exception err)
@@ -185,7 +190,7 @@ namespace MyLibrary.Server.Handlers
         {
             try
             {
-                for(int i = 0; i <= quantity; i++)
+                for (int i = 0; i < quantity; i++)
                 {
                     var book = _mapper.Map<Book>(existingBook);
                     await _context.Books.AddAsync(book);

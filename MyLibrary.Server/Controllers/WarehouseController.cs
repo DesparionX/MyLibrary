@@ -12,14 +12,13 @@ namespace MyLibrary.Server.Controllers
     [ApiController]
     public class WarehouseController : ControllerBase
     {
-        private readonly ILogger<WarehouseController> _logger;
         private readonly IWarehouseHandler<Warehouse> _warehouseHandler;
         private readonly IResultHandler<ITaskResult> _resultHandler;
 
-        public WarehouseController(ILogger<WarehouseController> logger, IWarehouseHandler<Warehouse> warehouseHandler)
+        public WarehouseController(IWarehouseHandler<Warehouse> warehouseHandler, IResultHandler<ITaskResult> resultHandler)
         {
-            _logger = logger;
             _warehouseHandler = warehouseHandler;
+            _resultHandler = resultHandler;
         }
 
         [HttpGet("getStock")]

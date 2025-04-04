@@ -9,7 +9,9 @@ using MyLibrary.Server.Configs;
 using MyLibrary.Server.Data;
 using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Data.Entities;
+using MyLibrary.Server.Events;
 using MyLibrary.Server.Handlers;
+using MyLibrary.Server.Handlers.EventHandlers;
 using MyLibrary.Server.Http.Responses;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -36,17 +38,17 @@ builder.Services.AddAuthentication(options =>
     .AddJwtBearer(options =>
     {
         options.RequireHttpsMetadata = false;
-        options.SaveToken = false;
+        options.SaveToken = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtConfig.JwtKey)),
-            ValidIssuer = JwtConfig.JwtIssuer,
-            ValidAudience = JwtConfig.JwtAudience,
             ValidateIssuer = true,
             ValidateAudience = true,
+            ValidateIssuerSigningKey = true,
+            ValidateLifetime = true,
             ClockSkew = TimeSpan.Zero,
-            ValidateLifetime = true
+            ValidIssuer = JwtConfig.JwtIssuer,
+            ValidAudience = JwtConfig.JwtAudience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtConfig.JwtKey))
         };
     });
 
@@ -103,10 +105,22 @@ builder.Services.AddOpenApiDocument(config =>
     config.Title = "Library API";
     config.Version = "v1";
     config.Description = "API Documentation for the Library System.";
+
+    config.AddSecurity("JWT", new NSwag.OpenApiSecurityScheme
+    {
+        Type = NSwag.OpenApiSecuritySchemeType.ApiKey,
+        Name = "Authorization",
+        In = NSwag.OpenApiSecurityApiKeyLocation.Header,
+        Description = "Enter JWT token in this format: Bearer {your_token}"
+    });
+
+    config.OperationProcessors.Add(new NSwag.Generation.Processors.Security.AspNetCoreOperationSecurityScopeProcessor("JWT"));
 });
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
+    options.EnableDetailedErrors();
+    options.EnableSensitiveDataLogging();
     options.UseSqlServer(DbConfig.ConnectionString, builder =>
     {
         builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
@@ -130,6 +144,8 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     .AddDefaultTokenProviders();
 
 // Custom services
+builder.Services.AddSingleton<EventBus>();
+builder.Services.AddScoped<IOperationsEventHandler, OperationsEventHandler>();
 builder.Services.AddLogging();
 builder.Services.AddScoped<DbContext, AppDbContext>();
 builder.Services.AddAutoMapper(typeof(MapHandler));
@@ -156,7 +172,6 @@ app.UseStaticFiles();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    //app.UseSwagger();
     app.UseOpenApi();
     app.UseSwaggerUI();
 }

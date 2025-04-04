@@ -4,7 +4,7 @@ namespace MyLibrary.Server.Handlers.EventHandlers
 {
     public interface IItemEvents
     {
-        public void OnItemAdded(IItemOperationEvent e);
+        public Task OnItemAdded(ItemAddedEvent e);
         public void OnItemRemoved(IItemOperationEvent e);
         public void OnItemSold(IItemOperationEvent e);
     }

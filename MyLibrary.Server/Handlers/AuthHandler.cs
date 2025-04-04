@@ -39,11 +39,11 @@ namespace MyLibrary.Server.Handlers
                     return new UserTaskResult(succeeded: false, message: "Couldn't find user with the given email.", statusCode: StatusCodes.Status404NotFound);
                 }
 
-                var result = await _signInManager.PasswordSignInAsync(user: user, password: request.Password!, isPersistent: false, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(user: user, password: request.Password!, isPersistent: (bool)request.RememberMe!, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     var jwt = await GenerateJwt(user);
-                    var dto = _mapper.Map<IUserDTO>(user);
+                    var dto = _mapper.Map<UserDTO>(user);
 
                     _logger.LogInformation($"User with email {request.Email} logged in successfully.");
                     return new AuthResult(succeeded: true, message: "User logged in successfully.", statusCode: StatusCodes.Status200OK, token: jwt, user: dto);
@@ -98,7 +98,7 @@ namespace MyLibrary.Server.Handlers
                     _logger.LogWarning($"User with email {email} not found.");
                     return new UserTaskResult(succeeded: false, message: "Couldn't find user with the given email.", statusCode: StatusCodes.Status404NotFound);
                 }
-                var dto = _mapper.Map<IUserDTO>(user);
+                var dto = _mapper.Map<UserDTO>(user);
                 return new AuthResult(succeeded: true, message: "User found.", statusCode: StatusCodes.Status200OK, user: dto);
             }
             catch (Exception err)

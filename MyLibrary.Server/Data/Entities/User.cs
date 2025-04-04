@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyLibrary.Server.Data.Entities
 {
     public class User : IdentityUser, IUser<string>
     {
+        [Key]
         public override string Id { get; set; } = Guid.NewGuid().ToString();
 
         public override string? UserName { get; set; }

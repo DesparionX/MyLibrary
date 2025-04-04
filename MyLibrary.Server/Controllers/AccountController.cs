@@ -63,7 +63,7 @@ namespace MyLibrary.Server.Controllers
             {
                 return BadRequest(new UserTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "RegisterDTO cannot be null."));
             }
-            var response = await _userHandler.RegisterUserAsync((INewUser<User>)newUserDto);
+            var response = await _userHandler.RegisterUserAsync(newUserDto);
             return _resultHandler.ReadResult(response);
         }
 
