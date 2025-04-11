@@ -1,4 +1,4 @@
-﻿namespace MyLibrary.Server.Data.Entities
+﻿namespace MyLibrary.Server.Data.Entities.Interfaces
 {
     public interface IBorrowedBooks
     {

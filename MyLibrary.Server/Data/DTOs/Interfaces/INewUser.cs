@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using MyLibrary.Server.Data.Entities;
 
-namespace MyLibrary.Server.Data.DTOs
+namespace MyLibrary.Server.Data.DTOs.Interfaces
 {
     public interface INewUser<TUserDTO>
     {

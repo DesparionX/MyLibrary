@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Data.Entities;
 using Namotion.Reflection;
+using Newtonsoft.Json;
 
 namespace MyLibrary.Server.Data
 {
@@ -40,6 +42,8 @@ namespace MyLibrary.Server.Data
                 b.Property(b => b.Id)
                 .ValueGeneratedOnAdd()
                 .HasDefaultValueSql("NEWID()");
+                b.Property(b => b.IsAvailable)
+                .HasDefaultValue(true);
             });
 
             builder.Entity<BorrowedBooks>(b =>
@@ -65,6 +69,12 @@ namespace MyLibrary.Server.Data
                 o.Property(o => o.TotalPrice).HasColumnType("decimal(18,2)");
                 o.Property(o => o.Id)
                 .ValueGeneratedOnAdd();
+                o.Property(o => o.OrderListInternal)
+                .HasColumnName("OrderList")
+                .HasConversion(
+                        v => JsonConvert.SerializeObject(v, Formatting.None),
+                        v => JsonConvert.DeserializeObject<List<Order>>(v)
+                    );
             });
 
             // Renaming Identity tables

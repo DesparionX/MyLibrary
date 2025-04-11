@@ -1,4 +1,4 @@
-﻿using MyLibrary.Server.Data.DTOs;
+﻿using MyLibrary.Server.Data.DTOs.Interfaces;
 
 namespace MyLibrary.Server.Http.Responses
 {

@@ -1,4 +1,7 @@
-﻿using MyLibrary.Server.Data.Entities;
+﻿using MyLibrary.Server.Data.DTOs.Interfaces;
+using MyLibrary.Server.Data.Entities;
+using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyLibrary.Server.Data.DTOs
 {
@@ -8,24 +11,25 @@ namespace MyLibrary.Server.Data.DTOs
 
         public string? OperationName { get; set; }
 
-        public string? ArticleId { get; set; }
+        [NotMapped, JsonIgnore]
+        public ICollection<IOrder>? OrderList
+        {
+            get => OrderListInternal?.Cast<IOrder>().ToList();
+            set => OrderListInternal = value?.Cast<Order>().ToList();
+        }
 
-        public string? ArticleISBN { get; set; }
+        [JsonProperty("orderList")]
+        public List<Order>? OrderListInternal { get; set; }
 
-        public string? ArticleName { get; set; }
+        public string? UserId { get; set; }
 
-        public string? StaffId { get; set; }
+        public string? UserName { get; set; }
 
-        public string? StaffName { get; set; }
-
-        public string? ClientId { get; set; }
-
-        public string? ClientName { get; set; }
-
-        public int? Quantity { get; set; }
+        public string? UserRole { get; set; }
 
         public decimal? TotalPrice { get; set; }
 
         public DateTime? OperationDate { get; set; }
+        
     }
 }

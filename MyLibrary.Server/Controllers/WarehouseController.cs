@@ -82,6 +82,22 @@ namespace MyLibrary.Server.Controllers
             return _resultHandler.ReadResult(result);
         }
 
+        [HttpPut("updateStock")]
+        [ProducesResponseType<ITaskResult>(StatusCodes.Status200OK)]
+        [ProducesResponseType<ITaskResult>(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType<ITaskResult>(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType<ITaskResult>(StatusCodes.Status404NotFound)]
+        [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateStock([FromBody] WarehouseDTO warehouseDto)
+        {
+            if (warehouseDto == null)
+            {
+                return BadRequest(new WarehouseTaskResult(succeeded: false, message: "Warehouse cannot be null.", statusCode: StatusCodes.Status400BadRequest));
+            }
+            var result = await _warehouseHandler.UpdateStockAsync(warehouseDto);
+            return _resultHandler.ReadResult(result);
+        }
+
         [HttpDelete("deleteStock")]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status200OK)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status400BadRequest)]

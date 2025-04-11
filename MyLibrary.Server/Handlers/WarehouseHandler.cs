@@ -4,9 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using MyLibrary.Server.Data;
 using MyLibrary.Server.Data.DTOs;
+using MyLibrary.Server.Data.DTOs.Interfaces;
 using MyLibrary.Server.Data.Entities;
 using MyLibrary.Server.Events;
 using MyLibrary.Server.Http.Responses;
+using System.Linq.Expressions;
 
 namespace MyLibrary.Server.Handlers
 {
@@ -50,7 +52,7 @@ namespace MyLibrary.Server.Handlers
             try
             {
                 var stocks = await _context.Warehouse.ToListAsync();
-                if(stocks.Count == 0)
+                if (stocks.Count == 0)
                 {
                     _logger.LogInformation($"[INFO] No items found.");
                     return new WarehouseTaskResult(succeeded: false, message: "No items found.", statusCode: StatusCodes.Status404NotFound);
@@ -71,7 +73,7 @@ namespace MyLibrary.Server.Handlers
         {
             try
             {
-                if(await _context.Warehouse.AnyAsync(w => w.ISBN.Equals(warehouseDTO.ISBN)))
+                if (await _context.Warehouse.AnyAsync(w => w.ISBN.Equals(warehouseDTO.ISBN)))
                 {
                     return new WarehouseTaskResult(succeeded: false, message: "Item already exists.", statusCode: StatusCodes.Status409Conflict);
                 }
@@ -88,7 +90,7 @@ namespace MyLibrary.Server.Handlers
 
                 return new WarehouseTaskResult(succeeded: false, message: "Item was not added.", statusCode: StatusCodes.Status400BadRequest);
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 _logger.LogError(err, $"[ERROR]\n{err.Message}");
                 return new WarehouseTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
@@ -149,16 +151,62 @@ namespace MyLibrary.Server.Handlers
 
                 var itemToUpdate = await _context.Warehouse
                     .Where(w => w.ISBN.Equals(warehouseDTO.ISBN))
-                    .ExecuteUpdateAsync(w => w.SetProperty(w => w.Quantity, + warehouseDTO.Quantity));
+                    .ExecuteUpdateAsync(w => w.SetProperty(w => w.Quantity, w => w.Quantity + warehouseDTO.Quantity));
                 if (itemToUpdate > 0)
                 {
                     _logger.LogInformation($"[INFO] {warehouseDTO.Quantity} items were added to the stock.");
                     return new WarehouseTaskResult(succeeded: true, message: $"{warehouseDTO.Quantity} items were added.", statusCode: StatusCodes.Status200OK);
-                    
+
                 }
                 return new WarehouseTaskResult(succeeded: false, message: "0 items were added.", statusCode: StatusCodes.Status304NotModified);
             }
-            catch(Exception err)
+            catch (Exception err)
+            {
+                _logger.LogError(err, $"[ERROR]\n{err.Message}");
+                return new WarehouseTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
+            }
+        }
+        public async Task<ITaskResult> AddStocksAsync(ICollection<IWarehouseDTO> warehouseDTOs)
+        {
+            try
+            {
+                var addedItems = 0;
+                foreach (var dto in warehouseDTOs)
+                {
+                    var result = await AddStockAsync(dto);
+                    addedItems = result.Succeeded ? addedItems++ : addedItems;
+                }
+
+                if (addedItems == warehouseDTOs.Count)
+                {
+                    _logger.LogInformation($"[INFO] {addedItems} items were added to the stock.");
+                    return new WarehouseTaskResult(succeeded: true, message: $"{addedItems} items were added.", statusCode: StatusCodes.Status200OK);
+                }
+
+                return new WarehouseTaskResult(succeeded: false, message: "0 items were added.", statusCode: StatusCodes.Status304NotModified);
+            }
+            catch (Exception err)
+            {
+                _logger.LogError(err, $"[ERROR]\n{err.Message}");
+                return new WarehouseTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
+            }
+        }
+        public async Task<ITaskResult> UpdateStockAsync(IWarehouseDTO warehouseDTO)
+        {
+            try
+            {
+                var itemToUpdate = warehouseDTO.Quantity > 0 ?
+                    await UpdateWholeStockAsync(warehouseDTO)
+                    : await UpdateNameOnlyAsync(warehouseDTO);
+
+                if (itemToUpdate > 0)
+                {
+                    _logger.LogInformation($"[INFO] Item with ISBN: {warehouseDTO.ISBN} was updated.");
+                    return new WarehouseTaskResult(succeeded: true, message: "Item was updated.", statusCode: StatusCodes.Status200OK);
+                }
+                return new WarehouseTaskResult(succeeded: false, message: "Item was not found.", statusCode: StatusCodes.Status404NotFound);
+            }
+            catch (Exception err)
             {
                 _logger.LogError(err, $"[ERROR]\n{err.Message}");
                 return new WarehouseTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
@@ -172,14 +220,14 @@ namespace MyLibrary.Server.Handlers
                 var itemInDb = await _context.Warehouse.Where(w => w.ISBN.Equals(warehouseDTO.ISBN))
                     .FirstOrDefaultAsync();
 
-                if(itemInDb!.Quantity < warehouseDTO.Quantity)
+                if (itemInDb!.Quantity < warehouseDTO.Quantity)
                 {
                     return new WarehouseTaskResult(succeeded: false, message: "Not enough items in stock.", statusCode: StatusCodes.Status400BadRequest);
                 }
 
                 var itemToUpdate = await _context.Warehouse
                     .Where(w => w.ISBN.Equals(warehouseDTO.ISBN))
-                    .ExecuteUpdateAsync(w => w.SetProperty(w => w.Quantity, - warehouseDTO.Quantity));
+                    .ExecuteUpdateAsync(w => w.SetProperty(w => w.Quantity, w => w.Quantity - warehouseDTO.Quantity));
                 if (itemToUpdate > 0)
                 {
                     _logger.LogInformation($"[INFO] {warehouseDTO.Quantity} items were removed from the stock.");
@@ -193,6 +241,61 @@ namespace MyLibrary.Server.Handlers
                 return new WarehouseTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
+        public async Task<ITaskResult> RemoveStocksAsync(ICollection<IWarehouseDTO> warehouseDTOs)
+        {
+            try
+            {
+                var removedItems = 0;
+                foreach (var dto in warehouseDTOs)
+                {
+                    var result = await RemoveStockAsync(dto);
+                    removedItems = result.Succeeded ? removedItems + 1 : removedItems;
+                }
 
+                if(removedItems == warehouseDTOs.Count)
+                {
+                    _logger.LogInformation($"[INFO] {removedItems} items were removed from the stock.");
+                    return new WarehouseTaskResult(succeeded: true, message: $"{removedItems} items were removed.", statusCode: StatusCodes.Status200OK);
+                }
+                
+                return new WarehouseTaskResult(succeeded: false, message: "0 items were removed.", statusCode: StatusCodes.Status304NotModified);
+            }
+            catch (Exception err)
+            {
+                _logger.LogError(err, $"[ERROR]\n{err.Message}");
+                return new WarehouseTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
+            }
+
+        }
+        private async Task<int> UpdateNameOnlyAsync(IWarehouseDTO warehouseDTO)
+        {
+            try
+            {
+                return await _context.Warehouse
+                    .Where(w => w.ISBN.Equals(warehouseDTO.ISBN))
+                    .ExecuteUpdateAsync(w => w.SetProperty(w => w.Name, warehouseDTO.Name));
+            }
+            catch (Exception err)
+            {
+                _logger.LogError(err, $"[ERROR]\n{err.Message}");
+                return 0;
+            }
+        }
+        private async Task<int> UpdateWholeStockAsync(IWarehouseDTO warehouseDTO)
+        {
+            try
+            {
+                return await _context.Warehouse
+                    .Where(w => w.ISBN.Equals(warehouseDTO.ISBN))
+                    .ExecuteUpdateAsync(w => w
+                    .SetProperty(w => w.Name, warehouseDTO.Name)
+                    .SetProperty(w => w.Quantity, warehouseDTO.Quantity));
+            }
+            catch (Exception err)
+            {
+                _logger.LogError(err, $"[ERROR]\n{err.Message}");
+                return 0;
+            }
+        }
     }
 }

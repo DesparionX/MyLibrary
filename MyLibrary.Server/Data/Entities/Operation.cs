@@ -1,28 +1,34 @@
 ﻿
+using MyLibrary.Server.Data.DTOs;
+using MyLibrary.Server.Data.DTOs.Interfaces;
+using MyLibrary.Server.Data.Entities.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace MyLibrary.Server.Data.Entities
 {
     public class Operation : IOperation<int>
     {
-        public int Id { get; }
-        public string? OperationName { get; }
-        public string? ArticleId { get; }
+        public int Id { get; set; }
 
-        public string? ArticleISBN { get; }
+        public string? OperationName { get; set; }
 
-        public string? ArticleName { get; }
+        [NotMapped]
+        public ICollection<IOrder>? OrderList
+        {
+            get => OrderListInternal?.Cast<IOrder>().ToList();
+            set => OrderListInternal = value?.Cast<Order>().ToList();
+        }
+        public List<Order>? OrderListInternal { get; set; }
 
-        public string? StaffId { get; }
+        public string? UserId { get; set; }
 
-        public string? StaffName { get; }
+        public string? UserName { get; set; }
 
-        public string? ClientId { get; }
+        public string? UserRole { get; set; }
 
-        public string? ClientName { get; }
+        public decimal? TotalPrice { get; set; }
 
-        public int? Quantity { get; }
-
-        public decimal? TotalPrice { get; }
-
-        public DateTime? OperationDate { get; }
+        public DateTime? OperationDate { get; set; }
+        
     }
 }

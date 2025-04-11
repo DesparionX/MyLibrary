@@ -1,4 +1,4 @@
-﻿using MyLibrary.Server.Data.DTOs;
+﻿using MyLibrary.Server.Data.DTOs.Interfaces;
 using MyLibrary.Server.Http.Responses;
 
 namespace MyLibrary.Server.Handlers

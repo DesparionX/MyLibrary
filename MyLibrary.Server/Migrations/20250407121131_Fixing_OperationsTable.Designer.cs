@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyLibrary.Server.Data;
 
@@ -11,9 +12,11 @@ using MyLibrary.Server.Data;
 namespace MyLibrary.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250407121131_Fixing_OperationsTable")]
+    partial class Fixing_OperationsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,11 +187,6 @@ namespace MyLibrary.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsAvailable")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
-
                     b.Property<int>("Pages")
                         .HasColumnType("int");
 
@@ -237,27 +235,38 @@ namespace MyLibrary.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ArticleISBN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ArticleId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ArticleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClientId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClientName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("OperationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OperationName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OrderListInternal")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("OrderList");
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StaffId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StaffName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal?>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserRole")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

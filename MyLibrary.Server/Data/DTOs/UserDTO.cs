@@ -1,4 +1,5 @@
-﻿using MyLibrary.Server.Data.Entities;
+﻿using MyLibrary.Server.Data.DTOs.Interfaces;
+using MyLibrary.Server.Data.Entities;
 
 namespace MyLibrary.Server.Data.DTOs
 {

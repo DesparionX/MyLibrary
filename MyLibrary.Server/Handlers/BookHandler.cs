@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using MyLibrary.Server.Data;
 using MyLibrary.Server.Data.DTOs;
+using MyLibrary.Server.Data.DTOs.Interfaces;
 using MyLibrary.Server.Data.Entities;
 using MyLibrary.Server.Events;
 using MyLibrary.Server.Handlers.EventHandlers;
@@ -101,6 +102,7 @@ namespace MyLibrary.Server.Handlers
                     return new BookTaskResult(succeeded: false, message: "Added books differs from requested quantity.", statusCode: StatusCodes.Status400BadRequest);
                 }
 
+                await _context.SaveChangesAsync();
                 _logger.LogInformation($"{addedBooks} books added to the database.");
                 _eventBus.Publish(new ItemAddedEvent(newBookDto.Book.ISBN, newBookDto.Book.Title, newBookDto.Quantity));
                 return new BookTaskResult(succeeded: true, message: $"{addedBooks} books added successfully.", statusCode: StatusCodes.Status201Created);
@@ -154,19 +156,59 @@ namespace MyLibrary.Server.Handlers
                 {
                     // Converting BookDTO to Book just in case there are different property names or special mapping.
                     var convertedBook = _mapper.Map<Book>(bookDto);
+
+                    // Preventing overriding the ID of the book.
+                    convertedBook.Id = book.Id;
+
                     _context.Entry(book).CurrentValues.SetValues(convertedBook);
 
-                    // Preventing Id from being updated.
-                    _context.Entry(book).Property(b => b.Id).IsModified = false;
+
                 }
                 var result = await _context.SaveChangesAsync();
                 if (result == 0)
                 {
                     return new BookTaskResult(succeeded: false, message: "No books updated.", statusCode: StatusCodes.Status400BadRequest);
                 }
+
+                _logger.LogInformation($"{result} books updated in the database.");
+                _eventBus.Publish(new ItemUpdatedEvent(bookDto.ISBN, bookDto.Title));
+
                 return new BookTaskResult(succeeded: true, message: $"{result} books updated successfully.", statusCode: StatusCodes.Status200OK);
             }
             catch(Exception err)
+            {
+                _logger.LogError($"[ERROR] {err.Message}\n{err.StackTrace}", err);
+                return new BookTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
+            }
+        }
+        public async Task<ITaskResult> UpdateBookAvailabilityAsync(ICollection<string> ids, bool isAvailable)
+        {
+            try
+            {
+                var updatedBooks = 0;
+                foreach (var id in ids)
+                {
+                    var book = await _context.Books
+                        .Where(b => b.Id.Equals(Guid.Parse(id)))
+                        .SingleOrDefaultAsync();
+
+                    if(book != null)
+                    {
+                        book.IsAvailable = isAvailable;
+                        _context.Books.Update(book);
+                        updatedBooks++;
+                    }
+                }
+                if (updatedBooks == ids.Count)
+                {
+                    await _context.SaveChangesAsync();
+                    _logger.LogInformation($"{updatedBooks} books availability updated in the database.");
+                    return new BookTaskResult(succeeded: true, message: $"{updatedBooks} books availability updated successfully.", statusCode: StatusCodes.Status200OK);
+                }
+
+                return new BookTaskResult(succeeded: false, message: "No books were updated.", statusCode: StatusCodes.Status400BadRequest);
+            }
+            catch (Exception err)
             {
                 _logger.LogError($"[ERROR] {err.Message}\n{err.StackTrace}", err);
                 return new BookTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
@@ -190,13 +232,16 @@ namespace MyLibrary.Server.Handlers
         {
             try
             {
+                var addedBooks = 0;
                 for (int i = 0; i < quantity; i++)
                 {
                     var book = _mapper.Map<Book>(existingBook);
                     await _context.Books.AddAsync(book);
+                    addedBooks++;
                     _logger.LogInformation($"Book {book.Title} added to the database.");
                 }
-                return await _context.SaveChangesAsync();
+                return addedBooks;
+                //return await _context.SaveChangesAsync();
             }
             catch (Exception err)
             {

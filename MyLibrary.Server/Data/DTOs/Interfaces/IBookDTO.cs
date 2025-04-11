@@ -1,6 +1,6 @@
-﻿using MyLibrary.Server.Data.Entities;
+﻿using MyLibrary.Server.Data.Entities.Interfaces;
 
-namespace MyLibrary.Server.Data.DTOs
+namespace MyLibrary.Server.Data.DTOs.Interfaces
 {
     // Full generic interface definition for IBookDTO
     public interface IBookDTO<TEntity,TId> : IDTO<TEntity, TId>, IBook<TId>

@@ -1,6 +1,6 @@
-﻿using MyLibrary.Server.Data.Entities;
+﻿using MyLibrary.Server.Data.Entities.Interfaces;
 
-namespace MyLibrary.Server.Data.DTOs
+namespace MyLibrary.Server.Data.DTOs.Interfaces
 {
     public interface IWarehouseDTO<TEntity,TId> : IDTO<IWarehouse<TId>,TId>, IWarehouse<TId>
         where TEntity : class, IEntity<TId>

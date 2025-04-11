@@ -41,7 +41,7 @@ namespace MyLibrary.Server.Controllers
         [ProducesResponseType<ITaskResult>(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status404NotFound)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> PerformOperation(OperationDTO operation)
+        public async Task<IActionResult> PerformOperation([FromBody] OperationDTO operation)
         {
             if(operation == null)
             {

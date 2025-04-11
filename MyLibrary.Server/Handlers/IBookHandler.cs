@@ -1,4 +1,5 @@
 ﻿using MyLibrary.Server.Data.DTOs;
+using MyLibrary.Server.Data.DTOs.Interfaces;
 using MyLibrary.Server.Http.Responses;
 
 namespace MyLibrary.Server.Handlers
@@ -10,6 +11,7 @@ namespace MyLibrary.Server.Handlers
         public Task<ITaskResult> FindBookById<TId>(TId id);
         public Task<ITaskResult> AddBookAsync(INewBook<BookDTO> newBookDto);
         public Task<ITaskResult> UpdateBookAsync(IBookDTO bookDto);
+        public Task<ITaskResult> UpdateBookAvailabilityAsync(ICollection<string> ids, bool isAvailable);
         public Task<ITaskResult> DeleteBookAsync(Guid id);
     }
 }

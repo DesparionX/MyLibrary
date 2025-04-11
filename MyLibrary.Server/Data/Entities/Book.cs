@@ -1,4 +1,6 @@
-﻿namespace MyLibrary.Server.Data.Entities
+﻿using MyLibrary.Server.Data.Entities.Interfaces;
+
+namespace MyLibrary.Server.Data.Entities
 {
     public class Book : IBook<Guid>
     {
@@ -12,5 +14,6 @@
         public decimal BasePrice { get; set; } = 0;
         public float Discount { get; set; } = 0;
         public int Pages { get; set; } = 0;
+        public bool IsAvailable { get; set; } = true;
     }
 }
