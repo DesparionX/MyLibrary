@@ -1,6 +1,7 @@
 ﻿using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Data.Entities;
 using MyLibrary.Server.Events;
+using MyLibrary.Server.Handlers.Interfaces;
 
 namespace MyLibrary.Server.Handlers.EventHandlers
 {

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyLibrary.Server.Data.DTOs;
-using MyLibrary.Server.Handlers;
+using MyLibrary.Server.Handlers.Interfaces;
 using MyLibrary.Server.Http.Responses;
 
 namespace MyLibrary.Server.Controllers

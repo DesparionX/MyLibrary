@@ -1,6 +1,6 @@
 ﻿namespace MyLibrary.Server.Data.Entities.Interfaces
 {
-    public interface ISubscription : IEntity<string>
+    public interface ISubscription<TId> : IEntity<TId> where TId : IEquatable<TId>
     {
         public int? SubscriptionId { get; set; }
         public string? SubscriptionTier { get; set; }

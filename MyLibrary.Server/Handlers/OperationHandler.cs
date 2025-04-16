@@ -7,6 +7,7 @@ using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Data.DTOs.Interfaces;
 using MyLibrary.Server.Data.Entities;
 using MyLibrary.Server.Events;
+using MyLibrary.Server.Handlers.Interfaces;
 using MyLibrary.Server.Helpers;
 using MyLibrary.Server.Http.Responses;
 using NJsonSchema.CodeGeneration.Models;

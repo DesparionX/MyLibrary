@@ -27,8 +27,13 @@ namespace MyLibrary.Server.Data.DTOs
 
         public string? Address { get; set; }
 
-        public int BookLimit { get; set; } = 5;
+        public int BorrowLimit { get; set; }
+
+        public bool CanBorrow { get; set; }
+
+        public float Discount { get; set; }
 
         public int Rating { get; set; } = 0;
+        
     }
 }

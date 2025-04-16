@@ -1,7 +1,7 @@
 ﻿using MyLibrary.Server.Data.DTOs.Interfaces;
 using MyLibrary.Server.Http.Responses;
 
-namespace MyLibrary.Server.Handlers
+namespace MyLibrary.Server.Handlers.Interfaces
 {
     public interface IOperationHandler
     {

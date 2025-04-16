@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyLibrary.Server.Data;
 
@@ -11,9 +12,11 @@ using MyLibrary.Server.Data;
 namespace MyLibrary.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250415144646_Subscriptions")]
+    partial class Subscriptions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -299,17 +302,8 @@ namespace MyLibrary.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BorrowLimit")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("CanBorrow")
-                        .HasColumnType("bit");
-
                     b.Property<decimal?>("Cost")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<float?>("Discount")
-                        .HasColumnType("real");
 
                     b.Property<int?>("Months")
                         .HasColumnType("int");

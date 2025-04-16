@@ -3,7 +3,7 @@ using MyLibrary.Server.Http.Responses;
 using System.Security.Claims;
 using System.Security.Principal;
 
-namespace MyLibrary.Server.Handlers
+namespace MyLibrary.Server.Handlers.Interfaces
 {
     public interface IAuthHandler
     {

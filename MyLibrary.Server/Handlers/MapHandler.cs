@@ -14,6 +14,8 @@ namespace MyLibrary.Server.Handlers
             CreateMap<User, UserDTO>()
                 .ForMember(dest => dest.Avatar, opt => opt.Ignore())
                 .ReverseMap();
+            CreateMap<SubscriptionTier, SubscriptionTierDTO>().ReverseMap();
+            CreateMap<Subscription, SubscriptionDTO>().ReverseMap();
         }
     }
 }

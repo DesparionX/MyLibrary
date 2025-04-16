@@ -1,8 +1,8 @@
-﻿using MyLibrary.Server.Data.Entities.Interfaces;
+﻿using MyLibrary.Server.Data.DTOs.Interfaces;
 
-namespace MyLibrary.Server.Data.Entities
+namespace MyLibrary.Server.Data.DTOs
 {
-    public class SubscriptionTier : ISubscriptionTier<int>
+    public class SubscriptionTierDTO : ISubscriptionTierDTO
     {
         public int Id { get; set; }
         public string? Tier { get; set; }

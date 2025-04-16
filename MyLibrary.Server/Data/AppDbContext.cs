@@ -15,6 +15,8 @@ namespace MyLibrary.Server.Data
         public DbSet<Warehouse> Warehouse { get; set; }
         public DbSet<Operation> Operations { get; set; }
         public DbSet<BorrowedBooks> BorrowedBooks { get; set; }
+        public DbSet<SubscriptionTier> SubscriptionTiers { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -75,6 +77,23 @@ namespace MyLibrary.Server.Data
                         v => JsonConvert.SerializeObject(v, Formatting.None),
                         v => JsonConvert.DeserializeObject<List<Order>>(v)
                     );
+            });
+
+            builder.Entity<SubscriptionTier>(s =>
+            {
+                s.ToTable("SubscriptionTiers");
+                s.HasKey(s => s.Id);
+                s.Property(s => s.Id).ValueGeneratedOnAdd();
+                s.Property(s => s.Cost).HasColumnType("decimal(18,2)");
+            });
+
+            builder.Entity<Subscription>(s =>
+            {
+                s.ToTable("Subscriptions");
+                s.HasKey(s => s.Id);
+                s.Property(s => s.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasDefaultValueSql("NEWID()");
             });
 
             // Renaming Identity tables

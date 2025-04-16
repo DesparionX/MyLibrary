@@ -12,6 +12,7 @@ using MyLibrary.Server.Data.Entities;
 using MyLibrary.Server.Events;
 using MyLibrary.Server.Handlers;
 using MyLibrary.Server.Handlers.EventHandlers;
+using MyLibrary.Server.Handlers.Interfaces;
 using MyLibrary.Server.Http.Responses;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -154,7 +155,9 @@ builder.Services.AddScoped<IWarehouseHandler<Warehouse>, WarehouseHandler>();
 builder.Services.AddScoped<IOperationHandler, OperationHandler>();
 builder.Services.AddScoped<IAuthHandler, AuthHandler>();
 builder.Services.AddScoped<IUserHandler, UserHandler>();
+builder.Services.AddScoped<ISubscriptionHandler<User>, SubscriptionHandler>();
 builder.Services.AddScoped<IResultHandler<ITaskResult>, ResultHandler>();
+
 
 builder.Host.UseSerilog();
 var app = builder.Build();

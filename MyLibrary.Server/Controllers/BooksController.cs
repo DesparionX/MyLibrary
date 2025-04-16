@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Data.Entities;
-using MyLibrary.Server.Handlers;
+using MyLibrary.Server.Handlers.Interfaces;
 using MyLibrary.Server.Http.Responses;
 
 namespace MyLibrary.Server.Controllers

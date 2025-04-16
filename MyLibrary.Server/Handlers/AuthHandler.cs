@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using MyLibrary.Server.Configs;
 using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Data.Entities;
+using MyLibrary.Server.Handlers.Interfaces;
 using MyLibrary.Server.Http.Requests;
 using MyLibrary.Server.Http.Responses;
 using System.IdentityModel.Tokens.Jwt;
