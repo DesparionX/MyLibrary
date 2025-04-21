@@ -210,8 +210,13 @@ namespace MyLibrary.Server.Handlers
 
                 // Safely apply subscription benefits and update DB.
                 var benefitsApplied = await ApplySubscriptionBenefits(request.UserId!, tier);
-                if (!benefitsApplied)
+                if (benefitsApplied)
                 {
+                    // ApplySubscriptionBenefits() is already calling the SaveChangesAsync() method from the UserManager.
+                    // But I'll keep this here if something changes.
+
+                    // await _context.SaveChangesAsync();
+
                     _logger.LogInformation("User subscribed successfully.");
                     return new SubscriptionTaskResult(succeeded: true, message: "User subscribed successfully.", statusCode: StatusCodes.Status201Created);
 
