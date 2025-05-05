@@ -1,5 +1,5 @@
 ﻿using MyLibrary.Server.Data.DTOs;
-using MyLibrary.Server.Data.DTOs.Interfaces;
+using MyLibrary.Shared.Interfaces.IDTOs;
 using MyLibrary.Server.Data.Entities;
 using MyLibrary.Server.Http.Responses;
 

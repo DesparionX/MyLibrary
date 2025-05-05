@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using MyLibrary.Server.Data;
 using MyLibrary.Server.Data.DTOs;
-using MyLibrary.Server.Data.DTOs.Interfaces;
 using MyLibrary.Server.Data.Entities;
 using MyLibrary.Server.Events;
 using MyLibrary.Server.Handlers.EventHandlers;
 using MyLibrary.Server.Handlers.Interfaces;
 using MyLibrary.Server.Http.Responses;
+using MyLibrary.Shared.Interfaces.IDTOs;
 
 namespace MyLibrary.Server.Handlers
 {

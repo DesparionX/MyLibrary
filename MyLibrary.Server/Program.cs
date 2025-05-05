@@ -1,5 +1,8 @@
 using DotNetEnv;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +21,7 @@ using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 
 Env.Load();
 var builder = WebApplication.CreateBuilder(args);
@@ -158,6 +162,18 @@ builder.Services.AddScoped<IUserHandler, UserHandler>();
 builder.Services.AddScoped<ISubscriptionHandler<User>, SubscriptionHandler>();
 builder.Services.AddScoped<IResultHandler<ITaskResult>, ResultHandler>();
 
+// Health checks
+builder.Services.AddHealthChecks()
+    .AddSqlServer(DbConfig.ConnectionString, name: "SQL Server", tags: new[] { "db" });
+
+builder.Services.AddHealthChecksUI(options =>
+{
+    options.SetEvaluationTimeInSeconds(15);
+    options.MaximumHistoryEntriesPerEndpoint(60);
+    options.AddHealthCheckEndpoint("Health Check", "/health");
+})
+    .AddSqlServerStorage(DbConfig.ConnectionString);
+
 
 builder.Host.UseSerilog();
 var app = builder.Build();
@@ -180,6 +196,16 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+app.MapHealthChecksUI(options =>
+{
+    options.UIPath = "/health-ui";
+    options.ApiPath = "/health-ui-api";
+    options.ResourcesPath = "/health-ui/resources";
+});
 
 app.UseAuthentication();
 app.UseAuthorization();
