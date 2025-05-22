@@ -4,28 +4,50 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:MyLibrary.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="SplashScreen"
-    Width="650"
+    Width="681.5"
     Height="400"
+    Margin="0"
+    Padding="0"
     AllowsTransparency="True"
+    Background="Transparent"
+    BorderThickness="0,0,0,0"
+    FontFamily="Jura Bold"
     Loaded="SplashScreen_Loaded"
+    Style="{DynamicResource MaterialDesignWindow}"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
-    <Window.Background>
-        <ImageBrush ImageSource="pack://application:,,,/Resources/Images/LoadingScreen.png" Stretch="Fill" />
-    </Window.Background>
-    <Border
-        Padding="20"
-        Background="Transparent"
-        CornerRadius="20">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+    <Border CornerRadius="20">
+        <Border.Background>
+            <ImageBrush ImageSource="pack://application:,,,/Resources/Images/LoadingScreen.png" Stretch="Fill" />
+        </Border.Background>
+
+        <Grid Height="auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="35" />
+                <RowDefinition Height="5" />
+            </Grid.RowDefinitions>
             <TextBlock
                 x:Name="StatusText"
+                Grid.Row="1"
                 Margin="0,10,0,0"
-                FontSize="22"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="15"
+                Foreground="White"
                 Text="{Binding StatusMessage}" />
-        </StackPanel>
+
+            <ProgressBar
+                Grid.Row="2"
+                Width="610"
+                VerticalContentAlignment="Bottom"
+                IsIndeterminate="True" />
+        </Grid>
     </Border>
 </Window>
+

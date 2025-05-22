@@ -22,7 +22,7 @@ namespace MyLibrary.Resources.Languages {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
+    public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace MyLibrary.Resources.Languages {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyLibrary.Resources.Languages.Strings", typeof(Strings).Assembly);
@@ -51,7 +51,7 @@ namespace MyLibrary.Resources.Languages {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
-        internal static string Error {
+        public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to An error occurred while sending the request: .
         /// </summary>
-        internal static string Errors_AuthHeader_FailedSendingRequest {
+        public static string Errors_AuthHeader_FailedSendingRequest {
             get {
                 return ResourceManager.GetString("Errors_AuthHeader_FailedSendingRequest", resourceCulture);
             }
@@ -81,16 +81,25 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Error clearing user identity..
         /// </summary>
-        internal static string Errors_AuthService_ClearingUserIdentity {
+        public static string Errors_AuthService_ClearingUserIdentity {
             get {
                 return ResourceManager.GetString("Errors_AuthService_ClearingUserIdentity", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error navigating to view:.
+        /// </summary>
+        public static string Errors_NavigatingToView {
+            get {
+                return ResourceManager.GetString("Errors_NavigatingToView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error navigating to window: .
         /// </summary>
-        internal static string Errors_NavigatingToWindow {
+        public static string Errors_NavigatingToWindow {
             get {
                 return ResourceManager.GetString("Errors_NavigatingToWindow", resourceCulture);
             }
@@ -99,7 +108,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Invalid response from server..
         /// </summary>
-        internal static string Errors_UserService_InvalidResponse {
+        public static string Errors_UserService_InvalidResponse {
             get {
                 return ResourceManager.GetString("Errors_UserService_InvalidResponse", resourceCulture);
             }
@@ -108,16 +117,43 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Login failed..
         /// </summary>
-        internal static string Errors_UserService_LoginFailed {
+        public static string Errors_UserService_LoginFailed {
             get {
                 return ResourceManager.GetString("Errors_UserService_LoginFailed", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string LogIn_Email {
+            get {
+                return ResourceManager.GetString("LogIn_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Log In.
+        /// </summary>
+        public static string LogIn_LogInButton {
+            get {
+                return ResourceManager.GetString("LogIn_LogInButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string LogIn_Password {
+            get {
+                return ResourceManager.GetString("LogIn_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Health check failed. Please check your API and Database connection..
         /// </summary>
-        internal static string Splash_APIChecksFailed {
+        public static string Splash_APIChecksFailed {
             get {
                 return ResourceManager.GetString("Splash_APIChecksFailed", resourceCulture);
             }
@@ -126,7 +162,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Checking API....
         /// </summary>
-        internal static string Splash_CheckingAPI {
+        public static string Splash_CheckingAPI {
             get {
                 return ResourceManager.GetString("Splash_CheckingAPI", resourceCulture);
             }
@@ -135,7 +171,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Checking DB....
         /// </summary>
-        internal static string Splash_CheckingDB {
+        public static string Splash_CheckingDB {
             get {
                 return ResourceManager.GetString("Splash_CheckingDB", resourceCulture);
             }
@@ -144,7 +180,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
-        internal static string Splash_Loading {
+        public static string Splash_Loading {
             get {
                 return ResourceManager.GetString("Splash_Loading", resourceCulture);
             }
@@ -153,7 +189,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Starting....
         /// </summary>
-        internal static string Splash_LoadingComplete {
+        public static string Splash_LoadingComplete {
             get {
                 return ResourceManager.GetString("Splash_LoadingComplete", resourceCulture);
             }
@@ -162,7 +198,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Email is not valid..
         /// </summary>
-        internal static string Validators_Email_Invalid {
+        public static string Validators_Email_Invalid {
             get {
                 return ResourceManager.GetString("Validators_Email_Invalid", resourceCulture);
             }
@@ -171,7 +207,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Password must be at most 20 characters long..
         /// </summary>
-        internal static string Validators_Password_MaxChars {
+        public static string Validators_Password_MaxChars {
             get {
                 return ResourceManager.GetString("Validators_Password_MaxChars", resourceCulture);
             }
@@ -180,7 +216,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Password must be at least 8 characters long..
         /// </summary>
-        internal static string Validators_Password_MinChars {
+        public static string Validators_Password_MinChars {
             get {
                 return ResourceManager.GetString("Validators_Password_MinChars", resourceCulture);
             }
@@ -189,7 +225,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Password cannot be null or empty..
         /// </summary>
-        internal static string Validators_Password_NullOrEmpty {
+        public static string Validators_Password_NullOrEmpty {
             get {
                 return ResourceManager.GetString("Validators_Password_NullOrEmpty", resourceCulture);
             }
@@ -198,7 +234,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Password must contain at least one lowercase letter..
         /// </summary>
-        internal static string Validators_Password_OneLowercase {
+        public static string Validators_Password_OneLowercase {
             get {
                 return ResourceManager.GetString("Validators_Password_OneLowercase", resourceCulture);
             }
@@ -207,7 +243,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Password must contain at least one uppercase letter..
         /// </summary>
-        internal static string Validators_Password_OneUppercase {
+        public static string Validators_Password_OneUppercase {
             get {
                 return ResourceManager.GetString("Validators_Password_OneUppercase", resourceCulture);
             }
@@ -216,7 +252,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Username can only contain letters and digits..
         /// </summary>
-        internal static string Validators_Username_LettersAndDigits {
+        public static string Validators_Username_LettersAndDigits {
             get {
                 return ResourceManager.GetString("Validators_Username_LettersAndDigits", resourceCulture);
             }
@@ -225,7 +261,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Username must be at most 30 characters long..
         /// </summary>
-        internal static string Validators_Username_MaxChars {
+        public static string Validators_Username_MaxChars {
             get {
                 return ResourceManager.GetString("Validators_Username_MaxChars", resourceCulture);
             }
@@ -234,7 +270,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Username must be at least 3 characters long..
         /// </summary>
-        internal static string Validators_Username_MinChars {
+        public static string Validators_Username_MinChars {
             get {
                 return ResourceManager.GetString("Validators_Username_MinChars", resourceCulture);
             }
@@ -243,7 +279,7 @@ namespace MyLibrary.Resources.Languages {
         /// <summary>
         ///   Looks up a localized string similar to Username cannot be null or empty..
         /// </summary>
-        internal static string Validators_Username_NullOrEmpty {
+        public static string Validators_Username_NullOrEmpty {
             get {
                 return ResourceManager.GetString("Validators_Username_NullOrEmpty", resourceCulture);
             }

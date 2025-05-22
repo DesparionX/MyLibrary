@@ -10,18 +10,12 @@ namespace MyLibrary
     /// </summary>
     public partial class App : Application
     {
-        //private readonly LoadingScreen _loadingScreen;
 
-        //public App(LoadingScreen loadingScreen)
-        //{
-        //    _loadingScreen = loadingScreen;
-        //}
+        public App()
+        {
+            InitializeComponent();
+        }
 
-        //protected override void OnStartup(StartupEventArgs e)
-        //{
-        //    base.OnStartup(e);
-        //    _loadingScreen.Show();
-        //}
     }
 
 }

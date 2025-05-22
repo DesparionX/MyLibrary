@@ -28,21 +28,37 @@ namespace MyLibrary.Views
             InitializeComponent();
         }
 
+        private void Email_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            _viewModel.Email = ((TextBox)sender).Text;
+            _viewModel.CheckEmail(_viewModel.Email);
+        }
+        private void Email_LostFocus(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Email = ((TextBox)sender).Text;
+            _viewModel.CheckEmail(_viewModel.Email);
+        }
         private void Password_PasswordChanged(object sender, RoutedEventArgs e)
         {
             _viewModel.Password = ((PasswordBox)sender).Password;
             _viewModel.CheckPassword(_viewModel.Password);
         }
-
-        private void Email_TextChanged(object sender, TextChangedEventArgs e)
+        private void Password_LostFocus(object sender, RoutedEventArgs e)
         {
-            _viewModel.Email = ((TextBox)sender).Text;
-            _viewModel.CheckEmail(_viewModel.Email);
+            _viewModel.Password = ((PasswordBox)sender).Password;
+            _viewModel.CheckPassword(_viewModel.Password);
         }
 
         private async void LogInButton_Click(object sender, RoutedEventArgs e)
         {
             await _viewModel.LogInAsync();
         }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            App.Current.Shutdown();
+        }
+
+        
     }
 }

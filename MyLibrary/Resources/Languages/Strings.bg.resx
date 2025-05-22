@@ -160,4 +160,16 @@
   <data name="Errors_UserService_InvalidResponse" xml:space="preserve">
     <value>Невалиден отговор от сървъра.</value>
   </data>
+  <data name="LogIn_Email" xml:space="preserve">
+    <value>Имейл</value>
+  </data>
+  <data name="LogIn_Password" xml:space="preserve">
+    <value>Парола</value>
+  </data>
+  <data name="LogIn_LogInButton" xml:space="preserve">
+    <value>Вход</value>
+  </data>
+  <data name="Errors_NavigatingToView" xml:space="preserve">
+    <value>Грешка при смяна на страницата:</value>
+  </data>
 </root>

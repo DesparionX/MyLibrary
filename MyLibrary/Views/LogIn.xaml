@@ -4,60 +4,120 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:MyLibrary.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resx="clr-namespace:MyLibrary.Resources.Languages"
     xmlns:viewmodels="clr-namespace:MyLibrary.ViewModels"
     Title="LogInView"
     Width="400"
     Height="600"
     d:DataContext="{d:DesignInstance Type=viewmodels:LogInViewModel}"
+    AllowsTransparency="True"
+    Background="Transparent"
+    FontFamily="Jura Bold"
+    ResizeMode="NoResize"
+    Style="{DynamicResource MaterialDesignWindow}"
     WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
     mc:Ignorable="d">
-    <StackPanel Margin="0,10,0,0">
-        <TextBox
-            x:Name="Email"
-            Width="200"
-            Height="40"
-            HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center"
-            FontSize="16"
-            TextAlignment="Center"
-            TextChanged="Email_TextChanged"
-            TextWrapping="Wrap" />
-        <Label
-            x:Name="EmailValidator"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Background="White"
-            Content="{Binding EmailErrors}"
-            Foreground="Red"
-            Visibility="{Binding EmailErrorVisibility}" />
-        <PasswordBox
-            x:Name="Password"
-            Width="200"
-            Height="40"
-            Margin="0,10,0,0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center"
-            PasswordChanged="Password_PasswordChanged" />
-        <Label
-            x:Name="PasswordValidator"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Background="White"
-            Content="{Binding PasswordErrors}"
-            Foreground="Red"
-            Visibility="{Binding PasswordErrorVisibility}" />
-        <Button
-            x:Name="LogInButton"
-            Width="150"
-            Height="40"
-            Margin="0,50,0,0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Click="LogInButton_Click"
-            Content="Button" />
+    <Border Background="{DynamicResource MaterialDesignPaper}" CornerRadius="20">
 
-    </StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="TopBar" Height="40" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <Button
+                x:Name="Close"
+                Grid.Row="0"
+                Width="40"
+                Height="40"
+                Margin="0,0,10,0"
+                Padding="0"
+                HorizontalAlignment="Right"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                Background="Transparent"
+                BorderThickness="0"
+                Click="Close_Click"
+                RenderTransformOrigin="0.5,0.5"
+                Style="{StaticResource CloseButton}">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
+            <TextBlock
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="50"
+                Foreground="{DynamicResource MaterialDesign.Brush.Primary}"
+                Text="LibStore" />
+            <StackPanel Grid.Row="2" Margin="0,10,0,0">
+                <TextBox
+                    x:Name="Email"
+                    Width="200"
+                    VerticalAlignment="Top"
+                    materialDesign:HintAssist.Hint="{x:Static resx:Strings.LogIn_Email}"
+                    Style="{DynamicResource MaterialDesignOutlinedTextBox}"
+                    TextAlignment="Center"
+                    TextChanged="Email_TextChanged"
+                    TextWrapping="Wrap" LostFocus="Email_LostFocus" />
+                <TextBlock
+                    x:Name="EmailValidator"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    Foreground="Red"
+                    Text="{Binding EmailErrors}"
+                    TextAlignment="Center"
+                    Visibility="{Binding EmailErrorVisibility}" />
+                <PasswordBox
+                    x:Name="Password"
+                    Width="200"
+                    Margin="0,20,0,0"
+                    VerticalAlignment="Top"
+                    materialDesign:HintAssist.Hint="{x:Static resx:Strings.LogIn_Password}"
+                    PasswordChanged="Password_PasswordChanged"
+                    Style="{DynamicResource MaterialDesignOutlinedRevealPasswordBox}" LostFocus="Password_LostFocus" />
+                <TextBlock
+                    x:Name="PasswordValidator"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    Foreground="Red"
+                    Text="{Binding PasswordErrors}"
+                    TextAlignment="Center"
+                    Visibility="{Binding PasswordErrorVisibility}" />
+            </StackPanel>
+            <Button
+                x:Name="LogInButton"
+                Grid.Row="3"
+                Width="150"
+                Height="50"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                materialDesign:ButtonAssist.CornerRadius="10"
+                Click="LogInButton_Click"
+                Content="{x:Static resx:Strings.LogIn_LogInButton}"
+                Style="{StaticResource LogInButton}" />
+            <TextBlock
+                Grid.Row="4"
+                Margin="10"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Text="by Manolov" />
+        </Grid>
+    </Border>
+
 </Window>

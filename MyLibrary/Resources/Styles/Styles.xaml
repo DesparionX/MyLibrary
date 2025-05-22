@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style TargetType="TextBlock">
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect
+                    BlurRadius="2"
+                    Opacity="1"
+                    ShadowDepth="2"
+                    Color="#FF000000" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

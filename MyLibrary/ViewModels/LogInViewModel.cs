@@ -24,7 +24,7 @@ namespace MyLibrary.ViewModels
 
         // Email field.
         [ObservableProperty]
-        private string _email = "Email";
+        private string _email = string.Empty;
         [ObservableProperty]
         private string _emailErrors = string.Empty;
         [ObservableProperty]

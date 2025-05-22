@@ -1,0 +1,63 @@
+﻿<UserControl
+    x:Class="MyLibrary.Views.Controls.NavItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MyLibrary.Views.Controls"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Views/Controls/NavItem.Style.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Button
+        Height="auto"
+        Margin="10"
+        HorizontalContentAlignment="Left"
+        materialDesign:ElevationAssist.Elevation="Dp0"
+        BorderThickness="0"
+        Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Command}"
+        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=CommandParameter}"
+        Style="{StaticResource MainNavItem}">
+        <Button.Content>
+            <StackPanel
+                Margin="10"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <materialDesign:PackIcon
+                    Width="30"
+                    Height="30"
+                    Margin="0,0,10,0"
+                    VerticalAlignment="Center"
+                    Kind="{Binding Icon, RelativeSource={RelativeSource AncestorType=UserControl}}">
+                    <materialDesign:PackIcon.Style>
+                        <Style TargetType="materialDesign:PackIcon">
+                            <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Primary}" />
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect
+                                        BlurRadius="2"
+                                        Opacity="1"
+                                        ShadowDepth="2"
+                                        Color="Black" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </materialDesign:PackIcon.Style>
+                </materialDesign:PackIcon>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="24"
+                    Foreground="White"
+                    Text="{Binding Text, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            </StackPanel>
+        </Button.Content>
+    </Button>
+
+
+</UserControl>

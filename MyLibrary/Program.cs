@@ -6,8 +6,10 @@ using MyLibrary.Services;
 using MyLibrary.Services.Api;
 using MyLibrary.ViewModels;
 using MyLibrary.Views;
+using MyLibrary.Views.Pages;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,10 +22,11 @@ namespace MyLibrary
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-
             var app = new App();
+
             app.Resources.Add("Services", host.Services);
-            var loadingScreen = host.Services.GetRequiredService<LoadingScreen>();
+            app.InitializeComponent();
+            var loadingScreen = host.Services.GetRequiredService<MainWindow>();
 
             app.Run(loadingScreen);
         }
@@ -46,23 +49,31 @@ namespace MyLibrary
                     services.AddSingleton<IAuthService, AuthService>();
                     services.AddSingleton<INavigationService, NavigationService>();
                     services.AddSingleton<INotificationService, NotificationService>();
-                    
+                    services.AddSingleton<ILanguageService, LanguageService>();
+
                     // API Services
                     services.AddTransient<IApiTestService, ApiTestService>();
                     services.AddTransient<AuthHeaderHandler>();
                     services.AddTransient<IUserService, UserService>();
                     services.AddTransient<IValidationService, ValidationService>();
 
-                    // Views
+                    // Windows
                     services.AddTransient<App>();
+                    services.AddTransient<StartingLanguage>();
                     services.AddTransient<LoadingScreen>();
                     services.AddTransient<LogIn>();
                     services.AddTransient<MainWindow>();
+
+                    // Views
+                    services.AddTransient<HomeView>();
+                    services.AddTransient<NotFoundView>();
 
                     // View Models
                     services.AddTransient<LoadingScreenViewModel>();
                     services.AddTransient<LogInViewModel>();
                     services.AddTransient<MainWindowViewModel>();
+                    services.AddTransient<ChangeLanguageViewModel>();
+
                 });
     }
 }
