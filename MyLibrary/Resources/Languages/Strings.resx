@@ -172,4 +172,7 @@
   <data name="Errors_NavigatingToView" xml:space="preserve">
     <value>Error navigating to view:</value>
   </data>
+  <data name="Errors_ClosingApp" xml:space="preserve">
+    <value>Error closing the app.</value>
+  </data>
 </root>

@@ -26,11 +26,22 @@ namespace MyLibrary.Views.Layouts.TopBar
             
         }
 
+        public Border Avatar => AvatarElement;
+
         public static readonly DependencyProperty CommandProperty = 
             DependencyProperty.Register("Command", typeof(ICommand), typeof(TopBar));
 
         public static readonly DependencyProperty CommandParameterProperty =
             DependencyProperty.Register("CommandParameter", typeof(object), typeof(TopBar));
+
+        public static readonly DependencyProperty IsCheckedProperty =
+            DependencyProperty.Register(nameof(IsChecked), typeof(bool), typeof(TopBar), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public static readonly DependencyProperty UserNameProperty =
+            DependencyProperty.Register("UserName", typeof(string), typeof(TopBar), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public static readonly DependencyProperty PowerOffButtonProperty =
+            DependencyProperty.Register("PowerOffButton", typeof(ICommand), typeof(TopBar));
 
         public ICommand Command
         {
@@ -44,13 +55,22 @@ namespace MyLibrary.Views.Layouts.TopBar
             set => SetValue(CommandParameterProperty, value);
         }
 
-        public static readonly DependencyProperty IsCheckedProperty =
-            DependencyProperty.Register(nameof(IsChecked), typeof(bool), typeof(TopBar), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-
         public bool IsChecked
         {
             get => (bool)GetValue(IsCheckedProperty);
             set => SetValue(IsCheckedProperty, value);
+        }
+
+        public string UserName
+        {
+            get => (string)GetValue(UserNameProperty);
+            set => SetValue(UserNameProperty, value);
+        }
+
+        public ICommand PowerOffButton
+        {
+            get => (ICommand)GetValue(PowerOffButtonProperty);
+            set => SetValue(PowerOffButtonProperty, value);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using MahApps.Metro.Controls;
+using MaterialDesignThemes.Wpf;
+using MyLibrary.Server.Data.DTOs;
 using MyLibrary.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -24,23 +26,43 @@ namespace MyLibrary.Views
     public partial class MainWindow : Window
     {
         private readonly MainWindowViewModel _viewModel;
-        
+
         public MainWindow(MainWindowViewModel viewModel)
         {
             _viewModel = viewModel;
             DataContext = _viewModel;
             InitializeComponent();
+            SetUserInfo();
         }
         
-        
+        private void SetUserInfo()
+        {
+            TopBar.UserName = _viewModel.User.FirstName + _viewModel.User.LastName;
+            if (string.IsNullOrWhiteSpace(_viewModel.User.Avatar))
+            {
+                TopBar.Avatar.Child = new PackIcon
+                {
+                    Kind = PackIconKind.AccountCircle,
+                    Width = Double.NaN,
+                    Height = Double.NaN
+                };
+            }
+            else
+            {
+                TopBar.Avatar.Background = new ImageBrush
+                {
+                    ImageSource = new BitmapImage(new Uri(_viewModel.User.Avatar, UriKind.RelativeOrAbsolute))
+                };
+            }
+        }
 
-        private void DrawerHost_DrawerClosing(object sender, MaterialDesignThemes.Wpf.DrawerClosingEventArgs e)
+        private void DrawerHost_DrawerClosing(object sender, DrawerClosingEventArgs e)
         {
             AnimateContentMargin(new Thickness(0, 0, 0, 0), 200);
             
         }
 
-        private void DrawerHost_DrawerOpened(object sender, MaterialDesignThemes.Wpf.DrawerOpenedEventArgs e)
+        private void DrawerHost_DrawerOpened(object sender, DrawerOpenedEventArgs e)
         {
             AnimateContentMargin(new Thickness(MainNav.ActualWidth, 0, 0, 0), 500);
         }

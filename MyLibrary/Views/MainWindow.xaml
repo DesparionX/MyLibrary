@@ -90,7 +90,8 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 HorizontalAlignment="Stretch"
-                DockPanel.Dock="Top" />
+                DockPanel.Dock="Top"
+                PowerOffButton="{Binding CloseApp}" />
             <ContentControl
                 x:Name="ContentView"
                 Grid.Row="1"

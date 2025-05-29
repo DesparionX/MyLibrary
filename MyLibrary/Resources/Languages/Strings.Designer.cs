@@ -88,6 +88,15 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error closing the app..
+        /// </summary>
+        public static string Errors_ClosingApp {
+            get {
+                return ResourceManager.GetString("Errors_ClosingApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error navigating to view:.
         /// </summary>
         public static string Errors_NavigatingToView {

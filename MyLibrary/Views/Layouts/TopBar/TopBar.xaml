@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Views/Layouts/TopBar/TopBar.Style.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Views/Layouts/TopBar/TopBar.Style.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -22,6 +22,7 @@
                 BlurRadius="10"
                 Direction="180"
                 Opacity="1"
+                ShadowDepth="1"
                 Color="Black" />
         </Border.Effect>
         <materialDesign:ColorZone
@@ -45,12 +46,26 @@
                     CommandParameter="{Binding CommandParameter, RelativeSource={RelativeSource AncestorType=UserControl}}"
                     IsChecked="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"
                     Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
-                <TextBlock
+                <StackPanel
                     Grid.Column="1"
-                    Margin="16,0,0,0"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Text="Material Design In XAML Toolkit" />
+                    Orientation="Horizontal">
+                    <Border
+                        Width="150"
+                        Height="150"
+                        Margin="0,-80,0,-50"
+                        Background="{DynamicResource MaterialDesignPaper}"
+                        CornerRadius=" 100">
+                        <Border x:Name="AvatarElement" Style="{DynamicResource Avatar}" />
+                    </Border>
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="16,0,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="{Binding UserName, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}" />
+                </StackPanel>
+
                 <Button
                     x:Name="LogOutButton"
                     Grid.Column="2"
@@ -58,6 +73,7 @@
                     Height="auto"
                     Margin="0,0,10,0"
                     Padding="0"
+                    Command="{Binding PowerOffButton, RelativeSource={RelativeSource AncestorType=UserControl}}"
                     Style="{DynamicResource PowerOffButton}" />
 
             </Grid>

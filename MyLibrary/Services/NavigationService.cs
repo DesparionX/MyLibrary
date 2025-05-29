@@ -42,5 +42,16 @@ namespace MyLibrary.Services.Api
         {
             _currentWindow?.Close();
         }
+        public void CloseApp()
+        {
+            try
+            {
+                Application.Current.Shutdown();
+            }
+            catch (Exception err)
+            {
+                _notificationService.ShowError(title: Strings.Error, message: Strings.Errors_ClosingApp + err.Message);
+            }
+        }
     }
 }

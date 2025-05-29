@@ -27,6 +27,7 @@ namespace MyLibrary.ViewModels
         private object _currentView = new();
 
         public ICommand NavigateToViewCommand => new RelayCommand<string>(NavigateToView);
+        public ICommand CloseApp => new RelayCommand(_navigationService.CloseApp);
 
         public MainWindowViewModel(IAuthService authService, INavigationService navigationService)
         {

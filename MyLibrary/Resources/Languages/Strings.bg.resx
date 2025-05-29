@@ -172,4 +172,7 @@
   <data name="Errors_NavigatingToView" xml:space="preserve">
     <value>Грешка при смяна на страницата:</value>
   </data>
+  <data name="Errors_ClosingApp" xml:space="preserve">
+    <value>Грешка при затварянето на програмата.</value>
+  </data>
 </root>

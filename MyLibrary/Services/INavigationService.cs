@@ -11,5 +11,6 @@ namespace MyLibrary.Services
     {
         void NavigateTo<TWindow>() where TWindow : Window;
         void CloseCurrentWindow();
+        void CloseApp();
     }
 }
