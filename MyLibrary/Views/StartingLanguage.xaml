@@ -11,7 +11,7 @@
     Margin="0"
     Padding="0"
     AllowsTransparency="True"
-    Background="Transparent"
+    Background="Black"
     Style="{DynamicResource MaterialDesignWindow}"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
@@ -34,7 +34,8 @@
             InkCanvas.Top="0"
             OpacityMask="Black"
             SnapsToDevicePixels="True"
-            Style="{DynamicResource StartingLanguageEnglish}">
+            Style="{DynamicResource StartingLanguageEnglish}"
+            ToolTip="English">
             <Button.Clip>
                 <PathGeometry Figures="M335,0 L500.480778013854,0 L500.480778013854,400 L0,400 Z" />
             </Button.Clip>
@@ -49,7 +50,8 @@
             InkCanvas.Top="0"
             OpacityMask="Black"
             SnapsToDevicePixels="True"
-            Style="{DynamicResource StartingLanguageBulgarian}">
+            Style="{DynamicResource StartingLanguageBulgarian}"
+            ToolTip="Български">
             <Button.Clip>
                 <PathGeometry Figures="M0,0 L525.5,0 L182,400 L0,400 Z" />
             </Button.Clip>

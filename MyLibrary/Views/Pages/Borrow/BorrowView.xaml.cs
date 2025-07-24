@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MyLibrary.Views.Pages
+namespace MyLibrary.Views.Pages.Borrow
 {
     /// <summary>
-    /// Interaction logic for HomeView.xaml
+    /// Interaction logic for BorrowView.xaml
     /// </summary>
-    public partial class HomeView : UserControl
+    public partial class BorrowView : UserControl
     {
-        public HomeView()
+        public BorrowView()
         {
             InitializeComponent();
         }

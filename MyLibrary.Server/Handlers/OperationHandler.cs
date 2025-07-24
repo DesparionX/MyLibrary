@@ -137,9 +137,10 @@ namespace MyLibrary.Server.Handlers
                         {
                             ISBN = item.ItemISBN!,
                             Name = item.ItemName!,
+                            Price = (decimal)item.Price!,
                             Quantity = item.Quantity
                         });
-                        item.ItemsId?.ToList().ForEach(id => bookIds.Add(id));
+                        bookIds.Add(item.ItemId!);
                     }
 
                     // If warehouse handler fails to remove the stocks, return false.
@@ -154,6 +155,8 @@ namespace MyLibrary.Server.Handlers
                     {
                         var bookResult = await _bookHandler.UpdateBookAvailabilityAsync(ids: bookIds, isAvailable: false);
                         return bookResult.Succeeded;
+
+                        //TODO: CREATE NEW BORROW
                     }
 
                 case nameof(StockOperations.OperationType.Return):
@@ -167,9 +170,10 @@ namespace MyLibrary.Server.Handlers
                         {
                             ISBN = item.ItemISBN!,
                             Name = item.ItemName!,
+                            Price = (decimal)item.Price!,
                             Quantity = item.Quantity
                         });
-                        item.ItemsId?.ToList().ForEach(id => bookIds.Add(id));
+                        bookIds.Add(item.ItemId!);
                     }
 
                     // If warehouse handler fails to add the stocks, return false.

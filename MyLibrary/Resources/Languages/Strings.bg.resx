@@ -175,4 +175,31 @@
   <data name="Errors_ClosingApp" xml:space="preserve">
     <value>Грешка при затварянето на програмата.</value>
   </data>
+  <data name="Home_BorrowBooks" xml:space="preserve">
+    <value>Заемане</value>
+  </data>
+  <data name="Home_Sell" xml:space="preserve">
+    <value>Продажба</value>
+  </data>
+  <data name="Home_ReturnBooks" xml:space="preserve">
+    <value>Връщане</value>
+  </data>
+  <data name="Sell_Validations_NullOrder" xml:space="preserve">
+    <value>Поръчката не може да е празна.</value>
+  </data>
+  <data name="BookService_Errors_ErrorFetchingBook" xml:space="preserve">
+    <value>Грешка при намирането на книга по ИН.</value>
+  </data>
+  <data name="Sell_Validations_ID_NullOrWhiteSpace" xml:space="preserve">
+    <value>Липсва ИН.</value>
+  </data>
+  <data name="Sell_Validations_ISBN_NullOrWhiteSpace" xml:space="preserve">
+    <value>Липсва ISBN.</value>
+  </data>
+  <data name="Sell_Validations_ItemNotFound" xml:space="preserve">
+    <value>Няма намерен предмет с този ИН/ISBN.</value>
+  </data>
+  <data name="Sell_Validations_NullQuantity" xml:space="preserve">
+    <value>Трябва да маркирате поне 1 предмет.</value>
+  </data>
 </root>

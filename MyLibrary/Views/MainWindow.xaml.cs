@@ -35,9 +35,9 @@ namespace MyLibrary.Views
             SetUserInfo();
         }
         
-        private void SetUserInfo()
+        private async Task SetUserInfo()
         {
-            TopBar.UserName = _viewModel.User.FirstName + _viewModel.User.LastName;
+            TopBar.UserName = $"{_viewModel.User.FirstName} {_viewModel.User.LastName}";
             if (string.IsNullOrWhiteSpace(_viewModel.User.Avatar))
             {
                 TopBar.Avatar.Child = new PackIcon
@@ -51,7 +51,8 @@ namespace MyLibrary.Views
             {
                 TopBar.Avatar.Background = new ImageBrush
                 {
-                    ImageSource = new BitmapImage(new Uri(_viewModel.User.Avatar, UriKind.RelativeOrAbsolute))
+                    ImageSource = new BitmapImage(new Uri(_viewModel.GetUserAvatar())),
+                    Stretch = Stretch.Fill
                 };
             }
         }

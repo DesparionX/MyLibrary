@@ -175,4 +175,31 @@
   <data name="Errors_ClosingApp" xml:space="preserve">
     <value>Error closing the app.</value>
   </data>
+  <data name="Home_BorrowBooks" xml:space="preserve">
+    <value>Borrow</value>
+  </data>
+  <data name="Home_Sell" xml:space="preserve">
+    <value>Sell</value>
+  </data>
+  <data name="Home_ReturnBooks" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="Sell_Validations_NullOrder" xml:space="preserve">
+    <value>Order cannot be null.</value>
+  </data>
+  <data name="BookService_Errors_ErrorFetchingBook" xml:space="preserve">
+    <value>Error fetching book by ID.</value>
+  </data>
+  <data name="Sell_Validations_ID_NullOrWhiteSpace" xml:space="preserve">
+    <value>Item ID cannot be null.</value>
+  </data>
+  <data name="Sell_Validations_ISBN_NullOrWhiteSpace" xml:space="preserve">
+    <value>ISBN cannot be null.</value>
+  </data>
+  <data name="Sell_Validations_ItemNotFound" xml:space="preserve">
+    <value>No item with such ID/ISBN.</value>
+  </data>
+  <data name="Sell_Validations_NullQuantity" xml:space="preserve">
+    <value>Quantity must be at least 1.</value>
+  </data>
 </root>

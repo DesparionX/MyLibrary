@@ -7,6 +7,9 @@ using MyLibrary.Services.Api;
 using MyLibrary.ViewModels;
 using MyLibrary.Views;
 using MyLibrary.Views.Pages;
+using MyLibrary.Views.Pages.Borrow;
+using MyLibrary.Views.Pages.Return;
+using MyLibrary.Views.Pages.Sell;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -26,7 +29,7 @@ namespace MyLibrary
 
             app.Resources.Add("Services", host.Services);
             app.InitializeComponent();
-            var loadingScreen = host.Services.GetRequiredService<MainWindow>();
+            var loadingScreen = host.Services.GetRequiredService<StartingLanguage>();
 
             app.Run(loadingScreen);
         }
@@ -56,6 +59,7 @@ namespace MyLibrary
                     services.AddTransient<AuthHeaderHandler>();
                     services.AddTransient<IUserService, UserService>();
                     services.AddTransient<IValidationService, ValidationService>();
+                    services.AddTransient<IBookService, BookService>();
 
                     // Windows
                     services.AddTransient<App>();
@@ -67,12 +71,20 @@ namespace MyLibrary
                     // Views
                     services.AddTransient<HomeView>();
                     services.AddTransient<NotFoundView>();
+                    services.AddTransient<BorrowView>();
+                    services.AddScoped<SellView>();
+                    services.AddTransient<ReturnView>();
 
                     // View Models
+                    services.AddTransient<ChangeLanguageViewModel>();
                     services.AddTransient<LoadingScreenViewModel>();
                     services.AddTransient<LogInViewModel>();
                     services.AddTransient<MainWindowViewModel>();
-                    services.AddTransient<ChangeLanguageViewModel>();
+                    services.AddTransient<HomeViewModel>();
+                    services.AddTransient<BorrowViewModel>();
+                    services.AddScoped<SellViewModel>();
+                    services.AddTransient<ReturnViewModel>();
+                    
 
                 });
     }

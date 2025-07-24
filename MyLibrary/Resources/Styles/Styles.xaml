@@ -11,5 +11,16 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="ShadowEffect" TargetType="FrameworkElement">
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect
+                    BlurRadius="10"
+                    Opacity="1"
+                    ShadowDepth="1"
+                    Color="#FF000000" />
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

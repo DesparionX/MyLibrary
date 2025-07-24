@@ -10,6 +10,7 @@ namespace MyLibrary.Configs
     public class ApiSettings
     {
         public string BaseUrl { get; set; } = string.Empty;
+        public string Images { get; set; } = string.Empty;
         public Controllers.Controllers Controllers { get; set; } = new();
     }
 }

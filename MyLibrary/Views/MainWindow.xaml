@@ -30,8 +30,8 @@
         DrawerClosing="DrawerHost_DrawerClosing"
         DrawerOpened="DrawerHost_DrawerOpened"
         IsLeftDrawerOpen="{Binding ElementName=TopBar, Path=IsChecked}"
-        LeftDrawerCloseOnClickAway="False"
-        OverlayBackground="Transparent">
+        LeftDrawerCloseOnClickAway="True"
+        OverlayBackground="Black">
         <materialDesign:DrawerHost.LeftDrawerContent>
             <Grid
                 x:Name="MainNav"
@@ -91,6 +91,7 @@
                 Grid.Column="0"
                 HorizontalAlignment="Stretch"
                 DockPanel.Dock="Top"
+                Focusable="False"
                 PowerOffButton="{Binding CloseApp}" />
             <ContentControl
                 x:Name="ContentView"
@@ -99,6 +100,5 @@
                 Margin="0"
                 Content="{Binding CurrentView}" />
         </Grid>
-
     </materialDesign:DrawerHost>
 </Window>

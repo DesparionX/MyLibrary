@@ -8,6 +8,7 @@ namespace MyLibrary.Configs.Controllers
 {
     public class Books
     {
+        public string FindById { get; set; } = string.Empty;
         public string FindByISBN { get; set; } = string.Empty;
         public string GetAllBooks { get; set; } = string.Empty;
         public string AddBook { get; set; } = string.Empty;

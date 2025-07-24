@@ -61,6 +61,15 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error fetching book by ID..
+        /// </summary>
+        public static string BookService_Errors_ErrorFetchingBook {
+            get {
+                return ResourceManager.GetString("BookService_Errors_ErrorFetchingBook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
@@ -133,6 +142,33 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Borrow.
+        /// </summary>
+        public static string Home_BorrowBooks {
+            get {
+                return ResourceManager.GetString("Home_BorrowBooks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return.
+        /// </summary>
+        public static string Home_ReturnBooks {
+            get {
+                return ResourceManager.GetString("Home_ReturnBooks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sell.
+        /// </summary>
+        public static string Home_Sell {
+            get {
+                return ResourceManager.GetString("Home_Sell", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string LogIn_Email {
@@ -156,6 +192,51 @@ namespace MyLibrary.Resources.Languages {
         public static string LogIn_Password {
             get {
                 return ResourceManager.GetString("LogIn_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item ID cannot be null..
+        /// </summary>
+        public static string Sell_Validations_ID_NullOrWhiteSpace {
+            get {
+                return ResourceManager.GetString("Sell_Validations_ID_NullOrWhiteSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISBN cannot be null..
+        /// </summary>
+        public static string Sell_Validations_ISBN_NullOrWhiteSpace {
+            get {
+                return ResourceManager.GetString("Sell_Validations_ISBN_NullOrWhiteSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No item with such ID/ISBN..
+        /// </summary>
+        public static string Sell_Validations_ItemNotFound {
+            get {
+                return ResourceManager.GetString("Sell_Validations_ItemNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order cannot be null..
+        /// </summary>
+        public static string Sell_Validations_NullOrder {
+            get {
+                return ResourceManager.GetString("Sell_Validations_NullOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity must be at least 1..
+        /// </summary>
+        public static string Sell_Validations_NullQuantity {
+            get {
+                return ResourceManager.GetString("Sell_Validations_NullQuantity", resourceCulture);
             }
         }
         

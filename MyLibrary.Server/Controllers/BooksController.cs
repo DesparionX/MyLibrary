@@ -23,14 +23,14 @@ namespace MyLibrary.Server.Controllers
             _resultHandler = resultHandler;
         }
 
-        [HttpGet("findBookById")]
+        [HttpGet("findBookById/{id}")]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status200OK)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status302Found)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status400BadRequest)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status404NotFound)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status502BadGateway)]
-        public async Task<IActionResult> FindById<TId>([FromQuery] TId id) where TId : IEquatable<TId>
+        public async Task<IActionResult> FindById<TId>([FromRoute] TId id) where TId : IEquatable<TId>
         {
             if (id == null || string.IsNullOrWhiteSpace(id.ToString()))
             {
@@ -41,14 +41,14 @@ namespace MyLibrary.Server.Controllers
             return _resultHandler.ReadResult(response);
         }
 
-        [HttpGet("findBookByISBN")]
+        [HttpGet("findBookByISBN/{isbn}")]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status200OK)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status302Found)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status400BadRequest)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status404NotFound)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status502BadGateway)]
-        public async Task<IActionResult> FindByISBN([FromQuery] string isbn)
+        public async Task<IActionResult> FindByISBN([FromRoute] string isbn)
         {
             if (isbn == null || string.IsNullOrWhiteSpace(isbn))
             {
@@ -86,13 +86,13 @@ namespace MyLibrary.Server.Controllers
             return _resultHandler.ReadResult(response);
         }
 
-        [HttpDelete("deleteBook")]
+        [HttpDelete("deleteBook/{id}")]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status200OK)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status400BadRequest)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status404NotFound)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status502BadGateway)]
-        public async Task<IActionResult> DeleteBookAsync([FromQuery] Guid id)
+        public async Task<IActionResult> DeleteBookAsync([FromRoute] Guid id)
         {
             if (id == null || string.IsNullOrWhiteSpace(id.ToString()))
             {
