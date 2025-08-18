@@ -18,13 +18,20 @@ namespace MyLibrary.Server.Handlers
     {
         private readonly IMapper _mapper;
         private readonly ILogger<AuthHandler> _logger;
+        private readonly IJWTGenerator _jwtGenerator;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
 
-        public AuthHandler(IMapper mapper, ILogger<AuthHandler> logger, SignInManager<User> signInManager, UserManager<User> userManager)
+        public AuthHandler(
+            IMapper mapper, 
+            ILogger<AuthHandler> logger, 
+            IJWTGenerator jwtGenerator,
+            SignInManager<User> signInManager, 
+            UserManager<User> userManager)
         {
             _mapper = mapper;
             _logger = logger;
+            _jwtGenerator = jwtGenerator;
             _signInManager = signInManager;
             _userManager = userManager;
         }
@@ -36,26 +43,26 @@ namespace MyLibrary.Server.Handlers
                 var user = await _userManager.FindByEmailAsync(request.Email!);
                 if (user == null)
                 {
-                    _logger.LogWarning($"User with email {request.Email} not found.");
+                    _logger.LogWarning("User with email {Email} not found.", request.Email);
                     return new UserTaskResult(succeeded: false, message: "Couldn't find user with the given email.", statusCode: StatusCodes.Status404NotFound);
                 }
 
                 var result = await _signInManager.PasswordSignInAsync(user: user, password: request.Password!, isPersistent: (bool)request.RememberMe!, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    var jwt = await GenerateJwt(user);
+                    var jwt = await _jwtGenerator.GenerateJWT(user);
                     var dto = _mapper.Map<UserDTO>(user);
 
-                    _logger.LogInformation($"User with email {request.Email} logged in successfully.");
+                    _logger.LogInformation("User with email {Email} logged in successfully.", request.Email);
                     return new AuthResult(succeeded: true, message: "User logged in successfully.", statusCode: StatusCodes.Status200OK, token: jwt, user: dto);
                 }
 
-                _logger.LogWarning($"User with email {request.Email} failed to log in.");
+                _logger.LogWarning("User with email {Email} failed to log in.", request.Email);
                 return new AuthResult(succeeded: false, message: "Invalid password.", statusCode: StatusCodes.Status401Unauthorized);
             }
             catch (Exception err)
             {
-                _logger.LogError(err, $"Error occurred while logging in user.\n{err.StackTrace}");
+                _logger.LogError(err, "Error occurred while logging in user.\n{StackTrace}", err.StackTrace);
                 return new AuthResult(succeeded: false, message: "An error occurred while logging in user.", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
@@ -64,10 +71,10 @@ namespace MyLibrary.Server.Handlers
         {
             try
             {
-                if(userIdentity == null)
+                if (!userIdentity.IsAuthenticated)
                 {
-                    _logger.LogWarning("User not logged in.");
-                    return new AuthResult(succeeded: false, message: "User not logged in.", statusCode: StatusCodes.Status401Unauthorized);
+                    _logger.LogInformation("User tried to log out without being authenticated.");
+                    return new AuthResult(succeeded: false, message: "User tried to log out without being authenticated.", statusCode: StatusCodes.Status401Unauthorized);
                 }
 
                 await _signInManager.SignOutAsync();
@@ -76,7 +83,7 @@ namespace MyLibrary.Server.Handlers
             }
             catch(Exception err)
             {
-                _logger.LogError(err, $"Error occurred while logging out user.\n{err.StackTrace}");
+                _logger.LogError(err, "Error occurred while logging out user.\n{StackTrace}", err.StackTrace);
                 return new AuthResult(succeeded: false, message: "An error occurred while logging out user.", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
@@ -85,51 +92,23 @@ namespace MyLibrary.Server.Handlers
         {
             try
             {
-                if (userIdentity == null)
-                {
-                    _logger.LogWarning("User not logged in.");
-                    return new AuthResult(succeeded: false, message: "User not logged in.", statusCode: StatusCodes.Status401Unauthorized);
-                }
                 var claimsIdentity = userIdentity as ClaimsIdentity;
                 var email = claimsIdentity!.FindFirst(ClaimTypes.Email)?.Value;
                 var user = await _userManager.FindByEmailAsync(email!);
 
                 if (user == null)
                 {
-                    _logger.LogWarning($"User with email {email} not found.");
-                    return new UserTaskResult(succeeded: false, message: "Couldn't find user with the given email.", statusCode: StatusCodes.Status404NotFound);
+                    _logger.LogWarning("User with email {Email} not found.",email);
+                    return new AuthResult(succeeded: false, message: "Couldn't find user with the given email.", statusCode: StatusCodes.Status404NotFound);
                 }
                 var dto = _mapper.Map<UserDTO>(user);
-                return new AuthResult(succeeded: true, message: "User found.", statusCode: StatusCodes.Status200OK, user: dto);
+                return new AuthResult(succeeded: true, message: "User identity retrieved successfully.", statusCode: StatusCodes.Status200OK, user: dto);
             }
             catch (Exception err)
             {
-                _logger.LogError(err, $"Error occurred while getting user identity.\n{err.StackTrace}");
-                return new AuthResult(succeeded: false, message: "An error occurred while getting user identity.", statusCode: StatusCodes.Status500InternalServerError);
+                _logger.LogError(err, "Error occurred while getting user identity. \n{StackTrace}", err.StackTrace);
+                return new AuthResult(succeeded: false, message: "An error occurred while retrieving user identity.", statusCode: StatusCodes.Status500InternalServerError);
             }
-        }
-
-        private async Task<string> GenerateJwt(User user)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.UserName!)
-            };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtConfig.JwtKey));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var jwt = new JwtSecurityToken(
-                issuer: JwtConfig.JwtIssuer,
-                audience: JwtConfig.JwtAudience,
-                claims: claims,
-                notBefore: DateTime.Now,
-                expires: DateTime.Now.AddMinutes(60),
-                signingCredentials: creds
-                );
-
-            return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
     }
 }

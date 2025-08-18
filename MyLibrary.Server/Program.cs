@@ -1,7 +1,7 @@
+using AutoMapper;
 using DotNetEnv;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +11,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyLibrary.Server.Configs;
 using MyLibrary.Server.Data;
-using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Data.Entities;
 using MyLibrary.Server.Events;
 using MyLibrary.Server.Handlers;
@@ -22,7 +21,6 @@ using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 using System.Text;
-using System.Text.Json;
 
 Env.Load();
 var builder = WebApplication.CreateBuilder(args);
@@ -154,7 +152,10 @@ builder.Services.AddSingleton<EventBus>();
 builder.Services.AddScoped<IOperationsEventHandler, OperationsEventHandler>();
 builder.Services.AddLogging();
 builder.Services.AddScoped<DbContext, AppDbContext>();
-builder.Services.AddAutoMapper(typeof(MapHandler));
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<MapHandler>();
+});
 builder.Services.AddScoped<IBookHandler<Book>, BookHandler>();
 builder.Services.AddScoped<IWarehouseHandler<Warehouse>, WarehouseHandler>();
 builder.Services.AddScoped<IOperationHandler, OperationHandler>();
@@ -162,6 +163,7 @@ builder.Services.AddScoped<IAuthHandler, AuthHandler>();
 builder.Services.AddScoped<IUserHandler, UserHandler>();
 builder.Services.AddScoped<ISubscriptionHandler<User>, SubscriptionHandler>();
 builder.Services.AddScoped<IResultHandler<ITaskResult>, ResultHandler>();
+builder.Services.AddScoped<IJWTGenerator, JWTGenerator>();
 
 // Health checks
 builder.Services.AddHealthChecks()
@@ -219,4 +221,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();

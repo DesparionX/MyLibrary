@@ -5,7 +5,7 @@ namespace MyLibrary.Server.Data.DTOs
 {
     public class UserDTO : IUserDTO
     {
-        public string? Id { get; set; }
+        public required string Id { get; set; }
 
         public string? UserName { get; set; }
 

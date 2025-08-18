@@ -17,7 +17,7 @@ namespace MyLibrary.Services
         private string _token = string.Empty;
 
         [ObservableProperty]
-        private UserDTO _user = new();
+        private UserDTO? _user;
 
         private readonly INotificationService _notificationService;
 
@@ -30,11 +30,14 @@ namespace MyLibrary.Services
         {
             try
             {
-                Token = jwtToken;
-                User = (UserDTO)user;
+                await Task.Run(() =>
+                {
+                    Token = jwtToken;
+                    User = (UserDTO)user;
+                });
                 return true;
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 _notificationService.ShowError(title: Strings.Error, message: err.Message);
                 return false;
@@ -48,7 +51,7 @@ namespace MyLibrary.Services
                 await Task.Run(() =>
                 {
                     Token = string.Empty;
-                    User = new();
+                    User = null;
                     return true;
                 });
                 _notificationService.ShowError(title: Strings.Error, message: Strings.Errors_AuthService_ClearingUserIdentity);
@@ -70,7 +73,7 @@ namespace MyLibrary.Services
         {
             return Token;
         }
-        public IUserDTO GetUser()
+        public IUserDTO? GetUser()
         {
             return User;
         }

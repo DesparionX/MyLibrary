@@ -25,12 +25,12 @@ namespace MyLibrary.ViewModels
         private readonly ApiSettings _apiSettings;
 
         [ObservableProperty]
-        private UserDTO _user = new();
+        private UserDTO? _user;
 
         [ObservableProperty]
         private object _currentView = new();
 
-        public ICommand NavigateToViewCommand => new RelayCommand<string>(NavigateToView);
+        public ICommand NavigateToViewCommand => new RelayCommand<string>(NavigateToView!);
         public ICommand CloseApp => new RelayCommand(_navigationService.CloseApp);
 
 
@@ -40,7 +40,7 @@ namespace MyLibrary.ViewModels
             _authService = authService;
             if (_authService.IsAuthenticated())
             {
-                _user = _authService.GetUser() as UserDTO;
+                _user = (UserDTO)_authService.GetUser();
             }
 
             _navigationService = navigationService;

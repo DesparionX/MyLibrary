@@ -6,17 +6,17 @@ namespace MyLibrary.Server.Data.DTOs
     {
         public Guid Id { get; set; }
 
-        public string ISBN { get; set; }
+        public required string ISBN { get; set; }
 
-        public string Genre { get; set; }
+        public required string Genre { get; set; }
 
-        public string Title { get; set; }
+        public  required string Title { get; set; }
 
-        public string Description { get; set; }
+        public required string Description { get; set; }
 
-        public string Author { get; set; }
+        public required string Author { get; set; }
 
-        public string Publisher { get; set; }
+        public required string Publisher { get; set; }
 
         public int Pages { get; set; }
 

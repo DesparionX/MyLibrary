@@ -13,7 +13,7 @@ namespace MyLibrary.ViewModels
     {
         private readonly INavigationService _navigationService;
 
-        public ICommand NavigateToViewCommand => new RelayCommand<string>(_navigationService.NavigateToView);
+        public ICommand NavigateToViewCommand => new RelayCommand<string>(_navigationService.NavigateToView!);
         public HomeViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;

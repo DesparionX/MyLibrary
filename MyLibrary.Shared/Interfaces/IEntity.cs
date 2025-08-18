@@ -2,6 +2,6 @@
 {
     public interface IEntity<TId> where TId : IEquatable<TId>
     {
-        public TId? Id { get; set; }
+        public TId Id { get; set; }
     }
 }

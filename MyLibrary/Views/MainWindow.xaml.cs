@@ -35,7 +35,7 @@ namespace MyLibrary.Views
             SetUserInfo();
         }
         
-        private async Task SetUserInfo()
+        private void SetUserInfo()
         {
             TopBar.UserName = $"{_viewModel.User.FirstName} {_viewModel.User.LastName}";
             if (string.IsNullOrWhiteSpace(_viewModel.User.Avatar))

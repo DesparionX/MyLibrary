@@ -94,7 +94,7 @@ namespace MyLibrary.Server.Controllers
         [ProducesResponseType<ITaskResult>(StatusCodes.Status502BadGateway)]
         public async Task<IActionResult> DeleteBookAsync([FromRoute] Guid id)
         {
-            if (id == null || string.IsNullOrWhiteSpace(id.ToString()))
+            if (string.IsNullOrWhiteSpace(id.ToString()))
             {
                 return BadRequest(new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "ISBN cannot be null or empty."));
             }

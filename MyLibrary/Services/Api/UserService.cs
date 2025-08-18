@@ -30,12 +30,12 @@ namespace MyLibrary.Services.Api
             _httpClient = httpClientFactory.CreateClient("LibStore");
             _notificationService = notificationService;
         }
-        public Task<ITaskResult> GetUserIdentityAsync()
+        public Task<ITaskResult?> GetUserIdentityAsync()
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ITaskResult> LogInAsync(ILoginRequest request)
+        public async Task<ITaskResult?> LogInAsync(ILoginRequest request)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace MyLibrary.Services.Api
             }
         }
 
-        public Task<ITaskResult> RegisterUserAsync(INewUser newUser)
+        public Task<ITaskResult?> RegisterUserAsync(INewUser newUser)
         {
             throw new NotImplementedException();
         }

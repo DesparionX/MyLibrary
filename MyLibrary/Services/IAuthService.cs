@@ -13,6 +13,6 @@ namespace MyLibrary.Services
         Task<bool> AuthenticateAsync(IUserDTO user, string jwtToken);
         Task<bool> ClearSesionAsync();
         string GetToken();
-        IUserDTO GetUser();
+        IUserDTO? GetUser();
     }
 }

@@ -11,8 +11,8 @@ namespace MyLibrary.Services.Api
 {
     public interface IUserService
     {
-        Task<ITaskResult> LogInAsync(ILoginRequest request);
-        Task<ITaskResult> RegisterUserAsync(INewUser newUser);
-        Task<ITaskResult> GetUserIdentityAsync();
+        Task<ITaskResult?> LogInAsync(ILoginRequest request);
+        Task<ITaskResult?> RegisterUserAsync(INewUser newUser);
+        Task<ITaskResult?> GetUserIdentityAsync();
     }
 }

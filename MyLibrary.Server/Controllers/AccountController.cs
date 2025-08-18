@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Data.Entities;
@@ -18,7 +19,7 @@ namespace MyLibrary.Server.Controllers
         private readonly IAuthHandler _authHandler;
         private readonly IResultHandler<ITaskResult> _resultHandler;
 
-        public AccountController(ILogger<AccountController> logger, IUserHandler userHandler, IAuthHandler authHandler,IResultHandler<ITaskResult> resultHandler)
+        public AccountController(ILogger<AccountController> logger, IUserHandler userHandler, IAuthHandler authHandler, IResultHandler<ITaskResult> resultHandler)
         {
             _logger = logger;
             _userHandler = userHandler;
@@ -33,7 +34,7 @@ namespace MyLibrary.Server.Controllers
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetUser([FromQuery] string id)
         {
-            if(string.IsNullOrWhiteSpace(id))
+            if (string.IsNullOrWhiteSpace(id))
             {
                 return BadRequest(new UserTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "User ID cannot be null or white space."));
             }
@@ -113,6 +114,7 @@ namespace MyLibrary.Server.Controllers
         }
 
         [HttpGet("getIdentity")]
+        [Authorize]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status200OK)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status400BadRequest)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status401Unauthorized)]
@@ -120,18 +122,19 @@ namespace MyLibrary.Server.Controllers
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetIdentity()
         {
-            var response = await _authHandler.GetIdentityAsync(User.Identity);
+            var response = await _authHandler.GetIdentityAsync(User.Identity!);
             return _resultHandler.ReadResult(response);
         }
 
         [HttpPost("logout")]
+        [Authorize]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status200OK)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status400BadRequest)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Logout()
         {
-            var response = await _authHandler.LogOutAsync(User.Identity);
+            var response = await _authHandler.LogOutAsync(User.Identity!);
             return _resultHandler.ReadResult(response);
         }
     }

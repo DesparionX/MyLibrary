@@ -4,7 +4,7 @@ namespace MyLibrary.Server.Data.DTOs
 {
     public class SubscriptionDTO : ISubscriptionDTO
     {
-        public string? Id { get; set; }
+        public required string Id { get; set; }
         public int? SubscriptionId { get; set; }
         public string? SubscriptionTier { get; set; }
         public string? UserId { get; set; }

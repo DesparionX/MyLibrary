@@ -125,13 +125,13 @@ namespace MyLibrary.Services
             }
 
             var findByISBN = await _bookService.FindBookByISBNAsync(order.ItemISBN!);
-            if (!findByISBN.Succeeded)
+            if (!findByISBN!.Succeeded)
             {
                 errors.Add(Strings.Sell_Validations_ItemNotFound);
             }
 
             var findById = await _bookService.FindBookByIdAsync(order.ItemId!);
-            if (!findById.Succeeded)
+            if (!findById!.Succeeded)
             {
                 errors.Add(Strings.Sell_Validations_ItemNotFound);
             }

@@ -29,17 +29,17 @@ namespace MyLibrary.Services.Api
             _notificationService = notificationService;
         }
 
-        public Task<ITaskResult> AddBookAsync(INewBook<BookDTO> newBookDto)
+        public Task<ITaskResult?> AddBookAsync(INewBook<BookDTO> newBookDto)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ITaskResult> DeleteBookAsync<T>(T id) where T : IEquatable<T>
+        public Task<ITaskResult?> DeleteBookAsync<T>(T id) where T : IEquatable<T>
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ITaskResult> FindBookByIdAsync<T>(T bookId) where T : IEquatable<T>
+        public async Task<ITaskResult?> FindBookByIdAsync<T>(T bookId) where T : IEquatable<T>
         {
             try
             {
@@ -56,7 +56,7 @@ namespace MyLibrary.Services.Api
             }
         }
 
-        public async Task<ITaskResult> FindBookByISBNAsync(string isbn)
+        public async Task<ITaskResult?> FindBookByISBNAsync(string isbn)
         {
             try
             {
@@ -73,12 +73,12 @@ namespace MyLibrary.Services.Api
             }
         }
 
-        public Task<ITaskResult> GetAllBooksAsync()
+        public Task<ITaskResult?> GetAllBooksAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<ITaskResult> UpdateBookAsync(IBookDTO bookDto)
+        public Task<ITaskResult?> UpdateBookAsync(IBookDTO bookDto)
         {
             throw new NotImplementedException();
         }

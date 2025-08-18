@@ -31,12 +31,12 @@ namespace MyLibrary.Server.Handlers.EventHandlers
             var warehouseHandler = scope.ServiceProvider.GetRequiredService<IWarehouseHandler<Warehouse>>();
             try
             {
-                _logger.LogInformation($"{e.Quantity}x {e.Name}({e.ISBN}) send to warehouse handler.");
+                _logger.LogInformation("{Quantity}x {Name}({ISBN}) send to warehouse handler.",e.Quantity,e.Name,e.ISBN);
                 await warehouseHandler.AddStockAsync(new WarehouseDTO { ISBN = e.ISBN, Name = e.Name, Quantity = e.Quantity });
             }
             catch (Exception err)
             {
-                _logger.LogError(err, $"Error sending {e.Quantity}x {e.Name}({e.ISBN}) to warehouse handler.");
+                _logger.LogError(err, "Error sending {Quantity}x {Name}({ISBN}) to warehouse handler.", e.Quantity, e.Name, e.ISBN);
             }
         }
         public async Task OnItemUpdated(IItemOperationEvent e)
@@ -45,12 +45,12 @@ namespace MyLibrary.Server.Handlers.EventHandlers
             var warehouseHandler = scope.ServiceProvider.GetRequiredService<IWarehouseHandler<Warehouse>>();
             try
             {
-                _logger.LogInformation($"{e.Name}({e.ISBN}) send to warehouse handler.");
+                _logger.LogInformation("{Name}({ISBN}) send to warehouse handler.", e.Name, e.ISBN);
                 await warehouseHandler.UpdateStockAsync(new WarehouseDTO { ISBN = e.ISBN, Name = e.Name, Quantity = e.Quantity });
             }
             catch (Exception err)
             {
-                _logger.LogError(err, $"Error sending {e.Name}({e.ISBN}) to warehouse handler.");
+                _logger.LogError(err, "Error sending {Name}({ISBN}) to warehouse handler.", e.Name, e.ISBN);
             }
         }
         public async Task OnItemRemoved(IItemOperationEvent e)
@@ -59,12 +59,12 @@ namespace MyLibrary.Server.Handlers.EventHandlers
             var warehouseHandler = scope.ServiceProvider.GetRequiredService<IWarehouseHandler<Warehouse>>();
             try
             {
-                _logger.LogInformation($"{e.Quantity}x {e.Name}({e.ISBN}) send to warehouse handler.");
+                _logger.LogInformation("{Quantity}x {Name}({ISBN}) send to warehouse handler.", e.Quantity, e.Name, e.ISBN);
                 await warehouseHandler.RemoveStockAsync(new WarehouseDTO { ISBN = e.ISBN, Name = e.Name, Quantity = e.Quantity });
             }
             catch (Exception err)
             {
-                _logger.LogError(err, $"Error sending {e.Quantity}x {e.Name}({e.ISBN}) to warehouse handler.");
+                _logger.LogError(err, "Error sending {Quantity}x {Name}({ISBN}) to warehouse handler.", e.Quantity, e.Name, e.ISBN);
             }
         }
         public async Task OnItemSold(IItemOperationEvent e)
@@ -73,12 +73,12 @@ namespace MyLibrary.Server.Handlers.EventHandlers
             var warehouseHandler = scope.ServiceProvider.GetRequiredService<IWarehouseHandler<Warehouse>>();
             try
             {
-                _logger.LogInformation($"{e.Quantity}x {e.Name}({e.ISBN}) send to warehouse handler.");
+                _logger.LogInformation("{Quantity}x {Name}({ISBN}) send to warehouse handler.", e.Quantity, e.Name, e.ISBN);
                 await warehouseHandler.RemoveStockAsync(new WarehouseDTO { ISBN = e.ISBN, Name = e.Name, Quantity = e.Quantity });
             }
             catch (Exception err)
             {
-                _logger.LogError(err, $"Error sending {e.Quantity}x {e.Name}({e.ISBN}) to warehouse handler.");
+                _logger.LogError(err, "Error sending {Quantity}x {Name}({ISBN}) to warehouse handler.", e.Quantity, e.Name, e.ISBN);
             }
         }
         public async Task OnBookBorrowed(IItemOperationEvent e)
@@ -87,12 +87,12 @@ namespace MyLibrary.Server.Handlers.EventHandlers
             var warehouseHandler = scope.ServiceProvider.GetRequiredService<IWarehouseHandler<Warehouse>>();
             try
             {
-                _logger.LogInformation($"{e.Quantity}x {e.Name}({e.ISBN}) send to warehouse handler.");
+                _logger.LogInformation("{Quantity}x {Name}({ISBN}) send to warehouse handler.", e.Quantity, e.Name, e.ISBN);
                 await warehouseHandler.RemoveStockAsync(new WarehouseDTO { ISBN = e.ISBN, Name = e.Name, Quantity = e.Quantity });
             }
             catch (Exception err)
             {
-                _logger.LogError(err, $"Error sending {e.Quantity}x {e.Name}({e.ISBN}) to warehouse handler.");
+                _logger.LogError(err, "Error sending {Quantity}x {Name}({ISBN}) to warehouse handler.", e.Quantity, e.Name, e.ISBN);
             }
         }
         public async Task OnBookReturned(IItemOperationEvent e)
@@ -101,12 +101,12 @@ namespace MyLibrary.Server.Handlers.EventHandlers
             var warehouseHandler = scope.ServiceProvider.GetRequiredService<IWarehouseHandler<Warehouse>>();
             try
             {
-                _logger.LogInformation($"{e.Quantity}x {e.Name}({e.ISBN}) send to warehouse handler.");
+                _logger.LogInformation("{Quantity}x {Name}({ISBN}) send to warehouse handler.", e.Quantity, e.Name, e.ISBN);
                 await warehouseHandler.AddStockAsync(new WarehouseDTO { ISBN = e.ISBN, Name = e.Name, Quantity = e.Quantity });
             }
             catch (Exception err)
             {
-                _logger.LogError(err, $"Error sending {e.Quantity}x {e.Name}({e.ISBN}) to warehouse handler.");
+                _logger.LogError(err, "Error sending {Quantity}x {Name}({ISBN}) to warehouse handler.", e.Quantity, e.Name, e.ISBN);
             }
         }
 

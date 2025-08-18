@@ -200,6 +200,7 @@ namespace MyLibrary.Server.Handlers
                 // Create and add new subscription.
                 var newSubscription = new Subscription
                 {
+                    Id = string.Empty,
                     UserId = request.UserId,
                     SubscriptionId = request.SubscriptionTierId,
                     SubscriptionTier = tier.Tier,
@@ -215,7 +216,7 @@ namespace MyLibrary.Server.Handlers
                     // ApplySubscriptionBenefits() is already calling the SaveChangesAsync() method from the UserManager.
                     // But I'll keep this here if something changes.
 
-                    // await _context.SaveChangesAsync();
+                    // await _context.SaveChangesAsync(); //
 
                     _logger.LogInformation("User subscribed successfully.");
                     return new SubscriptionTaskResult(succeeded: true, message: "User subscribed successfully.", statusCode: StatusCodes.Status201Created);
@@ -363,7 +364,7 @@ namespace MyLibrary.Server.Handlers
                 return true;
             }
         }
-        private async Task<ISubscriptionTierDTO> GetSubscription(int id)
+        private async Task<ISubscriptionTierDTO?> GetSubscription(int id)
         {
             try
             {
