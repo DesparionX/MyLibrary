@@ -12,6 +12,7 @@ using Microsoft.OpenApi.Models;
 using MyLibrary.Server.Configs;
 using MyLibrary.Server.Data;
 using MyLibrary.Server.Data.Entities;
+using MyLibrary.Server.Data.Entities.Interfaces;
 using MyLibrary.Server.Events;
 using MyLibrary.Server.Handlers;
 using MyLibrary.Server.Handlers.EventHandlers;
@@ -156,7 +157,7 @@ builder.Services.AddAutoMapper(cfg =>
 {
     cfg.AddProfile<MapHandler>();
 });
-builder.Services.AddScoped<IBookHandler<Book>, BookHandler>();
+builder.Services.AddScoped<IBookHandler<IBook<Guid>>, BookHandler>();
 builder.Services.AddScoped<IWarehouseHandler<Warehouse>, WarehouseHandler>();
 builder.Services.AddScoped<IOperationHandler, OperationHandler>();
 builder.Services.AddScoped<IAuthHandler, AuthHandler>();

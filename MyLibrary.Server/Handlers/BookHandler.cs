@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using MyLibrary.Server.Data;
 using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Data.Entities;
+using MyLibrary.Server.Data.Entities.Interfaces;
 using MyLibrary.Server.Events;
 using MyLibrary.Server.Handlers.EventHandlers;
 using MyLibrary.Server.Handlers.Interfaces;
@@ -12,18 +12,16 @@ using MyLibrary.Shared.Interfaces.IDTOs;
 
 namespace MyLibrary.Server.Handlers
 {
-    public class BookHandler : IBookHandler<Book>
+    public class BookHandler : IBookHandler<IBook<Guid>>
     {
         private readonly EventBus _eventBus;
-        private readonly IOperationsEventHandler _eventHandler;
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILogger<BookHandler> _logger;
 
-        public BookHandler(EventBus eventBus, IOperationsEventHandler eventHandler, AppDbContext context, IMapper mapper, ILogger<BookHandler> logger)
+        public BookHandler(EventBus eventBus, AppDbContext context, IMapper mapper, ILogger<BookHandler> logger)
         {
             _eventBus = eventBus;
-            _eventHandler = eventHandler;
             _context = context;
             _mapper = mapper;
             _logger = logger;
@@ -35,18 +33,18 @@ namespace MyLibrary.Server.Handlers
             try
             {
                 var book = await _context.Books.FindAsync(id);
-                if(book == null)
+                if (book == null)
                 {
                     return new BookTaskResult(succeeded: false, message: "No book found with given ID.", statusCode: StatusCodes.Status404NotFound);
                 }
                 var bookDto = _mapper.Map<BookDTO>(book);
-
+                
                 return new BookTaskResult(succeeded: true, message: "Book found !", statusCode: StatusCodes.Status302Found, book: bookDto);
             }
             catch (Exception err)
             {
-                _logger.LogError($"[ERROR] {err.Message}\n{err.StackTrace}", err);
-                return new BookTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
+                _logger.LogError(err, "[ERROR] {Message}\n{StackTrace}", err.Message, err.StackTrace);
+                return new BookTaskResult(succeeded: false, message: "An unexpected error occurred while finding the book.", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
 
@@ -64,7 +62,7 @@ namespace MyLibrary.Server.Handlers
             }
             catch (Exception err)
             {
-                _logger.LogError($"[ERROR] {err.Message}\n{err.StackTrace}", err);
+                _logger.LogError(err, "[ERROR] {Message}\n{StackTrace}", err.Message, err.StackTrace);
                 return new BookTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
@@ -83,7 +81,7 @@ namespace MyLibrary.Server.Handlers
             }
             catch (Exception err)
             {
-                _logger.LogError($"[ERROR] {err.Message}\n{err.StackTrace}", err);
+                _logger.LogError(err, "[ERROR] {Message}\n{StackTrace}", err.Message, err.StackTrace);
                 return new BookTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
@@ -104,13 +102,13 @@ namespace MyLibrary.Server.Handlers
                 }
 
                 await _context.SaveChangesAsync();
-                _logger.LogInformation($"{addedBooks} books added to the database.");
+                _logger.LogInformation("{AddedBooks} books added to the database.", addedBooks);
                 _eventBus.Publish(new ItemAddedEvent(newBookDto.Book.ISBN, newBookDto.Book.Title, newBookDto.Quantity));
                 return new BookTaskResult(succeeded: true, message: $"{addedBooks} books added successfully.", statusCode: StatusCodes.Status201Created);
             }
             catch(Exception err)
             {
-                _logger.LogError($"[ERROR] {err.Message}\n{err.StackTrace}", err);
+                _logger.LogError(err, "[ERROR] {Message}\n{StackTrace}", err.Message, err.StackTrace);
                 return new BookTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
@@ -133,13 +131,13 @@ namespace MyLibrary.Server.Handlers
                     return new BookTaskResult(succeeded: false, message: "No books removed from the database.", statusCode: StatusCodes.Status400BadRequest);
                 }
 
-                _logger.LogInformation($"{removedBooks} books removed from the database.");
+                _logger.LogInformation("{RemovedBooks} books removed from the database.", removedBooks);
                 _eventBus.Publish(new ItemRemovedEvent(bookToRemove.ISBN, bookToRemove.Title, removedBooks));
                 return new BookTaskResult(succeeded: true, message: $"{removedBooks} books removed successfully.", statusCode: StatusCodes.Status200OK);
             }
             catch(Exception err)
             {
-                _logger.LogError($"[ERROR] {err.Message}\n{err.StackTrace}", err);
+                _logger.LogError(err, "[ERROR] {Message}\n{StackTrace}", err.Message, err.StackTrace);
                 return new BookTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
@@ -171,14 +169,14 @@ namespace MyLibrary.Server.Handlers
                     return new BookTaskResult(succeeded: false, message: "No books updated.", statusCode: StatusCodes.Status400BadRequest);
                 }
 
-                _logger.LogInformation($"{result} books updated in the database.");
+                _logger.LogInformation("{Result} books updated in the database.", result);
                 _eventBus.Publish(new ItemUpdatedEvent(bookDto.ISBN, bookDto.Title));
 
                 return new BookTaskResult(succeeded: true, message: $"{result} books updated successfully.", statusCode: StatusCodes.Status200OK);
             }
             catch(Exception err)
             {
-                _logger.LogError($"[ERROR] {err.Message}\n{err.StackTrace}", err);
+                _logger.LogError(err, "[ERROR] {Message}\n{StackTrace}", err.Message, err.StackTrace);
                 return new BookTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
@@ -203,7 +201,7 @@ namespace MyLibrary.Server.Handlers
                 if (updatedBooks == ids.Count)
                 {
                     await _context.SaveChangesAsync();
-                    _logger.LogInformation($"{updatedBooks} books availability updated in the database.");
+                    _logger.LogInformation("{UpdatedBooks} books availability updated in the database.", updatedBooks);
                     return new BookTaskResult(succeeded: true, message: $"{updatedBooks} books availability updated successfully.", statusCode: StatusCodes.Status200OK);
                 }
 
@@ -211,7 +209,7 @@ namespace MyLibrary.Server.Handlers
             }
             catch (Exception err)
             {
-                _logger.LogError($"[ERROR] {err.Message}\n{err.StackTrace}", err);
+                _logger.LogError(err, "[ERROR] {Message}\n{StackTrace}", err.Message, err.StackTrace);
                 return new BookTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
@@ -225,7 +223,7 @@ namespace MyLibrary.Server.Handlers
             }
             catch (Exception err)
             {
-                _logger.LogError($"[ERROR] {err.Message}\n{err.StackTrace}", err);
+                _logger.LogError(err, "[ERROR] {Message}\n{StackTrace}", err.Message, err.StackTrace);
                 return false;
             }
         }
@@ -239,14 +237,13 @@ namespace MyLibrary.Server.Handlers
                     var book = _mapper.Map<Book>(existingBook);
                     await _context.Books.AddAsync(book);
                     addedBooks++;
-                    _logger.LogInformation($"Book {book.Title} added to the database.");
+                    _logger.LogInformation("Book {Title} added to the database.", book.Title);
                 }
                 return addedBooks;
-                //return await _context.SaveChangesAsync();
             }
             catch (Exception err)
             {
-                _logger.LogError($"[ERROR] {err.Message}\n{err.StackTrace}", err);
+                _logger.LogError(err, "[ERROR] {Message}\n{StackTrace}", err.Message, err.StackTrace);
                 return 0;
             }
         }

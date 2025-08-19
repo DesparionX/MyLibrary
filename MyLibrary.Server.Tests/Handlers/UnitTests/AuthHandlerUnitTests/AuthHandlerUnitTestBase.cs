@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Moq;
-using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Data.Entities;
 using MyLibrary.Server.Handlers;
 using MyLibrary.Server.Handlers.Interfaces;

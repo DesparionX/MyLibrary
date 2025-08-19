@@ -11,12 +11,12 @@ namespace MyLibrary.Server.Data
     public class AppDbContext : IdentityDbContext<User>
     {
         public override DbSet<User> Users => Set<User>();
-        public DbSet<Book> Books { get; set; }
-        public DbSet<Warehouse> Warehouse { get; set; }
-        public DbSet<Operation> Operations { get; set; }
-        public DbSet<BorrowedBooks> BorrowedBooks { get; set; }
-        public DbSet<SubscriptionTier> SubscriptionTiers { get; set; }
-        public DbSet<Subscription> Subscriptions { get; set; }
+        public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<Warehouse> Warehouse { get; set; }
+        public virtual DbSet<Operation> Operations { get; set; }
+        public virtual DbSet<BorrowedBooks> BorrowedBooks { get; set; }
+        public virtual DbSet<SubscriptionTier> SubscriptionTiers { get; set; }
+        public virtual DbSet<Subscription> Subscriptions { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {

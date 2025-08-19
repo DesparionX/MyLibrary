@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Castle.Core.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
-using MyLibrary.Server.Data.DTOs;
+using MyLibrary.Server.Data;
 using MyLibrary.Server.Data.Entities;
 using MyLibrary.Server.Data.Entities.Interfaces;
 using MyLibrary.Server.Events;
@@ -28,18 +28,12 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests
         protected Mock<IWarehouseHandler<IWarehouse<int>>> WarehouseHandler;
         protected Mock<EventBus> EventBus;
         protected IMapper Mapper;
+        protected AppDbContext DbContext;
 
         [SetUp]
         public void SetupBase()
         {
-            var userStore = new Mock<IUserStore<User>>();
-            UserManager = new Mock<UserManager<User>>(userStore.Object, null, null, null, null, null, null, null, null);
-            SignInManager = new Mock<SignInManager<User>>(
-                UserManager.Object,
-                new Mock<IHttpContextAccessor>().Object,
-                new Mock<IUserClaimsPrincipalFactory<User>>().Object,
-                null, null, null, null);
-
+            // Initialize the mocks for handlers and services
             AuthHandler = new Mock<IAuthHandler>();
             BookHandler = new Mock<IBookHandler<IBook<Guid>>>();
             OperationHandler = new Mock<IOperationHandler>();
@@ -50,12 +44,35 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests
             EventBus = new Mock<EventBus>();
             JWTGenerator = new Mock<IJWTGenerator>();
 
+            // Mock the UserManager and SignInManager
+            var userStore = new Mock<IUserStore<User>>();
+            UserManager = new Mock<UserManager<User>>(userStore.Object, null, null, null, null, null, null, null, null);
+            SignInManager = new Mock<SignInManager<User>>(
+                UserManager.Object,
+                new Mock<IHttpContextAccessor>().Object,
+                new Mock<IUserClaimsPrincipalFactory<User>>().Object,
+                null, null, null, null);
+
+            // Configure the AutoMapper
             var mapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<MapHandler>();
-                // Add other profiles as needed
             }, NullLoggerFactory.Instance);
             Mapper = mapperConfig.CreateMapper();
+
+            // Initialize the in-memory database for testing
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+                .UseInMemoryDatabase(databaseName: "TestDatabase")
+                .Options;
+            DbContext = new AppDbContext(options);
+        }
+
+        [TearDown]
+        public void Cleanup()
+        {
+            // Clear the in-memory database after each test
+            DbContext.Database.EnsureDeleted();
+            DbContext.Dispose();
         }
     }
 }
