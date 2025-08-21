@@ -20,7 +20,7 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests.BookHandlerUnitTests
         {
             // Arrange
             var bookId = Guid.NewGuid();
-            await AddFakeBooks(default, bookId);
+            await AddFakeBooks(id: bookId);
 
             // Act
             var result = await _bookHandler.FindBookById(bookId);

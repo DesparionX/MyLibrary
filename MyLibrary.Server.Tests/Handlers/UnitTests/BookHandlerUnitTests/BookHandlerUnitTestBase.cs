@@ -7,6 +7,7 @@ using MyLibrary.Server.Data.Entities.Interfaces;
 using MyLibrary.Server.Handlers;
 using MyLibrary.Server.Handlers.Interfaces;
 using MyLibrary.Server.Http.Responses;
+using MyLibrary.Server.Migrations;
 using MyLibrary.Shared.Interfaces.IDTOs;
 
 namespace MyLibrary.Server.Tests.Handlers.UnitTests.BookHandlerUnitTests
@@ -26,21 +27,26 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests.BookHandlerUnitTests
             );
         }
 
-        protected async Task AddFakeBooks(string? isbn = default, Guid? id = default, int? booksCount = 1)
+        protected async Task<ICollection<string>> AddFakeBooks(Guid? id = default, string? isbn = default, bool isAvailable = true, int? booksCount = 1)
         {
+            var bookIds = new List<string>();
             for (int i = 1; i <= booksCount; i++)
             {
-                DbContext.Add(new Book
+                var fakeBook = new Book
                 {
                     Id = id ?? Guid.NewGuid(),
                     ISBN = isbn ?? DateTime.Now.ToString(),
                     Title = $"Test Book {i}",
                     Author = $"Test Author {i}",
-                    IsAvailable = true
-                });
+                    IsAvailable = isAvailable
+                };
+                DbContext.Add(fakeBook);
+                bookIds.Add(fakeBook.Id.ToString());
             }
             await DbContext.SaveChangesAsync();
+            return bookIds;
         }
+
         protected INewBook<BookDTO> FakeNewBooksDTO(
             Guid? id = default,
             string? isbn = default,

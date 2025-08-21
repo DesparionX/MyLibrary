@@ -39,5 +39,48 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests.BookHandlerUnitTests
                 && r.StatusCode == StatusCodes.Status200OK);
 
         }
+        [Test]
+        public async Task UpdateBookAsync_ShouldReturnNotFound_WhenBookDoesNotExist()
+        {
+            // Arrange
+            var bookToUpdate = new BookDTO
+            {
+                Id = Guid.NewGuid(),
+                ISBN = "978-3-16-3333333-0",
+                Title = "Non-existent Book",
+                Author = "Unknown Author",
+                Description = "This book does not exist.",
+                Publisher = "Unknown Publisher",
+                Genre = "Fiction"
+            };
+
+            // Act
+            var result = await _bookHandler.UpdateBookAsync(bookToUpdate);
+
+            // Assert
+            result.As<ITaskResult>().Should().NotBeNull()
+                .And
+                .Match<BookTaskResult>(r =>
+                !r.Succeeded
+                && r.Message!.Equals("No books found with given ISBN.")
+                && r.StatusCode == StatusCodes.Status404NotFound);
+        }
+        [Test]
+        public async Task UpdateBookAvailabilityAsync_ShouldReturnOK_WhenBooksUpdateSuccessfully()
+        {
+            // Arrange
+            var ids = await AddFakeBooks(booksCount: 5);
+
+            // Act
+            var result = await _bookHandler.UpdateBookAvailabilityAsync(ids, isAvailable: false);
+
+            // Assert
+            result.As<ITaskResult>().Should().NotBeNull()
+                .And
+                .Match<BookTaskResult>(r =>
+                r.Succeeded
+                && r.Message!.Equals($"{ids.Count} books availability updated successfully.")
+                && r.StatusCode == StatusCodes.Status200OK);
+        }
     }
 }
