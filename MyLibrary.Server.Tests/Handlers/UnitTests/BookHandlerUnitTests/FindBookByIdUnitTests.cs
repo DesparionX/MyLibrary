@@ -13,14 +13,14 @@ using System.Threading.Tasks;
 namespace MyLibrary.Server.Tests.Handlers.UnitTests.BookHandlerUnitTests
 {
     [TestFixture]
-    public class FindBookByIdUnitTest : BookHandlerUnitTestBase
+    public class FindBookByIdUnitTests : BookHandlerUnitTestBase
     {
         [Test]
         public async Task FindBookById_ShouldReturnBookDTO_WhenBookExists()
         {
             // Arrange
             var bookId = Guid.NewGuid();
-            await AddFakeBook(default, bookId);
+            await AddFakeBooks(default, bookId);
 
             // Act
             var result = await _bookHandler.FindBookById(bookId);

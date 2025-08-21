@@ -18,7 +18,7 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests.BookHandlerUnitTests
         {
             // Arrange
             var isbn = "978-3-16-148410-0";
-            await AddFakeBook(isbn, default);
+            await AddFakeBooks(isbn, default);
 
             // Act
             var result = await _bookHandler.FindBookByISBN(isbn);

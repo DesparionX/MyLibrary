@@ -77,7 +77,7 @@ namespace MyLibrary.Server.Handlers
                     return new BookTaskResult(succeeded: false, message: "No books found.", statusCode: StatusCodes.Status404NotFound);
                 }
                 var bookDtos = _mapper.Map<ICollection<BookDTO>>(books);
-                return new BookTaskResult(succeeded: true, message: "Books found !", statusCode: StatusCodes.Status302Found, books: bookDtos);
+                return new BookTaskResult(succeeded: true, message: $"{books.Count} Books found !", statusCode: StatusCodes.Status302Found, books: bookDtos);
             }
             catch (Exception err)
             {
@@ -131,9 +131,9 @@ namespace MyLibrary.Server.Handlers
                     return new BookTaskResult(succeeded: false, message: "No books removed from the database.", statusCode: StatusCodes.Status400BadRequest);
                 }
 
-                _logger.LogInformation("{RemovedBooks} books removed from the database.", removedBooks);
+                _logger.LogInformation("Book removed from the database successfully.");
                 _eventBus.Publish(new ItemRemovedEvent(bookToRemove.ISBN, bookToRemove.Title, removedBooks));
-                return new BookTaskResult(succeeded: true, message: $"{removedBooks} books removed successfully.", statusCode: StatusCodes.Status200OK);
+                return new BookTaskResult(succeeded: true, message: "Book removed from the database successfully.", statusCode: StatusCodes.Status200OK);
             }
             catch(Exception err)
             {
@@ -244,7 +244,7 @@ namespace MyLibrary.Server.Handlers
             catch (Exception err)
             {
                 _logger.LogError(err, "[ERROR] {Message}\n{StackTrace}", err.Message, err.StackTrace);
-                return 0;
+                throw;
             }
         }
     }
