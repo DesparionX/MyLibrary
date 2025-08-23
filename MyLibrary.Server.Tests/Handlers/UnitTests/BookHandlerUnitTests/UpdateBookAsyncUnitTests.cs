@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MyLibrary.Server.Tests.Handlers.UnitTests.BookHandlerUnitTests
 {
@@ -81,6 +82,23 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests.BookHandlerUnitTests
                 r.Succeeded
                 && r.Message!.Equals($"{ids.Count} books availability updated successfully.")
                 && r.StatusCode == StatusCodes.Status200OK);
+        }
+        [Test]
+        public async Task UpdateBookAvailabilityAsync_ShouldReturnBadRequest_WhenBooksIdListIsEmpty()
+        {
+            // Arrange
+            var ids = new List<string>();
+
+            // Act
+            var result = await _bookHandler.UpdateBookAvailabilityAsync(ids, isAvailable: false);
+
+            // Assert
+            result.As<ITaskResult>().Should().NotBeNull()
+                .And
+                .Match<BookTaskResult>(r =>
+                !r.Succeeded
+                && r.Message!.Equals("No books were updated.")
+                && r.StatusCode == StatusCodes.Status400BadRequest);
         }
     }
 }

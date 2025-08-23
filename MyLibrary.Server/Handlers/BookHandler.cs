@@ -198,7 +198,7 @@ namespace MyLibrary.Server.Handlers
                         updatedBooks++;
                     }
                 }
-                if (updatedBooks == ids.Count)
+                if (updatedBooks > 0 && updatedBooks == ids.Count)
                 {
                     await _context.SaveChangesAsync();
                     _logger.LogInformation("{UpdatedBooks} books availability updated in the database.", updatedBooks);
