@@ -11,6 +11,7 @@ using MyLibrary.Server.Events;
 using MyLibrary.Server.Handlers;
 using MyLibrary.Server.Handlers.Interfaces;
 using MyLibrary.Server.Http.Responses;
+using MyLibrary.Shared.Interfaces.IDTOs;
 
 namespace MyLibrary.Server.Tests.Handlers.UnitTests
 {
@@ -41,6 +42,7 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests
             SubscriptionHandler = new Mock<ISubscriptionHandler<User>>();
             UserHandler = new Mock<IUserHandler>();
             WarehouseHandler = new Mock<IWarehouseHandler<IWarehouse<int>>>();
+            
             EventBus = new Mock<EventBus>();
             JWTGenerator = new Mock<IJWTGenerator>();
 
@@ -73,6 +75,26 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests
             // Clear the in-memory database after each test
             DbContext.Database.EnsureDeleted();
             DbContext.Dispose();
+        }
+
+        protected async Task<User?> AddFakeUserAsync(
+            string? id = default,
+            string? userName = default,
+            string? email = default,
+            string? password = "Password@123")
+        {
+            var fakeUser = new User
+            {
+                Id = id ?? Guid.NewGuid().ToString(),
+                UserName = userName ?? "testuser",
+                Email = email ?? "testmail@abv.bg"
+            };
+            fakeUser.PasswordHash = new PasswordHasher<User>().HashPassword(fakeUser, password!);
+
+            DbContext.Users.Add(fakeUser);
+            await DbContext.SaveChangesAsync();
+
+            return fakeUser;
         }
     }
 }

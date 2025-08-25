@@ -1,38 +1,31 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Extensions;
-using Microsoft.OpenApi.Models;
 using MyLibrary.Server.Data;
 using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Shared.Interfaces.IDTOs;
 using MyLibrary.Server.Data.Entities;
-using MyLibrary.Server.Events;
 using MyLibrary.Server.Handlers.Interfaces;
 using MyLibrary.Server.Helpers;
 using MyLibrary.Server.Http.Responses;
-using NJsonSchema.CodeGeneration.Models;
-using Sprache;
+using MyLibrary.Server.Data.Entities.Interfaces;
 
 namespace MyLibrary.Server.Handlers
 {
     public class OperationHandler : IOperationHandler
     {
-        private readonly EventBus _eventBus;
         private readonly ILogger<OperationHandler> _logger;
         private readonly IMapper _mapper;
-        private readonly IBookHandler<Book> _bookHandler;
-        private readonly IWarehouseHandler<Warehouse> _warehouseHandler;
+        private readonly IBookHandler<IBook<Guid>> _bookHandler;
+        private readonly IWarehouseHandler<IWarehouse<int>> _warehouseHandler;
         private readonly AppDbContext _context;
 
         public OperationHandler(
-            EventBus eventBus,
             ILogger<OperationHandler> logger,
             IMapper mapper,
-            IBookHandler<Book> bookHandler,
-            IWarehouseHandler<Warehouse> warehouseHandler,
+            IBookHandler<IBook<Guid>> bookHandler,
+            IWarehouseHandler<IWarehouse<int>> warehouseHandler,
             AppDbContext context)
         {
-            _eventBus = eventBus;
             _logger = logger;
             _mapper = mapper;
             _bookHandler = bookHandler;
@@ -50,12 +43,12 @@ namespace MyLibrary.Server.Handlers
                     return new OperationTaskResult(succeeded: false, message: "No operations found.", statusCode: StatusCodes.Status404NotFound);
                 }
                 var dtos = _mapper.Map<ICollection<OperationDTO>>(operations);
-                _logger.LogInformation($"[INFO] Found {operations.Count} operations.");
-                return new OperationTaskResult(succeeded: true, message: $"Found {operations.Count} operations.", statusCode: StatusCodes.Status200OK, operationDtos: dtos);
+                _logger.LogInformation("[INFO] Found {Count} operations.", operations.Count);
+                return new OperationTaskResult(succeeded: true, message: $"Found {operations.Count} operations.", statusCode: StatusCodes.Status302Found, operationDtos: dtos);
             }
             catch (Exception err)
             {
-                _logger.LogError(err, $"[ERROR]\n{err.Message}");
+                _logger.LogError(err, "[ERROR]\n{Message}", err.Message);
                 return new OperationTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
@@ -72,8 +65,8 @@ namespace MyLibrary.Server.Handlers
                 // First process the operation in the warehouse before storing it.
                 if(!await ProcessedInWarehouseAsync(operationDTO))
                 {
-                    _logger.LogWarning($"[WARNING] Operation with ID: {operationDTO.Id} failed to process in Warehouse.");
-                    return new OperationTaskResult(succeeded: false, message: "Operation failed while processing in Warehouse.", statusCode: StatusCodes.Status400BadRequest);
+                    _logger.LogWarning("[WARNING] Operation with ID: {Id} failed to process in Warehouse.", operationDTO.Id);
+                    return new OperationTaskResult(succeeded: false, message: "Operation failed while processing in Warehouse.", statusCode: StatusCodes.Status500InternalServerError);
                 }
 
                 // Map the DTO to the entity and add it to the context.
@@ -83,14 +76,14 @@ namespace MyLibrary.Server.Handlers
                 // If successfully added to the context, return positive task result.
                 if (await _context.SaveChangesAsync() > 0)
                 {
-                    _logger.LogInformation($"[INFO] Operation with ID: {operationDTO.Id} was created.");
+                    _logger.LogInformation("[INFO] Operation with ID: {Id} was created.", operationDTO.Id);
                     return new OperationTaskResult(succeeded: true, message: "Operation was added.", statusCode: StatusCodes.Status200OK);
                 }
                 return new OperationTaskResult(succeeded: false, message: "Operation was not added.", statusCode: StatusCodes.Status400BadRequest);
             }
             catch(Exception err)
             {
-                _logger.LogError(err, $"[ERROR]\n{err.Message}");
+                _logger.LogError(err, "[ERROR]\n{Message}", err.Message);
                 return new OperationTaskResult(succeeded: false, message: "Something went wrong !", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
@@ -148,7 +141,7 @@ namespace MyLibrary.Server.Handlers
                     var warehouseResult = await _warehouseHandler.RemoveStocksAsync(itemsToRemove);
                     if (!warehouseResult.Succeeded)
                     {
-                        _logger.LogWarning($"[WARNING] Operation with ID: {operationDTO.Id} failed to remove stocks.");
+                        _logger.LogWarning("[WARNING] Operation with ID: {Id} failed to remove stocks.", operationDTO.Id);
                         return false;
                     }
                     else
@@ -181,7 +174,7 @@ namespace MyLibrary.Server.Handlers
                     warehouseResult = await _warehouseHandler.RemoveStocksAsync(itemsToAdd);
                     if (!warehouseResult.Succeeded)
                     {
-                        _logger.LogWarning($"[WARNING] Operation with ID: {operationDTO.Id} failed to remove stocks.");
+                        _logger.LogWarning("[WARNING] Operation with ID: {Id} failed to remove stocks.", operationDTO.Id);
                         return false;
                     }
                     else
@@ -191,7 +184,7 @@ namespace MyLibrary.Server.Handlers
                     }
 
                 default:
-                    _logger.LogWarning($"[WARNING] Operation type: {operationDTO.OperationName} is not supported.");
+                    _logger.LogWarning("[WARNING] Operation type: {OperationName} is not supported.", operationDTO.OperationName);
                     return false;
             }
         }
