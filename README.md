@@ -9,4 +9,4 @@
 - **NUnit3 Test Project** - Unit tests for the server side. (will add RestSharp API tests in the future.)
 
 # <p align="center">WPF Client</p>
-## <p align="center">Initial screen, user must select language.</p>
+<p align="center">Initial screen, user must select language.</p>
