@@ -27,3 +27,6 @@
 
 #### <p align="center"> If API and DB are healthy, app starts and LogIn screen appears. </p>
 <p align="center"><img alt="Login screen" width="300" src="Screenshots/5.png"/><img alt="Login screen" width="300" src="Screenshots/6.png"/></p>
+
+#### <p align="center">And finally if user enters valid credentials, the program starts with the main window. </p>
+<p align="center"><img alt="Loading screen" src="Screenshots/7.png"/></p>
