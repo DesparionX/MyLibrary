@@ -1,4 +1,4 @@
-# <center>LibStore
+# <p align="center">LibStore</p>
  ## A full-stack project that I am developing to practice and improve my skills.
  LibStore started as a quick portfolio project, but it has the potential to become an actually good product. This is why it will take a while to be finished, however the API is working good (still needs improvement and little refactoring). I am currently working on one of the clients (WPF) But its currently in very early stage.
 
