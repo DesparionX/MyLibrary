@@ -23,4 +23,4 @@
 </table>
 
 ### <p align="center"> After language is selected, the app displays loading screen, and checks API and DB connections.</p>
-<p align="center"><img alt="Loading screen" height="200" src="Screenshots/4.png"/></p>
+<p align="center"><img alt="Loading screen" height="300" src="Screenshots/4.png"/></p>
