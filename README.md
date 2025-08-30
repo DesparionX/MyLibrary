@@ -8,4 +8,5 @@
 - **ASP.NET Core Web API** - REST API and business logic in one project.
 - **NUnit3 Test Project** - Unit tests for the server side. (will add RestSharp API tests in the future.)
 
-# <center>WPF Client 
+# <p align="center">WPF Client
+## Initial screen, user must select language.</p>
