@@ -12,7 +12,7 @@
 ### <p align="center">Initial screen, user must select language.</p>
 <p align="center">
 <img height="200" alt="Language selection screen" src="Screenshots/1.png"/></p>
-<table align="center" style="none">
+<table align="center">
     <tr>
         <th>Bulgarian</th>
         <th>English</th>
@@ -21,3 +21,5 @@
         <td><img alt="Bulgarian" height="200" src="Screenshots/2.png">
         <td><img alt="English" height="200" src="Screenshots/3.png">
 </table>
+### <p align="center"> After language is selected, the app displays loading screen, and checks API and DB connections.</p>
+ 
