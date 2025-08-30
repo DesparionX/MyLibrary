@@ -12,7 +12,7 @@
 ### <p align="center">Initial screen, user must select language.</p>
 <p align="center">
 <img height="200" alt="Language selection screen" src="Screenshots/1.png"/></p>
-<table align="center">
+<table align="center" style="none">
     <tr>
         <th>Bulgarian</th>
         <th>English</th>
