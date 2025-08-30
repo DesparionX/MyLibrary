@@ -1,9 +1,11 @@
 ﻿using MyLibrary.Server.Data.Entities.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyLibrary.Server.Data.Entities
 {
     public class Book : IBook<Guid>
     {
+        [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
         public string ISBN { get; set; } = "";
         public string Genre { get; set; } = "";

@@ -13,7 +13,7 @@ namespace MyLibrary.Server.Handlers
     public class UserHandler : IUserHandler
     {
         private readonly IMapper _mapper;
-        private readonly ILogger<UserHandler> _logger;
+        private readonly ILogger<IUserHandler> _logger;
         private readonly UserManager<User> _userManager;
 
         public UserHandler(IMapper mapper, ILogger<UserHandler> logger, UserManager<User> userManager)

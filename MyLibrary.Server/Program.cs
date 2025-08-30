@@ -158,7 +158,7 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.AddProfile<MapHandler>();
 });
 builder.Services.AddScoped<IBookHandler<IBook<Guid>>, BookHandler>();
-builder.Services.AddScoped<IWarehouseHandler<Warehouse>, WarehouseHandler>();
+builder.Services.AddScoped<IWarehouseHandler<IWarehouse<int>>, WarehouseHandler>();
 builder.Services.AddScoped<IOperationHandler, OperationHandler>();
 builder.Services.AddScoped<IAuthHandler, AuthHandler>();
 builder.Services.AddScoped<IUserHandler, UserHandler>();

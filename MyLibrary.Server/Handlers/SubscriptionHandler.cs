@@ -132,8 +132,6 @@ namespace MyLibrary.Server.Handlers
                 return new SubscriptionTaskResult(succeeded: false, message: "Error updating tier.", statusCode: StatusCodes.Status500InternalServerError);
             }
         }
-
-
         public async Task<ITaskResult> GetAllSubscriptionsAsync()
         {
             try

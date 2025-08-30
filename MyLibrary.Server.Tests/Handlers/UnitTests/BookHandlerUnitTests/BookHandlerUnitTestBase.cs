@@ -7,7 +7,6 @@ using MyLibrary.Server.Data.Entities.Interfaces;
 using MyLibrary.Server.Handlers;
 using MyLibrary.Server.Handlers.Interfaces;
 using MyLibrary.Server.Http.Responses;
-using MyLibrary.Server.Migrations;
 using MyLibrary.Shared.Interfaces.IDTOs;
 
 namespace MyLibrary.Server.Tests.Handlers.UnitTests.BookHandlerUnitTests
@@ -27,7 +26,7 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests.BookHandlerUnitTests
             );
         }
 
-        protected async Task<ICollection<string>> AddFakeBooks(Guid? id = default, string? isbn = default, bool isAvailable = true, int? booksCount = 1)
+        protected async Task<ICollection<string>> AddFakeBooks(Guid? id = null, string? isbn = default, bool isAvailable = true, int? booksCount = 1)
         {
             var bookIds = new List<string>();
             for (int i = 1; i <= booksCount; i++)
@@ -61,7 +60,7 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests.BookHandlerUnitTests
             {
                 Book = new BookDTO
                 {
-                    Id = id ?? Guid.Empty,
+                    Id = DetermineBookId(id, quantity),
                     ISBN = isbn ?? "978-3-16-148410-0",
                     Title = title ?? "Test Book 1",
                     Author = author ?? "Test Author 1",
@@ -80,6 +79,19 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests.BookHandlerUnitTests
                 var prop = typeof(BookDTO).GetProperty(propertyName);
                 return prop?.GetValue(b)?.Equals(value) ?? false;
             });
+        }
+
+        private Guid DetermineBookId(Guid? id, int? booksCount)
+        {
+            if (!id.HasValue && booksCount == 1)
+            {
+                return Guid.NewGuid();
+            }
+            if (id.HasValue && booksCount == 1)
+            {
+                return id.Value;
+            }
+            return Guid.Empty;
         }
     }
 }

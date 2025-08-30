@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
@@ -11,7 +12,6 @@ using MyLibrary.Server.Events;
 using MyLibrary.Server.Handlers;
 using MyLibrary.Server.Handlers.Interfaces;
 using MyLibrary.Server.Http.Responses;
-using MyLibrary.Shared.Interfaces.IDTOs;
 
 namespace MyLibrary.Server.Tests.Handlers.UnitTests
 {
@@ -30,6 +30,7 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests
         protected Mock<EventBus> EventBus;
         protected IMapper Mapper;
         protected AppDbContext DbContext;
+        protected SqliteConnection Connection;
 
         [SetUp]
         public void SetupBase()
@@ -63,10 +64,15 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests
             Mapper = mapperConfig.CreateMapper();
 
             // Initialize the in-memory database for testing
+            Connection = new SqliteConnection("Filename=:memory:");
+            Connection.Open();
+
             var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(databaseName: "TestDatabase")
+                //.UseInMemoryDatabase(databaseName: "TestDatabase")
+                .UseSqlite(Connection)
                 .Options;
             DbContext = new AppDbContext(options);
+            DbContext.Database.EnsureCreated();
         }
 
         [TearDown]
@@ -75,6 +81,7 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests
             // Clear the in-memory database after each test
             DbContext.Database.EnsureDeleted();
             DbContext.Dispose();
+            Connection.Close();
         }
 
         protected async Task<User?> AddFakeUserAsync(

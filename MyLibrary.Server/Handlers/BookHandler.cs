@@ -235,6 +235,13 @@ namespace MyLibrary.Server.Handlers
                 for (int i = 0; i < quantity; i++)
                 {
                     var book = _mapper.Map<Book>(existingBook);
+
+                    // In case DB provider doesn't support auto-generated GUIDs.
+                    if (book.Id.Equals(Guid.Empty))
+                    {
+                        book.Id = Guid.NewGuid();
+                    }
+                        
                     await _context.Books.AddAsync(book);
                     addedBooks++;
                     _logger.LogInformation("Book {Title} added to the database.", book.Title);
