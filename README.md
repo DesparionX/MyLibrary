@@ -3,7 +3,7 @@
  LibStore started as a quick portfolio project, but it has the potential to become an actually good product. This is why it will take a while to be finished, however the API is working good (still needs improvement and little refactoring). I am currently working on one of the clients (WPF) But its currently in very early stage.
 
  So here we got:
- - **WPF Client** - for local stores.
+ - **WPF Client - SPA Style** - for local stores.
  - **Future React/Angular TS Client** - for online shoping.
 - **ASP.NET Core Web API** - REST API and business logic in one project.
 - **NUnit3 Test Project** - Unit tests for the server side. (will add RestSharp API tests in the future.)
@@ -28,5 +28,7 @@
 #### <p align="center"> If API and DB are healthy, app starts and LogIn screen appears. </p>
 <p align="center"><img alt="Login screen" width="300" src="Screenshots/5.png"/><img alt="Login screen" width="300" src="Screenshots/6.png"/></p>
 
-#### <p align="center">And finally if user enters valid credentials, the program starts with the main window. </p>
+#### <p align="center">And finally if user enters valid credentials, the program starts with the main window and Home view. </p>
 <p align="center"><img alt="Loading screen" src="Screenshots/7.png"/></p>
+<p align="center"><img alt="Loading screen" src="Screenshots/8.png"/></p>
+
