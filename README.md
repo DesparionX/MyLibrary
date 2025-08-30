@@ -24,3 +24,6 @@
 
 ### <p align="center"> After language is selected, the app displays loading screen, and checks API and DB connections.</p>
 <p align="center"><img alt="Loading screen" height="300" src="Screenshots/4.png"/></p>
+
+#### <p align="center"> If API and DB are healthy, app starts and LogIn screen appears. </p>
+<p align="center"><img alt="Login screen" width="300" src="Screenshots/5.png"/><img alt="Login screen" width="300" src="Screenshots/6.png"/></p>
