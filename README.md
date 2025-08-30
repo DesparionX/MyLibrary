@@ -21,5 +21,6 @@
         <td><img alt="Bulgarian" height="200" src="Screenshots/2.png">
         <td><img alt="English" height="200" src="Screenshots/3.png">
 </table>
+
 ### <p align="center"> After language is selected, the app displays loading screen, and checks API and DB connections.</p>
- 
+<img alt="Loading screen" height="200" align="center" src="Screenshots/4.png"/>
