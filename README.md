@@ -11,4 +11,4 @@
 # <p align="center">WPF Client</p>
 ### <p align="center">Initial screen, user must select language.</p>
 <p align="center">
-<img alt="Language selection screen" src="Screenshots/1.png"/></p>
+<img height="200" alt="Language selection screen" src="Screenshots/1.png"/></p>
