@@ -61,11 +61,83 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Author:.
+        /// </summary>
+        public static string Book_Details_Author {
+            get {
+                return ResourceManager.GetString("Book_Details_Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description:.
+        /// </summary>
+        public static string Book_Details_Description {
+            get {
+                return ResourceManager.GetString("Book_Details_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genre:.
+        /// </summary>
+        public static string Book_Details_Genre {
+            get {
+                return ResourceManager.GetString("Book_Details_Genre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID:.
+        /// </summary>
+        public static string Book_Details_ID {
+            get {
+                return ResourceManager.GetString("Book_Details_ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISBN:.
+        /// </summary>
+        public static string Book_Details_ISBN {
+            get {
+                return ResourceManager.GetString("Book_Details_ISBN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Publisher:.
+        /// </summary>
+        public static string Book_Details_Publisher {
+            get {
+                return ResourceManager.GetString("Book_Details_Publisher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title:.
+        /// </summary>
+        public static string Book_Details_Title {
+            get {
+                return ResourceManager.GetString("Book_Details_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error fetching book by ID..
         /// </summary>
-        public static string BookService_Errors_ErrorFetchingBook {
+        public static string BookService_Errors_ErrorFetchingBookByID {
             get {
-                return ResourceManager.GetString("BookService_Errors_ErrorFetchingBook", resourceCulture);
+                return ResourceManager.GetString("BookService_Errors_ErrorFetchingBookByID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error fetching book by ISBN..
+        /// </summary>
+        public static string BookService_Errors_ErrorFetchingBookByISBN {
+            get {
+                return ResourceManager.GetString("BookService_Errors_ErrorFetchingBookByISBN", resourceCulture);
             }
         }
         
@@ -192,6 +264,51 @@ namespace MyLibrary.Resources.Languages {
         public static string LogIn_Password {
             get {
                 return ResourceManager.GetString("LogIn_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISBN.
+        /// </summary>
+        public static string Recipe_Header_ISBN {
+            get {
+                return ResourceManager.GetString("Recipe_Header_ISBN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Recipe_Header_Name {
+            get {
+                return ResourceManager.GetString("Recipe_Header_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        public static string Recipe_Header_Price {
+            get {
+                return ResourceManager.GetString("Recipe_Header_Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity.
+        /// </summary>
+        public static string Recipe_Header_Quantity {
+            get {
+                return ResourceManager.GetString("Recipe_Header_Quantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total.
+        /// </summary>
+        public static string Recipe_Header_Total {
+            get {
+                return ResourceManager.GetString("Recipe_Header_Total", resourceCulture);
             }
         }
         

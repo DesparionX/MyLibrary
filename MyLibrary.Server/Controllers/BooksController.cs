@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Data.Entities;
+using MyLibrary.Server.Data.Entities.Interfaces;
 using MyLibrary.Server.Handlers.Interfaces;
 using MyLibrary.Server.Http.Responses;
 
@@ -12,11 +13,11 @@ namespace MyLibrary.Server.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private readonly IBookHandler<Book> _bookHandler;
+        private readonly IBookHandler<IBook<Guid>> _bookHandler;
         private readonly ILogger<BooksController> _logger;
         private readonly IResultHandler<ITaskResult> _resultHandler;
 
-        public BooksController(IBookHandler<Book> bookHandler, ILogger<BooksController> logger, IResultHandler<ITaskResult> resultHandler)
+        public BooksController(IBookHandler<IBook<Guid>> bookHandler, ILogger<BooksController> logger, IResultHandler<ITaskResult> resultHandler)
         {
             _bookHandler = bookHandler;
             _logger = logger;

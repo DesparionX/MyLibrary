@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Data.Entities;
+using MyLibrary.Server.Data.Entities.Interfaces;
 using MyLibrary.Server.Handlers.Interfaces;
 using MyLibrary.Server.Http.Responses;
 using System.Runtime.CompilerServices;
@@ -12,10 +13,10 @@ namespace MyLibrary.Server.Controllers
     [ApiController]
     public class WarehouseController : ControllerBase
     {
-        private readonly IWarehouseHandler<Warehouse> _warehouseHandler;
+        private readonly IWarehouseHandler<IWarehouse<int>> _warehouseHandler;
         private readonly IResultHandler<ITaskResult> _resultHandler;
 
-        public WarehouseController(IWarehouseHandler<Warehouse> warehouseHandler, IResultHandler<ITaskResult> resultHandler)
+        public WarehouseController(IWarehouseHandler<IWarehouse<int>> warehouseHandler, IResultHandler<ITaskResult> resultHandler)
         {
             _warehouseHandler = warehouseHandler;
             _resultHandler = resultHandler;

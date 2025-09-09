@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:MyLibrary.Views.Pages.Sell"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resx="clr-namespace:MyLibrary.Resources.Languages"
     xmlns:viewmodels="clr-namespace:MyLibrary.ViewModels"
     MaxWidth="1200"
     MaxHeight="800"
@@ -32,8 +33,7 @@
             <Grid
                 x:Name="Left"
                 Grid.Column="0"
-                VerticalAlignment="Stretch"
-                Background="Yellow">
+                VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
@@ -59,7 +59,6 @@
                     Height="auto"
                     Margin="10"
                     HorizontalAlignment="Center"
-                    Background="Red"
                     DataContext="{Binding SelectedBookFromReceipt}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -80,14 +79,17 @@
                         Grid.Row="0"
                         Grid.Column="0"
                         Margin="0,5,5,0"
+                        FontSize="16"
                         FontWeight="Bold"
-                        Text="ID:"
+                        Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
+                        Text="{x:Static resx:Strings.Book_Details_ID}"
                         TextAlignment="Right" />
                     <TextBlock
                         x:Name="ItemID"
                         Grid.Row="0"
                         Grid.Column="1"
                         Margin="5,5,0,0"
+                        FontSize="16"
                         Text="{Binding Id}"
                         TextWrapping="Wrap" />
                     <TextBlock
@@ -95,14 +97,17 @@
                         Grid.Row="1"
                         Grid.Column="0"
                         Margin="0,5,5,0"
+                        FontSize="16"
                         FontWeight="Bold"
-                        Text="ISBN:"
+                        Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
+                        Text="{x:Static resx:Strings.Book_Details_ISBN}"
                         TextAlignment="Right" />
                     <TextBlock
                         x:Name="ItemISBN"
                         Grid.Row="1"
                         Grid.Column="1"
                         Margin="5,5,0,0"
+                        FontSize="16"
                         Text="{Binding ISBN}"
                         TextWrapping="Wrap" />
                     <TextBlock
@@ -110,65 +115,79 @@
                         Grid.Row="2"
                         Grid.Column="0"
                         Margin="0,5,5,0"
+                        FontSize="16"
                         FontWeight="Bold"
-                        Text="Title:"
+                        Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
+                        Text="{x:Static resx:Strings.Book_Details_Title}"
                         TextAlignment="Right" />
                     <TextBlock
                         x:Name="ItemTitle"
                         Grid.Row="2"
                         Grid.Column="1"
                         Margin="5,5,0,0"
+                        FontSize="16"
                         Text="{Binding Title}" />
                     <TextBlock
                         x:Name="ItemGenreLabel"
                         Grid.Row="3"
                         Grid.Column="0"
                         Margin="0,5,5,0"
+                        FontSize="16"
                         FontWeight="Bold"
-                        Text="Genre:"
+                        Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
+                        Text="{x:Static resx:Strings.Book_Details_Genre}"
                         TextAlignment="Right" />
                     <TextBlock
                         x:Name="ItemGenre"
                         Grid.Row="3"
                         Grid.Column="1"
                         Margin="5,5,0,0"
+                        FontSize="16"
                         Text="{Binding Genre}" />
                     <TextBlock
                         x:Name="ItemAuthorLabel"
                         Grid.Row="4"
                         Grid.Column="0"
                         Margin="0,5,5,0"
+                        FontSize="16"
                         FontWeight="Bold"
-                        Text="Author:"
+                        Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
+                        Text="{x:Static resx:Strings.Book_Details_Author}"
                         TextAlignment="Right" />
                     <TextBlock
                         x:Name="ItemAuthor"
                         Grid.Row="4"
                         Grid.Column="1"
                         Margin="5,5,0,0"
+                        FontSize="16"
                         Text="{Binding Author}" />
                     <TextBlock
                         x:Name="ItemPublisherLabel"
                         Grid.Row="5"
                         Grid.Column="0"
                         Margin="0,5,5,0"
+                        FontSize="16"
                         FontWeight="Bold"
-                        Text="Publisher:"
+                        Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
+                        Text="{x:Static resx:Strings.Book_Details_Publisher}"
                         TextAlignment="Right" />
                     <TextBlock
                         x:Name="ItemPublisher"
                         Grid.Row="5"
                         Grid.Column="1"
                         Margin="5,5,0,0"
+                        FontSize="16"
                         Text="{Binding Publisher}" />
                     <TextBlock
                         x:Name="ItemDescriptionLabel"
                         Grid.Row="6"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
-                        Margin="0,10,0,0"
+                        Margin="0,20,0,0"
+                        FontSize="16"
                         FontWeight="Bold"
-                        Text="Description:"
+                        Foreground="{DynamicResource MaterialDesign.Brush.Secondary}"
+                        Text="{x:Static resx:Strings.Book_Details_Description}"
                         TextAlignment="Center" />
                     <TextBlock
                         x:Name="ItemDescription"
@@ -176,6 +195,7 @@
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
                         Margin="10,5,10,5"
+                        FontSize="16"
                         Text="{Binding Description}"
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
@@ -184,16 +204,16 @@
             <Border
                 x:Name="Separator"
                 Grid.Column="1"
+                Width="1"
                 Margin="5">
                 <Border.Background>
-                    <SolidColorBrush Color="#FFCCCCCC" />
+                    <SolidColorBrush Color="#222222" />
                 </Border.Background>
             </Border>
             <Grid
                 x:Name="Right"
                 Grid.Column="3"
-                HorizontalAlignment="Center"
-                Background="Green">
+                HorizontalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
@@ -215,6 +235,7 @@
                     CanUserSortColumns="False"
                     FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Mode=Self}}"
                     Focusable="True"
+                    FontSize="16"
                     GridLinesVisibility="Horizontal"
                     HeadersVisibility="All"
                     IsReadOnly="True"
@@ -236,7 +257,7 @@
                     </DataGrid.Resources>
                     <DataGrid.Columns>
                         <DataGridTemplateColumn
-                            Header="ISBN"
+                            Header="{x:Static resx:Strings.Recipe_Header_ISBN}"
                             HeaderStyle="{StaticResource HeaderCenter}"
                             IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
@@ -249,7 +270,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn
-                            Header="Name"
+                            Header="{x:Static resx:Strings.Recipe_Header_Name}"
                             HeaderStyle="{StaticResource HeaderCenter}"
                             IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
@@ -262,7 +283,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn
-                            Header="Price"
+                            Header="{x:Static resx:Strings.Recipe_Header_Price}"
                             HeaderStyle="{StaticResource HeaderRight}"
                             IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
@@ -275,7 +296,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn
-                            Header="Quantity"
+                            Header="{x:Static resx:Strings.Recipe_Header_Quantity}"
                             HeaderStyle="{StaticResource HeaderCenter}"
                             IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
@@ -288,7 +309,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn
-                            Header="Total"
+                            Header="{x:Static resx:Strings.Recipe_Header_Total}"
                             HeaderStyle="{StaticResource HeaderRight}"
                             IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>

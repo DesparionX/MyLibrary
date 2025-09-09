@@ -51,7 +51,7 @@ namespace MyLibrary.Services.Api
             }
             catch(Exception err)
             {
-                _notificationService.ShowError(title: Strings.Error, message: $"{Strings.BookService_Errors_ErrorFetchingBook} \n {err.Message}");
+                _notificationService.ShowError(title: Strings.Error, message: $"{Strings.BookService_Errors_ErrorFetchingBookByID} \n {err.Message}");
                 return new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status500InternalServerError, message: err.Message);
             }
         }
@@ -68,7 +68,7 @@ namespace MyLibrary.Services.Api
             }
             catch (Exception err)
             {
-                _notificationService.ShowError(title: Strings.Error, message: $"{Strings.BookService_Errors_ErrorFetchingBook} \n {err.Message}");
+                _notificationService.ShowError(title: Strings.Error, message: $"{Strings.BookService_Errors_ErrorFetchingBookByISBN} \n {err.Message}");
                 return new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status500InternalServerError, message: err.Message);
             }
         }

@@ -187,7 +187,7 @@
   <data name="Sell_Validations_NullOrder" xml:space="preserve">
     <value>Поръчката не може да е празна.</value>
   </data>
-  <data name="BookService_Errors_ErrorFetchingBook" xml:space="preserve">
+  <data name="BookService_Errors_ErrorFetchingBookByID" xml:space="preserve">
     <value>Грешка при намирането на книга по ИН.</value>
   </data>
   <data name="Sell_Validations_ID_NullOrWhiteSpace" xml:space="preserve">
@@ -201,5 +201,44 @@
   </data>
   <data name="Sell_Validations_NullQuantity" xml:space="preserve">
     <value>Трябва да маркирате поне 1 предмет.</value>
+  </data>
+  <data name="BookService_Errors_ErrorFetchingBookByISBN" xml:space="preserve">
+    <value>Грешка при намирането на книга по ISBN.</value>
+  </data>
+  <data name="Book_Details_ID" xml:space="preserve">
+    <value>ИН:</value>
+  </data>
+  <data name="Book_Details_ISBN" xml:space="preserve">
+    <value>ISBN:</value>
+  </data>
+  <data name="Book_Details_Title" xml:space="preserve">
+    <value>Заглавие:</value>
+  </data>
+  <data name="Book_Details_Genre" xml:space="preserve">
+    <value>Жанр:</value>
+  </data>
+  <data name="Book_Details_Author" xml:space="preserve">
+    <value>Автор:</value>
+  </data>
+  <data name="Book_Details_Publisher" xml:space="preserve">
+    <value>Издател:</value>
+  </data>
+  <data name="Recipe_Header_ISBN" xml:space="preserve">
+    <value>ISBN</value>
+  </data>
+  <data name="Recipe_Header_Name" xml:space="preserve">
+    <value>Заглавие</value>
+  </data>
+  <data name="Recipe_Header_Price" xml:space="preserve">
+    <value>Цена/бр</value>
+  </data>
+  <data name="Recipe_Header_Quantity" xml:space="preserve">
+    <value>Количество</value>
+  </data>
+  <data name="Book_Details_Description" xml:space="preserve">
+    <value>Описание:</value>
+  </data>
+  <data name="Recipe_Header_Total" xml:space="preserve">
+    <value>Общо</value>
   </data>
 </root>

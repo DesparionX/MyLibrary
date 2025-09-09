@@ -132,9 +132,9 @@ namespace MyLibrary.ViewModels
         {
             Operation.OperationName = nameof(StockOperations.OperationType.Sell);
             Operation.OrderList = Orders;
-            Operation.UserId = _authService.GetUser().Id;
-            Operation.UserName = _authService.GetUser().UserName;
-            Operation.UserRole = _authService.GetUser().UserName; // Assing UserName until UserRole is implemented.
+            Operation.UserId = _authService.GetUser()!.Id;
+            Operation.UserName = _authService.GetUser()!.UserName;
+            Operation.UserRole = _authService.GetUser()!.UserName; // Assing UserName until UserRole is implemented.
         }
 
         private void AddFakeOrders()

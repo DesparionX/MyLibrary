@@ -187,7 +187,7 @@
   <data name="Sell_Validations_NullOrder" xml:space="preserve">
     <value>Order cannot be null.</value>
   </data>
-  <data name="BookService_Errors_ErrorFetchingBook" xml:space="preserve">
+  <data name="BookService_Errors_ErrorFetchingBookByID" xml:space="preserve">
     <value>Error fetching book by ID.</value>
   </data>
   <data name="Sell_Validations_ID_NullOrWhiteSpace" xml:space="preserve">
@@ -201,5 +201,44 @@
   </data>
   <data name="Sell_Validations_NullQuantity" xml:space="preserve">
     <value>Quantity must be at least 1.</value>
+  </data>
+  <data name="BookService_Errors_ErrorFetchingBookByISBN" xml:space="preserve">
+    <value>Error fetching book by ISBN.</value>
+  </data>
+  <data name="Book_Details_ID" xml:space="preserve">
+    <value>ID:</value>
+  </data>
+  <data name="Book_Details_ISBN" xml:space="preserve">
+    <value>ISBN:</value>
+  </data>
+  <data name="Book_Details_Title" xml:space="preserve">
+    <value>Title:</value>
+  </data>
+  <data name="Book_Details_Genre" xml:space="preserve">
+    <value>Genre:</value>
+  </data>
+  <data name="Book_Details_Author" xml:space="preserve">
+    <value>Author:</value>
+  </data>
+  <data name="Book_Details_Publisher" xml:space="preserve">
+    <value>Publisher:</value>
+  </data>
+  <data name="Recipe_Header_ISBN" xml:space="preserve">
+    <value>ISBN</value>
+  </data>
+  <data name="Recipe_Header_Name" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Recipe_Header_Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Recipe_Header_Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="Book_Details_Description" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="Recipe_Header_Total" xml:space="preserve">
+    <value>Total</value>
   </data>
 </root>
