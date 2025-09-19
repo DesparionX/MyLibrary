@@ -49,7 +49,6 @@ namespace MyLibrary.ViewModels
             try
             {
                 StatusMessage = Strings.Splash_CheckingAPI;
-                await Task.Delay(3000);
                 return await _apiTestService.IsApiOnline();
             }
             catch (Exception err)

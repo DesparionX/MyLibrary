@@ -119,21 +119,9 @@ namespace MyLibrary.Services
                 errors.Add(Strings.Sell_Validations_ISBN_NullOrWhiteSpace);
             }
 
-            if (order.Quantity <= 1)
+            if (order.Quantity < 1)
             {
                 errors.Add(Strings.Sell_Validations_NullQuantity);
-            }
-
-            var findByISBN = await _bookService.FindBookByISBNAsync(order.ItemISBN!);
-            if (!findByISBN!.Succeeded)
-            {
-                errors.Add(Strings.Sell_Validations_ItemNotFound);
-            }
-
-            var findById = await _bookService.FindBookByIdAsync(order.ItemId!);
-            if (!findById!.Succeeded)
-            {
-                errors.Add(Strings.Sell_Validations_ItemNotFound);
             }
 
             // Check for book availability and quantity.

@@ -10,7 +10,7 @@ namespace MyLibrary.Services.Api
 {
     public interface IOperationService
     {
-        public Task<ITaskResult> GetOperationHistoryAsync();
-        public Task<ITaskResult> PerformOperation(IOperationDTO operationDto);
+        public Task<ITaskResult?> GetOperationHistoryAsync();
+        public Task<ITaskResult?> PerformOperation(IOperationDTO? operationDto);
     }
 }

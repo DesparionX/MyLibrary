@@ -28,11 +28,14 @@ namespace MyLibrary.Views.Pages.Sell
         public SellView(SellViewModel viewModel)
         {
             _viewModel = viewModel;
-            DataContext = _viewModel;
             InitializeComponent();
+            DataContext = _viewModel;
             ChangeItemDataVisibility();
         }
-
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            ReceiptGrid.Focus();
+        }
         private void ReceiptGrid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             var grid = sender as DataGrid;
@@ -61,19 +64,13 @@ namespace MyLibrary.Views.Pages.Sell
                 var row = (DataGridRow)grid.ItemContainerGenerator.ContainerFromIndex(newIndex);
                 row?.Focus();
             }
+
             var order = grid.SelectedItem as DisplayOrder;
             if (order != null)
             {
                 _viewModel.SelectBookFromReceipt(order.ItemISBN!);
             }
         }
-
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            
-            ReceiptGrid.Focus();
-        }
-
         private void ReceiptGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var grid = sender as DataGrid;
@@ -160,6 +157,10 @@ namespace MyLibrary.Views.Pages.Sell
             {
                 Left.Visibility = Visibility.Hidden;
             }
+        }
+        private async void OpenNewItemDialog(object sender, EventArgs e)
+        {
+            await _viewModel.OpenAddItemDialog();
         }
     }
 }

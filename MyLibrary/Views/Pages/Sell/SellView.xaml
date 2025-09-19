@@ -42,15 +42,21 @@
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <Border
-                    x:Name="ItemImage"
-                    Grid.Row="0"
-                    Width="150"
-                    Height="200"
-                    Margin="10"
-                    ClipToBounds="True">
-                    <Border.Background>
-                        <ImageBrush ImageSource="https://cdn.waterstones.com/bookjackets/large/9780/0074/9780007447848.jpg" Stretch="Fill" />
-                    </Border.Background>
+                    Width="180"
+                    Height="230"
+                    Background="{DynamicResource MaterialDesign.Brush.Secondary.Dark}"
+                    CornerRadius="20">
+
+                    <Border
+                        x:Name="ItemImage"
+                        Grid.Row="0"
+                        Margin="5"
+                        ClipToBounds="True"
+                        CornerRadius="15">
+                        <Border.Background>
+                            <ImageBrush ImageSource="https://cdn.waterstones.com/bookjackets/large/9780/0074/9780007447848.jpg" Stretch="Fill" />
+                        </Border.Background>
+                    </Border>
                 </Border>
                 <Grid
                     x:Name="ItemData"
@@ -220,6 +226,9 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
 
                 <DataGrid
@@ -331,12 +340,62 @@
                                         Height="40"
                                         Margin="20,0,0,0"
                                         HorizontalAlignment="Right"
+                                        Command="{Binding DataContext.DeleteItemFromReceiptCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                        CommandParameter="{Binding ItemId}"
                                         Style="{StaticResource DeleteButton}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
+                <Button
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Width="50"
+                    Height="50"
+                    Margin="0,20,0,0"
+                    Padding="0"
+                    materialDesign:ButtonAssist.CornerRadius="10"
+                    Click="OpenNewItemDialog"
+                    Content="+"
+                    FontSize="30"
+                    Style="{DynamicResource LogInButton}" />
+                <TextBlock
+                    x:Name="ReceiptValidator"
+                    Grid.Row="2"
+                    Margin="0,10,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    Foreground="Red"
+                    Text="{Binding ReceiptErrors}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap"
+                    Visibility="{Binding ErrorsVisibility}" />
+                <Border
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Width="auto"
+                    Margin="0,20,0,0"
+                    VerticalAlignment="Bottom"
+                    BorderBrush="#50000000"
+                    BorderThickness="1"
+                    Visibility="{Binding FinishVisibility}" />
+                <Button
+                    x:Name="FinishReceipt"
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Width="200"
+                    Height="70"
+                    Margin="0,20"
+                    Padding="0"
+                    VerticalAlignment="Bottom"
+                    materialDesign:ButtonAssist.CornerRadius="10"
+                    Command="{Binding SellCommand}"
+                    Content="Finish"
+                    FontSize="30"
+                    Style="{DynamicResource LogInButton}"
+                    Visibility="{Binding FinishVisibility}" />
             </Grid>
         </Grid>
     </Border>

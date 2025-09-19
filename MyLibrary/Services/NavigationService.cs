@@ -5,13 +5,7 @@ using MyLibrary.Views.Pages;
 using MyLibrary.Views.Pages.Borrow;
 using MyLibrary.Views.Pages.Return;
 using MyLibrary.Views.Pages.Sell;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace MyLibrary.Services.Api
 {
@@ -35,7 +29,7 @@ namespace MyLibrary.Services.Api
         {
             try
             {
-                using var scope = _serviceProvider.CreateScope();
+                var scope = _serviceProvider.CreateScope();
                 var serviceProvider = scope.ServiceProvider;
                 CurrentView = viewName.ToLower() switch
                 {

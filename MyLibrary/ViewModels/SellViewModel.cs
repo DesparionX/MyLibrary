@@ -1,21 +1,18 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using MyLibrary.Configs;
 using MyLibrary.Helpers;
-using MyLibrary.Resources.Languages;
 using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Helpers;
 using MyLibrary.Server.Http.Responses;
 using MyLibrary.Services;
 using MyLibrary.Services.Api;
 using MyLibrary.Shared.Interfaces.IDTOs;
-using System;
-using System.Collections.Generic;
+using MyLibrary.Views;
 using System.Collections.ObjectModel;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace MyLibrary.ViewModels
 {
@@ -24,7 +21,9 @@ namespace MyLibrary.ViewModels
         private readonly INotificationService _notificationService;
         private readonly INavigationService _navigationService;
         private readonly IValidationService _validationService;
+        private readonly IServiceProvider _serviceProvider;
         private readonly IBookService _bookService;
+        private readonly IOperationService _operationService;
         private readonly IAuthService _authService;
         private readonly ApiSettings _apiSettings;
 
@@ -32,132 +31,149 @@ namespace MyLibrary.ViewModels
         private IOperationDTO _operation = new OperationDTO();
 
         [ObservableProperty]
-        private ICollection<IOrder> _orders = [];
+        private ObservableCollection<IOrder> _orders = [];
+
+        [ObservableProperty] 
+        private ObservableCollection<IBookDTO?> _booksFromReceipt = [];
+
+        [ObservableProperty] 
+        private IBookDTO? _selectedBookFromReceipt;
 
         [ObservableProperty]
-        private ObservableCollection<BookDTO?> _booksFromReceipt = [];
-
-        [ObservableProperty]
-        private BookDTO? _selectedBookFromReceipt;
-
-        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(FinishVisibility))]
         private ObservableCollection<DisplayOrder> _displayOrders = [];
 
         [ObservableProperty]
-        private List<string> _receiptErrors = [];
+        [NotifyPropertyChangedFor(nameof(ErrorsVisibility))]
+        private string _receiptErrors = string.Empty;
+
+        public Visibility ErrorsVisibility =>
+            string.IsNullOrWhiteSpace(ReceiptErrors) ? Visibility.Collapsed : Visibility.Visible;
+        public Visibility FinishVisibility =>
+            DisplayOrders.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
 
         public SellViewModel(INotificationService notificationService,
             INavigationService navigationService,
             IAuthService authService,
             IBookService bookService,
+            IServiceProvider serviceProvider,
             IOptions<ApiSettings> apiSettings,
+            IOperationService operationService,
             IValidationService validationService)
         {
             _notificationService = notificationService;
             _navigationService = navigationService;
+            _serviceProvider = serviceProvider;
             _authService = authService;
+            _operationService = operationService;
             _bookService = bookService;
             _apiSettings = apiSettings.Value;
             _validationService = validationService;
 
-            InitializeOrder();
-            AddFakeOrders();
-            FakeReceiptBooksAdd();
+            
+            DisplayOrders.CollectionChanged += (s, e) => OnPropertyChanged(nameof(FinishVisibility));
         }
 
-        public async Task<bool> SellAsync(IOperationDTO operation)
+        [RelayCommand]
+        public async Task SellAsync()
         {
-            Operation.OperationDate = DateTime.Now;
-            return true;
-        }
-        public async Task AddOrder(IOrder order)
-        {
-            if(await IsValidOrder(order))
+            if(Operation.OrderList is null || Operation.OrderList.Count == 0)
             {
-                Orders.Add(order);
-                DisplayOrders.Add(new DisplayOrder(order));
-                await AddBookFromOrder(order.ItemISBN!);
+                ReceiptErrors += "No items in the receipt. Please add items before finalizing the sale." + Environment.NewLine;
+                return;
+            }
+
+            InitializeReceipt();
+            var result = await _operationService.PerformOperation(Operation);
+            if (!result.Succeeded)
+            {
+                ReceiptErrors += $"{result.Message}{Environment.NewLine}";
+            }
+
+            // Implement Success Notification window.
+            // Implement Print Receipt functionality.
+            //_notificationService.ShowSuccess(title: "Success", message: "Sale completed successfully!");
+
+            _navigationService.BackToHomeView();
+        }
+
+        // Takes a BookDTO, creates an Order from it and adds it to the Receipt if valid.
+        public async Task AddItemToReceipt(IBookDTO? book)
+        {
+            var order = CreateOrder(book);
+
+            if(await IsValidOrder(order!))
+            {
+                Orders.Add(order!);
+                DisplayOrders.Add(new DisplayOrder(order!));
+                BooksFromReceipt.Add(book!);
             }
         }
+
+        [RelayCommand]
+        public void DeleteItemFromReceipt(string? itemId)
+        {
+            // Remove the item from all relevant collections.
+            DisplayOrders.Remove(DisplayOrders.FirstOrDefault(i => i.ItemId!.Equals(itemId))!);
+            Orders.Remove(Orders.FirstOrDefault(i => i.ItemId!.Equals(itemId))!);
+            BooksFromReceipt.Remove(BooksFromReceipt.FirstOrDefault(i => i!.Id.ToString().Equals(itemId))!);
+            SelectedBookFromReceipt = null;
+        }
+
+        // Sets the SelectedBookFromReceipt property based on the provided ISBN.
         public void SelectBookFromReceipt(string isbn)
         {
             SelectedBookFromReceipt = BooksFromReceipt.FirstOrDefault(b => b?.ISBN == isbn);
         }
 
-        private async Task<BookDTO?> GetBookByISBN(string isbn)
+        // Opens a dialog and retrieves a BookDTO from it, then adds it to the Receipt.
+        public async Task OpenAddItemDialog()
         {
-            try
+            var scope = _serviceProvider.CreateScope();
+            var addItemWindow = scope.ServiceProvider.GetRequiredService<AddItemToReceiptWindow>();
+            
+            if (addItemWindow.ShowDialog() is true)
             {
-                var response = await _bookService.FindBookByISBNAsync(isbn) as BookTaskResult;
-                if (response!.Succeeded)
-                    return response.Book;
-                else
-                {
-                    ReceiptErrors.Add(response.Message!);
-                    return null;
-                }
-            }
-            catch (Exception err)
-            {
-                ReceiptErrors.Add(err.Message);
-                return null;
+                var model = addItemWindow.DataContext as AddItemToReceiptViewModel;
+                await AddItemToReceipt(model?.Book);
             }
         }
 
-        private async Task<bool> IsValidOrder(IOrder order)
-        {
-            var orderCheck = await _validationService.ValidateOrder(order);
-            if (!orderCheck.IsValid)
-            {
-                orderCheck.Errors!.ToList().ForEach(error => ReceiptErrors.Add(error));
-            }
-
-            return orderCheck.IsValid;
-        }
-
-        private async Task AddBookFromOrder(string isbn)
-        {
-            var book = await GetBookByISBN(isbn);
-            if (book != null)
-            {
-                BooksFromReceipt.Add(book);
-            }
-            else
-            {
-                ReceiptErrors.Add("Book not found with ISBN: " + isbn);
-            }
-        }
-
-        private void InitializeOrder()
+        // Initializes the receipt with default values.
+        private void InitializeReceipt()
         {
             Operation.OperationName = nameof(StockOperations.OperationType.Sell);
             Operation.OrderList = Orders;
             Operation.UserId = _authService.GetUser()!.Id;
             Operation.UserName = _authService.GetUser()!.UserName;
-            Operation.UserRole = _authService.GetUser()!.UserName; // Assing UserName until UserRole is implemented.
+            Operation.UserRole = _authService.GetUser()!.UserName; // Adding UserName until UserRole is implemented.
+            Operation.OperationDate = DateTime.Now;
+            Operation.TotalPrice = Orders.Sum(o => o.Price * o.Quantity);
         }
 
-        private void AddFakeOrders()
+        // Recieves BookDTO and creates an Order from it.
+        private IOrder? CreateOrder(IBookDTO? book)
         {
-            DisplayOrders.Add(new DisplayOrder(
-                new Order { ItemISBN = "12345678", ItemId = "ff8ca4e3-0026-4399-8eac-1236e7cc1422", ItemName = "BEST BOOK", Quantity = 1, Price = 56.00m }));
-            DisplayOrders.Add(new DisplayOrder(
-                new Order { ItemISBN = "12345678", ItemId = "ffe07648-78e4-4e33-8e9d-5d28a7219bfa", ItemName = "BEST BOOK", Quantity = 1, Price = 56.00m }));
-            DisplayOrders.Add(new DisplayOrder(
-                new Order { ItemISBN = "12345678", ItemId = "abededc0-f902-4c51-9439-6ce8b76fe29c", ItemName = "BEST BOOK", Quantity = 1, Price = 56.00m }));
-            DisplayOrders.Add(new DisplayOrder(
-                new Order { ItemISBN = "53433 333 22", ItemId = "a2c9e362-5a08-4ebf-b604-0965e97057c8", ItemName = "IT: Chapter TWO", Quantity = 1, Price = 45.00m }));
-            DisplayOrders.Add(new DisplayOrder(
-                new Order { ItemISBN = "53433 333 22", ItemId = "c6d97756-c844-490f-a14d-3c70d271c092", ItemName = "IT: Chapter TWO", Quantity = 1, Price = 45.00m }));
-            DisplayOrders.Add(new DisplayOrder(
-                new Order { ItemISBN = "53433 333 22", ItemId = "d055ecdd-2087-4362-8250-570de80bc927", ItemName = "IT: Chapter TWO", Quantity = 1, Price = 45.00m }));
-        }
-        private async Task FakeReceiptBooksAdd()
-        {
-            foreach(var order in DisplayOrders)
+            return new Order
             {
-                await AddBookFromOrder(order.ItemISBN!);
+                ItemId = book?.Id.ToString(),
+                ItemISBN = book?.ISBN,
+                ItemName = book?.Title,
+                Price = book?.BasePrice,
+                Quantity = 1
+            };
+        }
+
+        // Validates the given order before adding it to the receipt.
+        private async Task<bool> IsValidOrder(IOrder order)
+        {
+            var orderCheck = await _validationService.ValidateOrder(order);
+            if (!orderCheck.IsValid)
+            {
+                orderCheck.Errors!.ToList().ForEach(error => ReceiptErrors += error + Environment.NewLine);
             }
+
+            return orderCheck.IsValid;
         }
     }
 }

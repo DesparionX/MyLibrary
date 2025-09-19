@@ -55,11 +55,13 @@ namespace MyLibrary
                     services.AddSingleton<ILanguageService, LanguageService>();
 
                     // API Services
+                    services.AddTransient<ApiService>();
                     services.AddTransient<IApiTestService, ApiTestService>();
                     services.AddTransient<AuthHeaderHandler>();
                     services.AddTransient<IUserService, UserService>();
                     services.AddTransient<IValidationService, ValidationService>();
                     services.AddTransient<IBookService, BookService>();
+                    services.AddScoped<IOperationService, OperationService>();
 
                     // Windows
                     services.AddTransient<App>();
@@ -67,6 +69,7 @@ namespace MyLibrary
                     services.AddTransient<LoadingScreen>();
                     services.AddTransient<LogIn>();
                     services.AddTransient<MainWindow>();
+                    services.AddScoped<AddItemToReceiptWindow>();
 
                     // Views
                     services.AddTransient<HomeView>();
@@ -84,8 +87,7 @@ namespace MyLibrary
                     services.AddTransient<BorrowViewModel>();
                     services.AddScoped<SellViewModel>();
                     services.AddTransient<ReturnViewModel>();
-                    
-
+                    services.AddScoped<AddItemToReceiptViewModel>();
                 });
     }
 }
