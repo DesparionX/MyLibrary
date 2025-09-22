@@ -54,7 +54,7 @@
                         ClipToBounds="True"
                         CornerRadius="15">
                         <Border.Background>
-                            <ImageBrush ImageSource="https://cdn.waterstones.com/bookjackets/large/9780/0074/9780007447848.jpg" Stretch="Fill" />
+                            <ImageBrush ImageSource="{Binding SelectedBookFromReceipt.Picture}" Stretch="Fill" />
                         </Border.Background>
                     </Border>
                 </Border>

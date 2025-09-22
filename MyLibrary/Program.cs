@@ -53,6 +53,7 @@ namespace MyLibrary
                     services.AddSingleton<INavigationService, NavigationService>();
                     services.AddSingleton<INotificationService, NotificationService>();
                     services.AddSingleton<ILanguageService, LanguageService>();
+                    services.AddSingleton<IFileService, FileService>();
 
                     // API Services
                     services.AddTransient<ApiService>();

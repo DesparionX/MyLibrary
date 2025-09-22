@@ -24,6 +24,7 @@ namespace MyLibrary.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IValidationService _validationService;
         private readonly IServiceProvider _serviceProvider;
+        private readonly IFileService _fileService;
         private readonly IBookService _bookService;
         private readonly IOperationService _operationService;
         private readonly IAuthService _authService;
@@ -58,6 +59,7 @@ namespace MyLibrary.ViewModels
             INavigationService navigationService,
             IAuthService authService,
             IBookService bookService,
+            IFileService fileService,
             IServiceProvider serviceProvider,
             IOptions<ApiSettings> apiSettings,
             IOperationService operationService,
@@ -67,6 +69,7 @@ namespace MyLibrary.ViewModels
             _navigationService = navigationService;
             _serviceProvider = serviceProvider;
             _authService = authService;
+            _fileService = fileService;
             _operationService = operationService;
             _bookService = bookService;
             _apiSettings = apiSettings.Value;
@@ -124,6 +127,7 @@ namespace MyLibrary.ViewModels
         public void SelectBookFromReceipt(string isbn)
         {
             SelectedBookFromReceipt = BooksFromReceipt.FirstOrDefault(b => b?.ISBN == isbn);
+            SelectedBookFromReceipt?.Picture = _fileService.GetImageUrl(SelectedBookFromReceipt.Picture);
         }
 
         // Opens a dialog and retrieves a BookDTO from it, then adds it to the Receipt.

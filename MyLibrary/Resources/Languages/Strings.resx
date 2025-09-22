@@ -265,4 +265,13 @@
   <data name="CustomDialog_Title_Fail" xml:space="preserve">
     <value>Error !</value>
   </data>
+  <data name="FileService_Errors_InvalidFilePath" xml:space="preserve">
+    <value>File path is invalid or file does not exist.</value>
+  </data>
+  <data name="FileService_Errors_InvalidFileType" xml:space="preserve">
+    <value>Invalid file type. Allowed types are: </value>
+  </data>
+  <data name="FileService_Errors_InvalidFileSize" xml:space="preserve">
+    <value>File size exceeds the maximum limit of 5MB.</value>
+  </data>
 </root>

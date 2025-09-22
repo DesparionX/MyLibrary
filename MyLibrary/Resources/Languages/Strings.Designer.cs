@@ -286,6 +286,33 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File path is invalid or file does not exist..
+        /// </summary>
+        public static string FileService_Errors_InvalidFilePath {
+            get {
+                return ResourceManager.GetString("FileService_Errors_InvalidFilePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File size exceeds the maximum limit of 5MB..
+        /// </summary>
+        public static string FileService_Errors_InvalidFileSize {
+            get {
+                return ResourceManager.GetString("FileService_Errors_InvalidFileSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid file type. Allowed types are: .
+        /// </summary>
+        public static string FileService_Errors_InvalidFileType {
+            get {
+                return ResourceManager.GetString("FileService_Errors_InvalidFileType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Borrow.
         /// </summary>
         public static string Home_BorrowBooks {

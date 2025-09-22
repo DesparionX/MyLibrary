@@ -8,7 +8,7 @@ namespace MyLibrary.Services
 {
     public interface IFileService
     {
-        Task<string?> GetImageUrl(string? imageName);
-
+        string GetImageUrl(string? imageName);
+        Task<string?> ConvertToBase64(string filePath);
     }
 }

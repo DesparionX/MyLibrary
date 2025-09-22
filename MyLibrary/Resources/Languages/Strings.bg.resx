@@ -265,4 +265,13 @@
   <data name="CustomDialog_Title_Fail" xml:space="preserve">
     <value>Грешка !</value>
   </data>
+  <data name="FileService_Errors_InvalidFilePath" xml:space="preserve">
+    <value>Пътят до файла е неправилен или файлът не съществува.</value>
+  </data>
+  <data name="FileService_Errors_InvalidFileType" xml:space="preserve">
+    <value>Файлът е с грешен формат. Трябва да бъде: </value>
+  </data>
+  <data name="FileService_Errors_InvalidFileSize" xml:space="preserve">
+    <value>Файлът надхвърля максималният обем от 5МБ.</value>
+  </data>
 </root>
