@@ -142,6 +142,51 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string CustomDialog_Cancel {
+            get {
+                return ResourceManager.GetString("CustomDialog_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string CustomDialog_Confirm {
+            get {
+                return ResourceManager.GetString("CustomDialog_Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public static string CustomDialog_OK {
+            get {
+                return ResourceManager.GetString("CustomDialog_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error !.
+        /// </summary>
+        public static string CustomDialog_Title_Fail {
+            get {
+                return ResourceManager.GetString("CustomDialog_Title_Fail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success !.
+        /// </summary>
+        public static string CustomDialog_Title_Success {
+            get {
+                return ResourceManager.GetString("CustomDialog_Title_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string Error {
@@ -192,6 +237,33 @@ namespace MyLibrary.Resources.Languages {
         public static string Errors_NavigatingToWindow {
             get {
                 return ResourceManager.GetString("Errors_NavigatingToWindow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISBN cannot be empty..
+        /// </summary>
+        public static string Errors_Receipt_EmptyISBN {
+            get {
+                return ResourceManager.GetString("Errors_Receipt_EmptyISBN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No item found with given ISBN..
+        /// </summary>
+        public static string Errors_Receipt_ISBNNotFound {
+            get {
+                return ResourceManager.GetString("Errors_Receipt_ISBNNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No items in the receipt. Please add items before finalizing the sale..
+        /// </summary>
+        public static string Errors_Receipt_ZeroOrders {
+            get {
+                return ResourceManager.GetString("Errors_Receipt_ZeroOrders", resourceCulture);
             }
         }
         

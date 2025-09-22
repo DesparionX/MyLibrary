@@ -56,7 +56,7 @@ namespace MyLibrary.ViewModels
         }
         public string GetUserAvatar()
         {
-            return _apiSettings.BaseUrl + _apiSettings.Images + User.Avatar;
+            return _apiSettings.BaseUrl + _apiSettings.Images + User?.Avatar;
         }
         private void NavigateToView(string viewName)
         {

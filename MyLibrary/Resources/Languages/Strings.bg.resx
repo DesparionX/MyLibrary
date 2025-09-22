@@ -241,4 +241,28 @@
   <data name="Recipe_Header_Total" xml:space="preserve">
     <value>Общо</value>
   </data>
+  <data name="Errors_Receipt_ZeroOrders" xml:space="preserve">
+    <value>Моля добавете артикули преди да финализирате продажбата.</value>
+  </data>
+  <data name="Errors_Receipt_ISBNNotFound" xml:space="preserve">
+    <value>Няма намерен продукт с този ISBN.</value>
+  </data>
+  <data name="Errors_Receipt_EmptyISBN" xml:space="preserve">
+    <value>Моля въведете ISBN.</value>
+  </data>
+  <data name="CustomDialog_OK" xml:space="preserve">
+    <value>Добре</value>
+  </data>
+  <data name="CustomDialog_Confirm" xml:space="preserve">
+    <value>Потвърди</value>
+  </data>
+  <data name="CustomDialog_Cancel" xml:space="preserve">
+    <value>Отказ</value>
+  </data>
+  <data name="CustomDialog_Title_Success" xml:space="preserve">
+    <value>Успех !</value>
+  </data>
+  <data name="CustomDialog_Title_Fail" xml:space="preserve">
+    <value>Грешка !</value>
+  </data>
 </root>

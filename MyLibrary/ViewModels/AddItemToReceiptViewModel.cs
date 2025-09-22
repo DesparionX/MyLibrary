@@ -1,10 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using MyLibrary.Resources.Languages;
-using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Http.Responses;
 using MyLibrary.Services.Api;
 using MyLibrary.Shared.Interfaces.IDTOs;
-using MyLibrary.Views;
 using System.Windows;
 
 namespace MyLibrary.ViewModels
@@ -58,7 +56,7 @@ namespace MyLibrary.ViewModels
                 else
                 {
                     // Add proper 404 Message.
-                    ReceiptErrors += Strings.BookService_Errors_ErrorFetchingBookByISBN + Environment.NewLine;
+                    ReceiptErrors += Strings.Errors_Receipt_ISBNNotFound + Environment.NewLine;
                     return null;
                 }
             }
@@ -76,7 +74,7 @@ namespace MyLibrary.ViewModels
 
             if (string.IsNullOrWhiteSpace(Isbn))
             {
-                ReceiptErrors += "ISBN cannot be empty." + Environment.NewLine;
+                ReceiptErrors += Strings.Errors_Receipt_EmptyISBN + Environment.NewLine;
             }
         }
 

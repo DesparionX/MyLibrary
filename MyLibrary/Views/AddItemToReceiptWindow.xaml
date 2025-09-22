@@ -9,7 +9,7 @@
     xmlns:resx="clr-namespace:MyLibrary.Resources.Languages"
     xmlns:viewmodels="clr-namespace:MyLibrary.ViewModels"
     x:Name="NewItemToReceipt"
-    Title="AddItemToReceiptWindow"
+    Title="New item"
     d:DataContext="{d:DesignInstance Type=viewmodels:AddItemToReceiptViewModel}"
     AllowsTransparency="True"
     Background="#70000000"

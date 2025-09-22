@@ -13,6 +13,7 @@ namespace MyLibrary.Server.Data.DTOs
         public  required string Title { get; set; }
 
         public required string Description { get; set; }
+        public string? Picture { get; set; }
 
         public required string Author { get; set; }
 

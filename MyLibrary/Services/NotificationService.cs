@@ -1,37 +1,53 @@
-﻿using System;
+﻿using MyLibrary.Resources.Languages;
+using MyLibrary.ViewModels;
+using MyLibrary.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using static MyLibrary.Helpers.CustomDialogTypes;
 
 namespace MyLibrary.Services.Api
 {
     public class NotificationService : INotificationService
     {
-        public void ShowError(string title, string message)
+        public bool? ShowError(string title, string message)
         {
-            MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
+            return CreateDialog(type: DialogType.Error, title, message, confirmButtonText: Strings.CustomDialog_OK);
         }
 
-        public void ShowInfo(string title, string message)
+        public bool? ShowInfo(string title, string message)
         {
-            throw new NotImplementedException();
+            return CreateDialog(type: DialogType.Info, title, message, confirmButtonText: Strings.CustomDialog_OK);
         }
 
-        public void ShowNotification(string title, string message)
+        public bool? ShowNotification(string title, string message)
         {
-            throw new NotImplementedException();
+            return CreateDialog(type: DialogType.Info, title, message, confirmButtonText: Strings.CustomDialog_OK);
         }
 
-        public void ShowSuccess(string title, string message)
+        public bool? ShowSuccess(string title, string message)
         {
-            throw new NotImplementedException();
+            return CreateDialog(type: DialogType.Success, title, message, confirmButtonText: Strings.CustomDialog_OK);
         }
 
-        public void ShowWarning(string title, string message)
+        public bool? ShowWarning(string title, string message)
         {
-            throw new NotImplementedException();
+            return CreateDialog(type: DialogType.Warning, title, message, confirmButtonText: Strings.CustomDialog_OK);
+        }
+        public bool? ShowConfirm(string title, string message)
+        {
+            return CreateDialog(type: DialogType.Error, title, message, confirmButtonText: Strings.CustomDialog_Confirm, cancelButtonText: Strings.CustomDialog_Cancel);
+        }
+
+        private static bool? CreateDialog(DialogType type, string title, string message, string? confirmButtonText = default, string? cancelButtonText = default)
+        {
+            var dialog = new CustomDialogViewModel(type, title, message, confirmButtonText, cancelButtonText);
+            var customDialog = new CustomDialog(dialog);
+
+            return customDialog.ShowDialog();
         }
     }
 }

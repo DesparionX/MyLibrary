@@ -1,17 +1,20 @@
-﻿using System;
+﻿using MyLibrary.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MyLibrary.Helpers.CustomDialogTypes;
 
 namespace MyLibrary.Services
 {
     public interface INotificationService
     {
-        void ShowNotification(string title, string message);
-        void ShowError(string title, string message);
-        void ShowWarning(string title, string message);
-        void ShowInfo(string title, string message);
-        void ShowSuccess(string title, string message);
+        bool? ShowNotification(string title, string message);
+        bool? ShowError(string title, string message);
+        bool? ShowWarning(string title, string message);
+        bool? ShowInfo(string title, string message);
+        bool? ShowSuccess(string title, string message);
+        bool? ShowConfirm(string title, string message);
     }
 }

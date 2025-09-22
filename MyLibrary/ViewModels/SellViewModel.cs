@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using MyLibrary.Configs;
 using MyLibrary.Helpers;
+using MyLibrary.Resources.Languages;
 using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Helpers;
 using MyLibrary.Server.Http.Responses;
@@ -13,6 +14,7 @@ using MyLibrary.Shared.Interfaces.IDTOs;
 using MyLibrary.Views;
 using System.Collections.ObjectModel;
 using System.Windows;
+using static MyLibrary.Helpers.CustomDialogTypes;
 
 namespace MyLibrary.ViewModels
 {
@@ -77,9 +79,9 @@ namespace MyLibrary.ViewModels
         [RelayCommand]
         public async Task SellAsync()
         {
-            if(Operation.OrderList is null || Operation.OrderList.Count == 0)
+            if(Orders is null || Orders.Count == 0)
             {
-                ReceiptErrors += "No items in the receipt. Please add items before finalizing the sale." + Environment.NewLine;
+                ReceiptErrors += Strings.Errors_Receipt_ZeroOrders + Environment.NewLine;
                 return;
             }
 
@@ -90,10 +92,8 @@ namespace MyLibrary.ViewModels
                 ReceiptErrors += $"{result.Message}{Environment.NewLine}";
             }
 
-            // Implement Success Notification window.
             // Implement Print Receipt functionality.
-            //_notificationService.ShowSuccess(title: "Success", message: "Sale completed successfully!");
-
+            _notificationService.ShowSuccess(title: Strings.CustomDialog_Title_Success, message: result.Message!);
             _navigationService.BackToHomeView();
         }
 
