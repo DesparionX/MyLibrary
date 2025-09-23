@@ -50,13 +50,12 @@ namespace MyLibrary.ViewModels
         {
             try
             {
-                var response = await _bookService.FindBookByISBNAsync(Isbn) as BookTaskResult;
+                var response = await _bookService.FindBookByISBNAsync(Isbn, isAvailable: true) as BookTaskResult;
                 if (response!.Succeeded)
                     return response.Book;
                 else
                 {
-                    // Add proper 404 Message.
-                    ReceiptErrors += Strings.Errors_Receipt_ISBNNotFound + Environment.NewLine;
+                    ReceiptErrors += Strings.Receipt_AddNewItem_NotFoundOrNotAvailable + Environment.NewLine;
                     return null;
                 }
             }

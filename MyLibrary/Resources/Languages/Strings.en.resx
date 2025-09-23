@@ -274,4 +274,7 @@
   <data name="FileService_Errors_InvalidFileSize" xml:space="preserve">
     <value>File size exceeds the maximum limit of 5MB.</value>
   </data>
+  <data name="Receipt_AddNewItem_NotFoundOrNotAvailable" xml:space="preserve">
+    <value>The book is either not found, or out of stock.</value>
+  </data>
 </root>

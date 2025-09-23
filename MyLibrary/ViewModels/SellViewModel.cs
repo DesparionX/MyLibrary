@@ -1,20 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using MyLibrary.Configs;
 using MyLibrary.Helpers;
 using MyLibrary.Resources.Languages;
 using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Helpers;
-using MyLibrary.Server.Http.Responses;
 using MyLibrary.Services;
 using MyLibrary.Services.Api;
 using MyLibrary.Shared.Interfaces.IDTOs;
 using MyLibrary.Views;
 using System.Collections.ObjectModel;
 using System.Windows;
-using static MyLibrary.Helpers.CustomDialogTypes;
 
 namespace MyLibrary.ViewModels
 {
@@ -25,10 +21,8 @@ namespace MyLibrary.ViewModels
         private readonly IValidationService _validationService;
         private readonly IServiceProvider _serviceProvider;
         private readonly IFileService _fileService;
-        private readonly IBookService _bookService;
         private readonly IOperationService _operationService;
         private readonly IAuthService _authService;
-        private readonly ApiSettings _apiSettings;
 
         [ObservableProperty]
         private IOperationDTO _operation = new OperationDTO();
@@ -58,10 +52,8 @@ namespace MyLibrary.ViewModels
         public SellViewModel(INotificationService notificationService,
             INavigationService navigationService,
             IAuthService authService,
-            IBookService bookService,
             IFileService fileService,
             IServiceProvider serviceProvider,
-            IOptions<ApiSettings> apiSettings,
             IOperationService operationService,
             IValidationService validationService)
         {
@@ -71,8 +63,6 @@ namespace MyLibrary.ViewModels
             _authService = authService;
             _fileService = fileService;
             _operationService = operationService;
-            _bookService = bookService;
-            _apiSettings = apiSettings.Value;
             _validationService = validationService;
 
             

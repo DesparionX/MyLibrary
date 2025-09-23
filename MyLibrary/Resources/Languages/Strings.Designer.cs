@@ -367,6 +367,15 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The book is either not found, or out of stock..
+        /// </summary>
+        public static string Receipt_AddNewItem_NotFoundOrNotAvailable {
+            get {
+                return ResourceManager.GetString("Receipt_AddNewItem_NotFoundOrNotAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ISBN.
         /// </summary>
         public static string Recipe_Header_ISBN {

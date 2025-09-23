@@ -48,16 +48,19 @@ namespace MyLibrary.Server.Handlers
             }
         }
 
-        public async Task<ITaskResult> FindBookByISBN(string ISBN)
+        public async Task<ITaskResult> FindBookByISBN(string ISBN, bool? isAvailable = default)
         {
             try
             {
-                var book = await _context.Books.FirstOrDefaultAsync(b => b.ISBN == ISBN);
-                if (book == null)
+                var book = await _context.Books.FirstOrDefaultAsync(b => b.ISBN.Equals(ISBN) 
+                && (isAvailable == null || b.IsAvailable == isAvailable));
+
+                if (book is null)
                 {
                     return new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status404NotFound, "There is no books with given ISBN.");
                 }
                 var bookDto = _mapper.Map<BookDTO>(book);
+
                 return new BookTaskResult(succeeded: true, statusCode: StatusCodes.Status302Found, "Book found !", book: bookDto);
             }
             catch (Exception err)

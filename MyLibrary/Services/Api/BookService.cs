@@ -56,12 +56,12 @@ namespace MyLibrary.Services.Api
             }
         }
 
-        public async Task<ITaskResult?> FindBookByISBNAsync(string isbn)
+        public async Task<ITaskResult?> FindBookByISBNAsync(string isbn, bool? isAvailable)
         {
             try
             {
                 var requestUrl = _apiSettings.BaseUrl + _apiSettings.Controllers.Books.FindByISBN;
-                var param = ($"/{Uri.EscapeDataString(isbn) ?? ""}");
+                var param = ($"/{Uri.EscapeDataString(isbn) ?? ""}+{isAvailable}");
                 var response = await _httpClient.GetFromJsonAsync<BookTaskResult>(requestUrl + param);
 
                 return response;

@@ -42,20 +42,20 @@ namespace MyLibrary.Server.Controllers
             return _resultHandler.ReadResult(response);
         }
 
-        [HttpGet("findBookByISBN/{isbn}")]
+        [HttpGet("findBookByISBN/{isbn}+{isAvailable}")]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status200OK)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status302Found)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status400BadRequest)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status404NotFound)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status502BadGateway)]
-        public async Task<IActionResult> FindByISBN([FromRoute] string isbn)
+        public async Task<IActionResult> FindByISBN([FromRoute] string isbn, bool? isAvailable = default)
         {
             if (isbn == null || string.IsNullOrWhiteSpace(isbn))
             {
                 return BadRequest(new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "ISBN cannot be null or empty."));
             }
-            var response = await _bookHandler.FindBookByISBN(isbn);
+            var response = await _bookHandler.FindBookByISBN(isbn, isAvailable);
             return _resultHandler.ReadResult(response);
         }
 
