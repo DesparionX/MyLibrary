@@ -277,4 +277,19 @@
   <data name="Receipt_AddNewItem_NotFoundOrNotAvailable" xml:space="preserve">
     <value>Книгата не съществува или не е налична.</value>
   </data>
+  <data name="Book_Details_Borrower" xml:space="preserve">
+    <value>Ползвател:</value>
+  </data>
+  <data name="Buttons_Find" xml:space="preserve">
+    <value>Търси</value>
+  </data>
+  <data name="Buttons_Return" xml:space="preserve">
+    <value>Върни</value>
+  </data>
+  <data name="Buttons_Borrow" xml:space="preserve">
+    <value>Заеми</value>
+  </data>
+  <data name="TextBoxes_BookID" xml:space="preserve">
+    <value>ИН на книгата</value>
+  </data>
 </root>

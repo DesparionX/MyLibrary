@@ -1,19 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using MyLibrary.Configs;
 using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Services;
-using MyLibrary.Views;
-using MyLibrary.Views.Pages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace MyLibrary.ViewModels

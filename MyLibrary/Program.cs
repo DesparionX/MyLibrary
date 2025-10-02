@@ -7,15 +7,9 @@ using MyLibrary.Services.Api;
 using MyLibrary.ViewModels;
 using MyLibrary.Views;
 using MyLibrary.Views.Pages;
-using MyLibrary.Views.Pages.Borrow;
 using MyLibrary.Views.Pages.Return;
+using MyLibrary.Views.Pages.Borrow;
 using MyLibrary.Views.Pages.Sell;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyLibrary
 {
@@ -75,9 +69,9 @@ namespace MyLibrary
                     // Views
                     services.AddTransient<HomeView>();
                     services.AddTransient<NotFoundView>();
-                    services.AddTransient<BorrowView>();
+                    services.AddScoped<ReturnView>();
                     services.AddScoped<SellView>();
-                    services.AddTransient<ReturnView>();
+                    services.AddTransient<BorrowView>();
 
                     // View Models
                     services.AddTransient<ChangeLanguageViewModel>();
@@ -85,9 +79,9 @@ namespace MyLibrary
                     services.AddTransient<LogInViewModel>();
                     services.AddTransient<MainWindowViewModel>();
                     services.AddTransient<HomeViewModel>();
-                    services.AddTransient<BorrowViewModel>();
                     services.AddScoped<SellViewModel>();
-                    services.AddTransient<ReturnViewModel>();
+                    services.AddScoped<ReturnViewModel>();
+                    services.AddTransient<BorrowViewModel>();
                     services.AddScoped<AddItemToReceiptViewModel>();
                 });
     }

@@ -132,6 +132,9 @@
     <Page Update="Resources\Styles\Styles.xaml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Page>
+    <Page Update="Views\Pages\Return\ReturnView.Style.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
 </Project>

@@ -277,4 +277,19 @@
   <data name="Receipt_AddNewItem_NotFoundOrNotAvailable" xml:space="preserve">
     <value>The book is either not found, or out of stock.</value>
   </data>
+  <data name="Book_Details_Borrower" xml:space="preserve">
+    <value>Borrower:</value>
+  </data>
+  <data name="Buttons_Find" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="Buttons_Return" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="Buttons_Borrow" xml:space="preserve">
+    <value>Borrow</value>
+  </data>
+  <data name="TextBoxes_BookID" xml:space="preserve">
+    <value>Book ID</value>
+  </data>
 </root>

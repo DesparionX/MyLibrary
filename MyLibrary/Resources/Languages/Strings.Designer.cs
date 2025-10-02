@@ -70,6 +70,15 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Borrower:.
+        /// </summary>
+        public static string Book_Details_Borrower {
+            get {
+                return ResourceManager.GetString("Book_Details_Borrower", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Description:.
         /// </summary>
         public static string Book_Details_Description {
@@ -138,6 +147,33 @@ namespace MyLibrary.Resources.Languages {
         public static string BookService_Errors_ErrorFetchingBookByISBN {
             get {
                 return ResourceManager.GetString("BookService_Errors_ErrorFetchingBookByISBN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Borrow.
+        /// </summary>
+        public static string Buttons_Borrow {
+            get {
+                return ResourceManager.GetString("Buttons_Borrow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find.
+        /// </summary>
+        public static string Buttons_Find {
+            get {
+                return ResourceManager.GetString("Buttons_Find", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Return.
+        /// </summary>
+        public static string Buttons_Return {
+            get {
+                return ResourceManager.GetString("Buttons_Return", resourceCulture);
             }
         }
         
@@ -507,6 +543,15 @@ namespace MyLibrary.Resources.Languages {
         public static string Splash_LoadingComplete {
             get {
                 return ResourceManager.GetString("Splash_LoadingComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Book ID.
+        /// </summary>
+        public static string TextBoxes_BookID {
+            get {
+                return ResourceManager.GetString("TextBoxes_BookID", resourceCulture);
             }
         }
         
