@@ -14,7 +14,7 @@ namespace MyLibrary.Server.Data
         public virtual DbSet<Book> Books { get; set; }
         public virtual DbSet<Warehouse> Warehouse { get; set; }
         public virtual DbSet<Operation> Operations { get; set; }
-        public virtual DbSet<BorrowedBooks> BorrowedBooks { get; set; }
+        public virtual DbSet<Borrow> Borrows { get; set; }
         public virtual DbSet<SubscriptionTier> SubscriptionTiers { get; set; }
         public virtual DbSet<Subscription> Subscriptions { get; set; }
 
@@ -48,9 +48,9 @@ namespace MyLibrary.Server.Data
                 .HasDefaultValue(true);
             });
 
-            builder.Entity<BorrowedBooks>(b =>
+            builder.Entity<Borrow>(b =>
             {
-                b.ToTable("BorrowedBooks");
+                b.ToTable("Borrows");
                 b.HasKey(b => b.Id);
                 b.Property(b => b.Id)
                 .ValueGeneratedOnAdd();

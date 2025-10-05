@@ -23,6 +23,7 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests.OperationsHandlerUnitTests
                 new Mock<ILogger<OperationHandler>>().Object,
                 Mapper,
                 BookHandler.Object,
+                BorrowHandler.Object,
                 WarehouseHandler.Object,
                 DbContext
             );

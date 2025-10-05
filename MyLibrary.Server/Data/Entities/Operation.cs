@@ -25,6 +25,7 @@ namespace MyLibrary.Server.Data.Entities
         public string? UserName { get; set; }
 
         public string? UserRole { get; set; }
+        public string? BorrowerId { get; set; }
 
         public decimal? TotalPrice { get; set; }
 

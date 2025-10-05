@@ -26,6 +26,7 @@ namespace MyLibrary.Server.Data.DTOs
         public string? UserName { get; set; }
 
         public string? UserRole { get; set; }
+        public string? BorrowerId { get; set; }
 
         public decimal? TotalPrice { get; set; }
 

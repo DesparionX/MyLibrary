@@ -1,0 +1,22 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+
+    <Style x:Key="BorrowViewWindow" TargetType="{x:Type Border}">
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect
+                    BlurRadius="50"
+                    Opacity="0.5"
+                    ShadowDepth="1"
+                    Color="Black" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

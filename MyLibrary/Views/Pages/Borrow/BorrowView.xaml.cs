@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyLibrary.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,13 @@ namespace MyLibrary.Views.Pages.Borrow
     /// </summary>
     public partial class BorrowView : UserControl
     {
-        public BorrowView()
+        private readonly BorrowViewModel _viewModel;
+
+        public BorrowView(BorrowViewModel viewModel)
         {
+            _viewModel = viewModel;
             InitializeComponent();
+            DataContext = _viewModel;
         }
     }
 }

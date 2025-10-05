@@ -26,6 +26,7 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests
         protected Mock<IResultHandler<ITaskResult>> ResultHandler;
         protected Mock<ISubscriptionHandler<User>> SubscriptionHandler;
         protected Mock<IUserHandler> UserHandler;
+        protected Mock<IBorrowHandler> BorrowHandler;
         protected Mock<IWarehouseHandler<IWarehouse<int>>> WarehouseHandler;
         protected Mock<EventBus> EventBus;
         protected IMapper Mapper;
@@ -41,6 +42,7 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests
             OperationHandler = new Mock<IOperationHandler>();
             ResultHandler = new Mock<IResultHandler<ITaskResult>>();
             SubscriptionHandler = new Mock<ISubscriptionHandler<User>>();
+            BorrowHandler = new Mock<IBorrowHandler>();
             UserHandler = new Mock<IUserHandler>();
             WarehouseHandler = new Mock<IWarehouseHandler<IWarehouse<int>>>();
             

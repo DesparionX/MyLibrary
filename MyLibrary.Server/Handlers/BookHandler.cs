@@ -28,11 +28,11 @@ namespace MyLibrary.Server.Handlers
         }
 
         
-        public async Task<ITaskResult> FindBookById<TId>(TId id)
+        public async Task<ITaskResult> FindBookById(string id)
         {
             try
             {
-                var book = await _context.Books.FindAsync(id);
+                var book = await _context.Books.FindAsync(Guid.Parse(id));
                 if (book == null)
                 {
                     return new BookTaskResult(succeeded: false, message: "No book found with given ID.", statusCode: StatusCodes.Status404NotFound);

@@ -24,7 +24,7 @@ namespace MyLibrary.Server.Migrations
 
 
             migrationBuilder.CreateTable(
-                name: "BorrowedBooks",
+                name: "Borrow",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -43,7 +43,7 @@ namespace MyLibrary.Server.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BorrowedBooks");
+                name: "Borrow");
 
             migrationBuilder.AlterColumn<Guid>(
                 name: "Id",

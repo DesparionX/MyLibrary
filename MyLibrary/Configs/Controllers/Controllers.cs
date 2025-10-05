@@ -15,5 +15,6 @@ namespace MyLibrary.Configs.Controllers
         public Warehouse Warehouse { get; set; } = new();
         public Admin.Admin Admin { get; set; } = new();
         public HealthChecks HealthChecks { get; set; } = new();
+        public Borrows Borrows { get; set; } = new();
     }
 }

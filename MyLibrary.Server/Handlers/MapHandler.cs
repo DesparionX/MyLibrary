@@ -2,6 +2,7 @@
 using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Data.Entities;
 using MyLibrary.Server.Data.Entities.Interfaces;
+using MyLibrary.Shared.DTOs;
 using MyLibrary.Shared.Interfaces.IDTOs;
 
 namespace MyLibrary.Server.Handlers
@@ -17,6 +18,7 @@ namespace MyLibrary.Server.Handlers
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<SubscriptionTier, SubscriptionTierDTO>().ReverseMap();
             CreateMap<Subscription, SubscriptionDTO>().ReverseMap();
+            CreateMap<Borrow, BorrowDTO>().ReverseMap();
         }
     }
 }

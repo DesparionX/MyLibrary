@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyLibrary.Server.Data;
 
@@ -11,9 +12,11 @@ using MyLibrary.Server.Data;
 namespace MyLibrary.Server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251004152043_Add_BorrowerId_Column_In_Operation")]
+    partial class Add_BorrowerId_Column_In_Operation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,16 +226,13 @@ namespace MyLibrary.Server.Migrations
                     b.Property<DateTime>("DateBorrowed")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("DateReturned")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Borrows", (string)null);
+                    b.ToTable("Borrow", (string)null);
                 });
 
             modelBuilder.Entity("MyLibrary.Server.Data.Entities.Operation", b =>

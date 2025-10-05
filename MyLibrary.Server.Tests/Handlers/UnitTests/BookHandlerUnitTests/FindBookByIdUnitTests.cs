@@ -1,14 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Http;
-using Moq;
-using MyLibrary.Server.Data;
-using MyLibrary.Server.Data.Entities;
 using MyLibrary.Server.Http.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyLibrary.Server.Tests.Handlers.UnitTests.BookHandlerUnitTests
 {
@@ -23,7 +15,7 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests.BookHandlerUnitTests
             await AddFakeBooks(id: bookId);
 
             // Act
-            var result = await _bookHandler.FindBookById(bookId);
+            var result = await _bookHandler.FindBookById(bookId.ToString());
 
             // Assert
             result.As<ITaskResult>().Should().NotBeNull()
@@ -39,7 +31,7 @@ namespace MyLibrary.Server.Tests.Handlers.UnitTests.BookHandlerUnitTests
         public async Task FindBookById_ShouldReturnNotFound_WhenBookDoesNotExist()
         {
             // Arrange
-            var nonExistentBookId = Guid.NewGuid();
+            var nonExistentBookId = Guid.NewGuid().ToString();
 
             // Act
             var result = await _bookHandler.FindBookById(nonExistentBookId);

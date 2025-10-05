@@ -16,6 +16,7 @@ namespace MyLibrary.Server.Handlers
         private readonly ILogger<OperationHandler> _logger;
         private readonly IMapper _mapper;
         private readonly IBookHandler<IBook<Guid>> _bookHandler;
+        private readonly IBorrowHandler _borrowHandler;
         private readonly IWarehouseHandler<IWarehouse<int>> _warehouseHandler;
         private readonly AppDbContext _context;
 
@@ -23,10 +24,12 @@ namespace MyLibrary.Server.Handlers
             ILogger<OperationHandler> logger,
             IMapper mapper,
             IBookHandler<IBook<Guid>> bookHandler,
+            IBorrowHandler borrowHandler,
             IWarehouseHandler<IWarehouse<int>> warehouseHandler,
             AppDbContext context)
         {
             _logger = logger;
+            _borrowHandler = borrowHandler;
             _mapper = mapper;
             _bookHandler = bookHandler;
             _warehouseHandler = warehouseHandler;
@@ -144,13 +147,18 @@ namespace MyLibrary.Server.Handlers
                         _logger.LogWarning("[WARNING] Operation with ID: {Id} failed to remove stocks.", operationDTO.Id);
                         return false;
                     }
-                    else
-                    {
-                        var bookResult = await _bookHandler.UpdateBookAvailabilityAsync(ids: bookIds, isAvailable: false);
-                        return bookResult.Succeeded;
 
-                        //TODO: CREATE NEW BORROW
+                    var statusResult = await _bookHandler.UpdateBookAvailabilityAsync(ids: bookIds, isAvailable: false);
+
+                    // Also if it is Borrow operation, create a borrow record, and return both results.
+                    if (operationDTO.OperationName == nameof(StockOperations.OperationType.Borrow))
+                    {
+                        var borrowResult = await _borrowHandler.BorrowBookAsync(bookIds[0], operationDTO.BorrowerId!);
+
+                        return borrowResult.Succeeded && statusResult.Succeeded;
                     }
+
+                    return statusResult.Succeeded;
 
                 case nameof(StockOperations.OperationType.Return):
 
@@ -170,18 +178,18 @@ namespace MyLibrary.Server.Handlers
                     }
 
                     // If warehouse handler fails to add the stocks, return false.
-                    // Else, update the book availability and return result status.
-                    warehouseResult = await _warehouseHandler.RemoveStocksAsync(itemsToAdd);
+                    // Else, update the book availability, and borrow status, and return the results.
+                    warehouseResult = await _warehouseHandler.AddStocksAsync(itemsToAdd);
                     if (!warehouseResult.Succeeded)
                     {
                         _logger.LogWarning("[WARNING] Operation with ID: {Id} failed to remove stocks.", operationDTO.Id);
                         return false;
                     }
-                    else
-                    {
-                        var bookResult = await _bookHandler.UpdateBookAvailabilityAsync(ids: bookIds, isAvailable: true);
-                        return bookResult.Succeeded;
-                    }
+
+                    statusResult = await _bookHandler.UpdateBookAvailabilityAsync(ids: bookIds, isAvailable: true);
+                    var returnResult = await _borrowHandler.ReturnBookAsync(bookIds[0], operationDTO.BorrowerId!);
+
+                    return statusResult.Succeeded && returnResult.Succeeded;
 
                 default:
                     _logger.LogWarning("[WARNING] Operation type: {OperationName} is not supported.", operationDTO.OperationName);

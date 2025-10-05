@@ -292,4 +292,34 @@
   <data name="TextBoxes_BookID" xml:space="preserve">
     <value>ИН на книгата</value>
   </data>
+  <data name="Validators_BookId_Invalid" xml:space="preserve">
+    <value>Невалиден ИН.</value>
+  </data>
+  <data name="Errors_Api_NullResponse" xml:space="preserve">
+    <value>Отговора от АПИ-то е празен.</value>
+  </data>
+  <data name="Errors_Borrows_FailedToGetBorrow" xml:space="preserve">
+    <value>Неуспешно извличане на записа.</value>
+  </data>
+  <data name="Borrows_Validations_EmptyID" xml:space="preserve">
+    <value>Полето за ИН не може да е празно.</value>
+  </data>
+  <data name="Borrows_Validations_InvalidID" xml:space="preserve">
+    <value>Това не е валиден ИН.</value>
+  </data>
+  <data name="Borrows_Successfully_Borrowed" xml:space="preserve">
+    <value>Книгата е заета успешно.</value>
+  </data>
+  <data name="Borrows_Failed_To_Borrow" xml:space="preserve">
+    <value>Неуспешно заемане на книгата.</value>
+  </data>
+  <data name="Borrows_Missing_Book" xml:space="preserve">
+    <value>Поради някаква причина, книгата не е маркирана.</value>
+  </data>
+  <data name="Errors_Book_Already_Returned" xml:space="preserve">
+    <value>Книгата е вече върната или изобщо не е заемана.</value>
+  </data>
+  <data name="Return_Book_Returned_Successfully" xml:space="preserve">
+    <value>Книгата е върната успешно.</value>
+  </data>
 </root>

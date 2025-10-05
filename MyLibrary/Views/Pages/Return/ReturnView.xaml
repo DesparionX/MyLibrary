@@ -41,13 +41,15 @@
                     x:Name="ID"
                     Grid.Row="1"
                     Grid.Column="0"
-                    Width="300"
+                    Width="Auto"
                     Height="50"
+                    MinWidth="300"
                     Margin="20"
                     VerticalAlignment="Center"
                     materialDesign:HintAssist.Hint="{x:Static resx:Strings.TextBoxes_BookID}"
                     Focusable="True"
                     Style="{DynamicResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding BookId, UpdateSourceTrigger=PropertyChanged}"
                     TextAlignment="Center"
                     TextWrapping="Wrap" />
                 <Button
@@ -59,6 +61,8 @@
                     Padding="0"
                     VerticalAlignment="Center"
                     materialDesign:ButtonAssist.CornerRadius="20"
+                    Command="{Binding FindBookCommand}"
+                    CommandParameter="{Binding BookId}"
                     Content="{x:Static resx:Strings.Buttons_Find}"
                     FontSize="20"
                     Style="{DynamicResource LogInButton}" />
@@ -70,17 +74,17 @@
                 VerticalAlignment="Center"
                 Background="Transparent"
                 Foreground="Red"
-                Text="Some kind of error"
+                Text="{Binding Errors}"
                 TextAlignment="Center"
                 TextWrapping="Wrap"
-                Visibility="Visible" />
+                Visibility="{Binding ErrorsVisibility}" />
             <Grid
                 x:Name="ReturnForm"
                 Grid.Row="2"
                 Grid.Column="0"
                 Margin="20"
                 HorizontalAlignment="Center"
-                Visibility="Visible">
+                Visibility="{Binding BookDetailsVisibility}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
@@ -104,7 +108,11 @@
                         x:Name="ItemImage"
                         Margin="5"
                         ClipToBounds="True"
-                        CornerRadius="15" />
+                        CornerRadius="15">
+                        <Border.Background>
+                            <ImageBrush ImageSource="{Binding BorrowedBook.Picture}" Stretch="Fill" />
+                        </Border.Background>
+                    </Border>
                 </Border>
                 <StackPanel
                     x:Name="Title"
@@ -122,7 +130,7 @@
                     <TextBlock
                         x:Name="BookTitle"
                         FontSize="16"
-                        Text="RANDOM BOOK TITLE"
+                        Text="{Binding BorrowedBook.Title}"
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
                 </StackPanel>
@@ -142,7 +150,7 @@
                     <TextBlock
                         x:Name="BookAuthor"
                         FontSize="16"
-                        Text="RANDOM AUTHOR"
+                        Text="{Binding BorrowedBook.Author}"
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
                 </StackPanel>
@@ -162,7 +170,7 @@
                     <TextBlock
                         x:Name="BookID"
                         FontSize="16"
-                        Text="RANDOM BOOK ID"
+                        Text="{Binding BorrowedBook.Id}"
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
                 </StackPanel>
@@ -182,7 +190,7 @@
                     <TextBlock
                         x:Name="BookISBN"
                         FontSize="16"
-                        Text="RANDOM BOOK ISBN"
+                        Text="{Binding BorrowedBook.ISBN}"
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
                 </StackPanel>
@@ -202,7 +210,7 @@
                     <TextBlock
                         x:Name="BorrowerID"
                         FontSize="16"
-                        Text="RANDOM BORROWER ID"
+                        Text="{Binding BorrowerId}"
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
                 </StackPanel>
@@ -216,6 +224,7 @@
                     Padding="0"
                     VerticalAlignment="Center"
                     materialDesign:ButtonAssist.CornerRadius="20"
+                    Command="{Binding ReturnBookCommand}"
                     Content="{x:Static resx:Strings.Buttons_Return}"
                     FontSize="20"
                     Style="{DynamicResource LogInButton}" />

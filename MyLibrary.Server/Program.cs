@@ -164,6 +164,7 @@ builder.Services.AddScoped<IAuthHandler, AuthHandler>();
 builder.Services.AddScoped<IUserHandler, UserHandler>();
 builder.Services.AddScoped<ISubscriptionHandler<User>, SubscriptionHandler>();
 builder.Services.AddScoped<IResultHandler<ITaskResult>, ResultHandler>();
+builder.Services.AddScoped<IBorrowHandler, BorrowHandler>();
 builder.Services.AddScoped<IJWTGenerator, JWTGenerator>();
 
 // Health checks

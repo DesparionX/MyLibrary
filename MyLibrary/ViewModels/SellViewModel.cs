@@ -79,10 +79,11 @@ namespace MyLibrary.ViewModels
             }
 
             InitializeReceipt();
+
             var result = await _operationService.PerformOperation(Operation);
             if (!result.Succeeded)
             {
-                ReceiptErrors += $"{result.Message}{Environment.NewLine}";
+                ReceiptErrors += result.Message + Environment.NewLine;
             }
 
             // Implement Print Receipt functionality.

@@ -5,14 +5,8 @@ using MyLibrary.Resources.Languages;
 using MyLibrary.Server.Data.DTOs;
 using MyLibrary.Server.Http.Responses;
 using MyLibrary.Shared.Interfaces.IDTOs;
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyLibrary.Services.Api
 {
@@ -29,23 +23,29 @@ namespace MyLibrary.Services.Api
             _notificationService = notificationService;
         }
 
-        public Task<ITaskResult?> AddBookAsync(INewBook<BookDTO> newBookDto)
+        public Task<ITaskResult> AddBookAsync(INewBook<BookDTO> newBookDto)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ITaskResult?> DeleteBookAsync<T>(T id) where T : IEquatable<T>
+        public Task<ITaskResult> DeleteBookAsync<T>(T id) where T : IEquatable<T>
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ITaskResult?> FindBookByIdAsync<T>(T bookId) where T : IEquatable<T>
+        public async Task<ITaskResult> FindBookByIdAsync(string bookId)
         {
             try
             {
                 var requestUrl = _apiSettings.BaseUrl + _apiSettings.Controllers.Books.FindById;
-                var param = Uri.EscapeDataString($"/{bookId.ToString() ?? ""}");
+                var param = ($"/{Uri.EscapeDataString(bookId) ?? ""}");
                 var response = await _httpClient.GetFromJsonAsync<BookTaskResult>(requestUrl + param);
+
+                if (response is null)
+                {
+                    _notificationService.ShowError(title: Strings.Error, message: Strings.Errors_Api_NullResponse);
+                    return new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status500InternalServerError, message: Strings.Errors_Api_NullResponse);
+                }
 
                 return response;
             }
@@ -56,13 +56,19 @@ namespace MyLibrary.Services.Api
             }
         }
 
-        public async Task<ITaskResult?> FindBookByISBNAsync(string isbn, bool? isAvailable)
+        public async Task<ITaskResult> FindBookByISBNAsync(string isbn, bool? isAvailable)
         {
             try
             {
                 var requestUrl = _apiSettings.BaseUrl + _apiSettings.Controllers.Books.FindByISBN;
                 var param = ($"/{Uri.EscapeDataString(isbn) ?? ""}+{isAvailable}");
                 var response = await _httpClient.GetFromJsonAsync<BookTaskResult>(requestUrl + param);
+
+                if (response is null)
+                {
+                    _notificationService.ShowError(title: Strings.Error, message: Strings.Errors_Api_NullResponse);
+                    return new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status500InternalServerError, message: Strings.Errors_Api_NullResponse);
+                }
 
                 return response;
             }
@@ -73,12 +79,12 @@ namespace MyLibrary.Services.Api
             }
         }
 
-        public Task<ITaskResult?> GetAllBooksAsync()
+        public Task<ITaskResult> GetAllBooksAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<ITaskResult?> UpdateBookAsync(IBookDTO bookDto)
+        public Task<ITaskResult> UpdateBookAsync(IBookDTO bookDto)
         {
             throw new NotImplementedException();
         }

@@ -203,7 +203,7 @@ namespace MyLibrary.Server.Migrations
                     b.ToTable("Books", (string)null);
                 });
 
-            modelBuilder.Entity("MyLibrary.Server.Data.Entities.BorrowedBooks", b =>
+            modelBuilder.Entity("MyLibrary.Server.Data.Entities.Borrow", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -224,7 +224,7 @@ namespace MyLibrary.Server.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BorrowedBooks", (string)null);
+                    b.ToTable("Borrow", (string)null);
                 });
 
             modelBuilder.Entity("MyLibrary.Server.Data.Entities.Operation", b =>

@@ -292,4 +292,34 @@
   <data name="TextBoxes_BookID" xml:space="preserve">
     <value>Book ID</value>
   </data>
+  <data name="Validators_BookId_Invalid" xml:space="preserve">
+    <value>Invalid Book ID.</value>
+  </data>
+  <data name="Errors_Api_NullResponse" xml:space="preserve">
+    <value>API response was null.</value>
+  </data>
+  <data name="Errors_Borrows_FailedToGetBorrow" xml:space="preserve">
+    <value>Failed to get borrow from the DB.</value>
+  </data>
+  <data name="Borrows_Validations_EmptyID" xml:space="preserve">
+    <value>ID field cannot be empty.</value>
+  </data>
+  <data name="Borrows_Validations_InvalidID" xml:space="preserve">
+    <value>This is not a valid ID.</value>
+  </data>
+  <data name="Borrows_Successfully_Borrowed" xml:space="preserve">
+    <value>Book borrowed successfully.</value>
+  </data>
+  <data name="Borrows_Failed_To_Borrow" xml:space="preserve">
+    <value>Book borrow failed.</value>
+  </data>
+  <data name="Borrows_Missing_Book" xml:space="preserve">
+    <value>For some reason the book was not selected.</value>
+  </data>
+  <data name="Errors_Book_Already_Returned" xml:space="preserve">
+    <value>Book is already returned, or not borrowed at all.</value>
+  </data>
+  <data name="Return_Book_Returned_Successfully" xml:space="preserve">
+    <value>Book returned successfully.</value>
+  </data>
 </root>

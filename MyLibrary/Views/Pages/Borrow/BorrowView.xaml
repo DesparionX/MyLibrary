@@ -1,12 +1,124 @@
-﻿<UserControl x:Class="MyLibrary.Views.Pages.Borrow.BorrowView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MyLibrary.Views.Pages.Borrow"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+﻿<UserControl
+    x:Class="MyLibrary.Views.Pages.Borrow.BorrowView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MyLibrary.Views.Pages.Borrow"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resx="clr-namespace:MyLibrary.Resources.Languages"
+    xmlns:viewmodels="clr-namespace:MyLibrary.ViewModels"
+    MaxWidth="1200"
+    MaxHeight="800"
+    d:DataContext="{d:DesignInstance Type=viewmodels:BorrowViewModel}"
+    FontFamily="Jura Bold"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="BorrowView.Style.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border x:Name="BorrowViewContent" Style="{DynamicResource BorrowViewWindow}">
+        <Grid HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel
+                x:Name="BookIDAndValidation"
+                Grid.Row="0"
+                Grid.Column="0"
+                Orientation="Vertical">
+                <materialDesign:PackIcon
+                    Width="auto"
+                    Height="100"
+                    HorizontalAlignment="Center"
+                    Foreground="{DynamicResource MaterialDesign.Brush.Primary.Dark}"
+                    Kind="BookOpenVariantOutline" />
+                <TextBox
+                    x:Name="BookID"
+                    Width="Auto"
+                    Height="50"
+                    MinWidth="300"
+                    HorizontalAlignment="Center"
+                    materialDesign:HintAssist.Hint="{x:Static resx:Strings.TextBoxes_BookID}"
+                    Focusable="True"
+                    Style="{DynamicResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding BookId}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    x:Name="BookIDErrors"
+                    Margin="10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    Foreground="Red"
+                    Text="{Binding BookIdErrors}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap"
+                    Visibility="{Binding BookIdErrorsVisibility}" />
+            </StackPanel>
+            <StackPanel
+                x:Name="UserIDAndValidation"
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="30"
+                Orientation="Vertical">
+                <materialDesign:PackIcon
+                    Width="Auto"
+                    Height="100"
+                    HorizontalAlignment="Center"
+                    Foreground="{DynamicResource MaterialDesign.Brush.Primary.Dark}"
+                    Kind="CardAccountDetails" />
+                <TextBox
+                    x:Name="UserID"
+                    Width="auto"
+                    Height="60"
+                    MinWidth="300"
+                    HorizontalAlignment="Center"
+                    materialDesign:HintAssist.Hint="{x:Static resx:Strings.TextBoxes_BookID}"
+                    Focusable="True"
+                    Style="{DynamicResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding BorrowerId}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    x:Name="UserIDErrors"
+                    Margin="10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    Foreground="Red"
+                    Text="{Binding BorrowerIdErrors}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap"
+                    Visibility="{Binding BorrowerIdErrorsVisibility}" />
+            </StackPanel>
+            <Button
+                x:Name="SubmitBorrow"
+                Grid.Row="2"
+                Grid.Column="0"
+                Width="150"
+                Height="70"
+                Margin="0,20"
+                Padding="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                materialDesign:ButtonAssist.CornerRadius="20"
+                Command="{Binding BorrowCommand}"
+                Content="{x:Static resx:Strings.Buttons_Borrow}"
+                FontSize="20"
+                Style="{DynamicResource LogInButton}" />
+        </Grid>
+    </Border>
+
 </UserControl>

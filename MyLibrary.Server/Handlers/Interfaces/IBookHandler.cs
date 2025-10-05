@@ -8,7 +8,7 @@ namespace MyLibrary.Server.Handlers.Interfaces
     {
         public Task<ITaskResult> GetAllBooks();
         public Task<ITaskResult> FindBookByISBN(string ISBN, bool? isAvailable = default);
-        public Task<ITaskResult> FindBookById<TId>(TId id);
+        public Task<ITaskResult> FindBookById(string id);
         public Task<ITaskResult> AddBookAsync(INewBook<BookDTO> newBookDto);
         public Task<ITaskResult> UpdateBookAsync(IBookDTO bookDto);
         public Task<ITaskResult> UpdateBookAvailabilityAsync(ICollection<string> ids, bool isAvailable);

@@ -55,8 +55,9 @@ namespace MyLibrary
                     services.AddTransient<AuthHeaderHandler>();
                     services.AddTransient<IUserService, UserService>();
                     services.AddTransient<IValidationService, ValidationService>();
-                    services.AddTransient<IBookService, BookService>();
+                    services.AddScoped<IBookService, BookService>();
                     services.AddScoped<IOperationService, OperationService>();
+                    services.AddScoped<IBorrowService, BorrowService>();
 
                     // Windows
                     services.AddTransient<App>();

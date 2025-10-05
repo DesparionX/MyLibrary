@@ -151,6 +151,51 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Book borrow failed..
+        /// </summary>
+        public static string Borrows_Failed_To_Borrow {
+            get {
+                return ResourceManager.GetString("Borrows_Failed_To_Borrow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For some reason the book was not selected..
+        /// </summary>
+        public static string Borrows_Missing_Book {
+            get {
+                return ResourceManager.GetString("Borrows_Missing_Book", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Book borrowed successfully..
+        /// </summary>
+        public static string Borrows_Successfully_Borrowed {
+            get {
+                return ResourceManager.GetString("Borrows_Successfully_Borrowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID field cannot be empty..
+        /// </summary>
+        public static string Borrows_Validations_EmptyID {
+            get {
+                return ResourceManager.GetString("Borrows_Validations_EmptyID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is not a valid ID..
+        /// </summary>
+        public static string Borrows_Validations_InvalidID {
+            get {
+                return ResourceManager.GetString("Borrows_Validations_InvalidID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Borrow.
         /// </summary>
         public static string Buttons_Borrow {
@@ -232,6 +277,15 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to API response was null..
+        /// </summary>
+        public static string Errors_Api_NullResponse {
+            get {
+                return ResourceManager.GetString("Errors_Api_NullResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occurred while sending the request: .
         /// </summary>
         public static string Errors_AuthHeader_FailedSendingRequest {
@@ -246,6 +300,24 @@ namespace MyLibrary.Resources.Languages {
         public static string Errors_AuthService_ClearingUserIdentity {
             get {
                 return ResourceManager.GetString("Errors_AuthService_ClearingUserIdentity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Book is already returned, or not borrowed at all..
+        /// </summary>
+        public static string Errors_Book_Already_Returned {
+            get {
+                return ResourceManager.GetString("Errors_Book_Already_Returned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to get borrow from the DB..
+        /// </summary>
+        public static string Errors_Borrows_FailedToGetBorrow {
+            get {
+                return ResourceManager.GetString("Errors_Borrows_FailedToGetBorrow", resourceCulture);
             }
         }
         
@@ -457,6 +529,15 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Book returned successfully..
+        /// </summary>
+        public static string Return_Book_Returned_Successfully {
+            get {
+                return ResourceManager.GetString("Return_Book_Returned_Successfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item ID cannot be null..
         /// </summary>
         public static string Sell_Validations_ID_NullOrWhiteSpace {
@@ -552,6 +633,15 @@ namespace MyLibrary.Resources.Languages {
         public static string TextBoxes_BookID {
             get {
                 return ResourceManager.GetString("TextBoxes_BookID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Book ID..
+        /// </summary>
+        public static string Validators_BookId_Invalid {
+            get {
+                return ResourceManager.GetString("Validators_BookId_Invalid", resourceCulture);
             }
         }
         

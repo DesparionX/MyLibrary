@@ -31,7 +31,7 @@ namespace MyLibrary.Server.Controllers
         [ProducesResponseType<ITaskResult>(StatusCodes.Status404NotFound)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status502BadGateway)]
-        public async Task<IActionResult> FindById<TId>([FromRoute] TId id) where TId : IEquatable<TId>
+        public async Task<IActionResult> FindById([FromRoute] string id)
         {
             if (id == null || string.IsNullOrWhiteSpace(id.ToString()))
             {
