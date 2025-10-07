@@ -133,6 +133,15 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to There is no book with such ID..
+        /// </summary>
+        public static string BookService_Errors_BookDoesntExist {
+            get {
+                return ResourceManager.GetString("BookService_Errors_BookDoesntExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error fetching book by ID..
         /// </summary>
         public static string BookService_Errors_ErrorFetchingBookByID {
@@ -156,15 +165,6 @@ namespace MyLibrary.Resources.Languages {
         public static string Borrows_Failed_To_Borrow {
             get {
                 return ResourceManager.GetString("Borrows_Failed_To_Borrow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to For some reason the book was not selected..
-        /// </summary>
-        public static string Borrows_Missing_Book {
-            get {
-                return ResourceManager.GetString("Borrows_Missing_Book", resourceCulture);
             }
         }
         
@@ -309,6 +309,15 @@ namespace MyLibrary.Resources.Languages {
         public static string Errors_Book_Already_Returned {
             get {
                 return ResourceManager.GetString("Errors_Book_Already_Returned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The book is already borrowed..
+        /// </summary>
+        public static string Errors_Borrows_AlreadyBorrowed {
+            get {
+                return ResourceManager.GetString("Errors_Borrows_AlreadyBorrowed", resourceCulture);
             }
         }
         

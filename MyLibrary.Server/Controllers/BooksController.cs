@@ -33,7 +33,7 @@ namespace MyLibrary.Server.Controllers
         [ProducesResponseType<ITaskResult>(StatusCodes.Status502BadGateway)]
         public async Task<IActionResult> FindById([FromRoute] string id)
         {
-            if (id == null || string.IsNullOrWhiteSpace(id.ToString()))
+            if (string.IsNullOrWhiteSpace(id))
             {
                 return BadRequest(new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status400BadRequest, message: "ID cannot be null or empty."));
             }

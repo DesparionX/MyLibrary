@@ -7,6 +7,7 @@ using MyLibrary.Server.Http.Responses;
 using MyLibrary.Services;
 using MyLibrary.Services.Api;
 using MyLibrary.Shared.Interfaces.IDTOs;
+using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace MyLibrary.ViewModels
@@ -14,7 +15,6 @@ namespace MyLibrary.ViewModels
     public partial class BorrowViewModel : ObservableObject
     {
         private readonly IBookService _bookService;
-        private readonly IBorrowService _borrowService;
         private readonly IAuthService _authService;
         private readonly INavigationService _navigationService;
         private readonly IOperationService _operationService;
@@ -34,8 +34,8 @@ namespace MyLibrary.ViewModels
         [NotifyPropertyChangedFor(nameof(BorrowerIdErrorsVisibility))]
         private string _borrowerIdErrors = string.Empty;
 
-        [ObservableProperty]
-        private IOperationDTO _operation = new OperationDTO();
+        private IOperationDTO Operation = new OperationDTO();
+
 
         public Visibility BookIdErrorsVisibility 
             => string.IsNullOrWhiteSpace(BookIdErrors) ? Visibility.Collapsed : Visibility.Visible;
@@ -46,18 +46,18 @@ namespace MyLibrary.ViewModels
 
         public BorrowViewModel(
             IBookService bookService,
-            IBorrowService borrowService,
             IAuthService authService,
             INavigationService navigationService,
             IOperationService operationService,
             INotificationService notificationService)
         {
             _bookService = bookService;
-            _borrowService = borrowService;
             _authService = authService;
             _navigationService = navigationService;
             _operationService = operationService;
             _notificationService = notificationService;
+
+            
         }
 
         [RelayCommand]
@@ -69,10 +69,7 @@ namespace MyLibrary.ViewModels
             await FillOperation();
 
             if (Operation.OrderList is null || Operation.OrderList.Count == 0)
-            {
-                _notificationService.ShowError(title: Strings.CustomDialog_Title_Fail, message: Strings.Borrows_Missing_Book);
                 return;
-            }
 
             var result = await _operationService.PerformOperation(Operation) as OperationTaskResult;
 
@@ -94,20 +91,33 @@ namespace MyLibrary.ViewModels
             Operation.UserName = _authService.GetUser()!.UserName;
             Operation.UserRole = _authService.GetUser()!.UserName; // Adding UserName until UserRole is implemented.
             Operation.TotalPrice = 0;
-            Operation.OrderList = new List<IOrder>
-            {
-                await CreateOrderAsync(BookId)
-            };
             Operation.OperationDate = DateTime.Now;
             Operation.BorrowerId = BorrowerId;
+            
+            var order = await CreateOrderAsync(BookId);
+            if (order is null)
+                return;
 
-
+            Operation.OrderList = [order];
         }
 
         // Fetch the book from DB
-        private async Task<IOrder> CreateOrderAsync(string bookId)
+        private async Task<IOrder?> CreateOrderAsync(string bookId)
         {
-            var book = (await _bookService.FindBookByIdAsync(bookId) as BookTaskResult)!.Book!;
+            var book = (await _bookService.FindBookByIdAsync(bookId) as BookTaskResult)?.Book;
+
+            if (book is null)
+            {
+                BookIdErrors += Strings.BookService_Errors_BookDoesntExist + Environment.NewLine;
+                return null;
+            }
+
+            if (!book.IsAvailable)
+            {
+                BookIdErrors += Strings.Errors_Borrows_AlreadyBorrowed + Environment.NewLine;
+                return null;
+            }
+
             var order = new Order
             {
                 ItemId = book.Id.ToString(),

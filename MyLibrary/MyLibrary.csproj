@@ -137,4 +137,8 @@
     </Page>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Pages\Books\" />
+  </ItemGroup>
+
 </Project>

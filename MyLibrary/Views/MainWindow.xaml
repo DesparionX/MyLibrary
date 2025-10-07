@@ -70,9 +70,9 @@
                         Text="Home" />
                     <nav:NavItem
                         Command="{Binding NavigateToViewCommand}"
-                        CommandParameter="TRERE"
-                        Icon="GpsNotFixed"
-                        Text="Test" />
+                        CommandParameter="Books"
+                        Icon="BookOpenVariantOutline"
+                        Text="Books" />
                 </StackPanel>
             </Grid>
 

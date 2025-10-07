@@ -82,7 +82,7 @@
                 <TextBox
                     x:Name="UserID"
                     Width="auto"
-                    Height="60"
+                    Height="50"
                     MinWidth="300"
                     HorizontalAlignment="Center"
                     materialDesign:HintAssist.Hint="{x:Static resx:Strings.TextBoxes_BookID}"

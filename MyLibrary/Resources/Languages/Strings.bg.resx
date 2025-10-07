@@ -313,13 +313,16 @@
   <data name="Borrows_Failed_To_Borrow" xml:space="preserve">
     <value>Неуспешно заемане на книгата.</value>
   </data>
-  <data name="Borrows_Missing_Book" xml:space="preserve">
-    <value>Поради някаква причина, книгата не е маркирана.</value>
-  </data>
   <data name="Errors_Book_Already_Returned" xml:space="preserve">
     <value>Книгата е вече върната или изобщо не е заемана.</value>
   </data>
   <data name="Return_Book_Returned_Successfully" xml:space="preserve">
     <value>Книгата е върната успешно.</value>
+  </data>
+  <data name="Errors_Borrows_AlreadyBorrowed" xml:space="preserve">
+    <value>Книгата е вече заета.</value>
+  </data>
+  <data name="BookService_Errors_BookDoesntExist" xml:space="preserve">
+    <value>Не съществува книга с този ИН.</value>
   </data>
 </root>

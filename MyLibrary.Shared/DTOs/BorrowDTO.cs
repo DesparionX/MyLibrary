@@ -13,6 +13,6 @@ namespace MyLibrary.Shared.DTOs
         public required string BookId { get; set; } = string.Empty;
         public required string UserId { get; set; } = string.Empty;
         public DateTime BorrowedAt { get; set; } = DateTime.UtcNow;
-        public DateTime? ReturnedAt { get; set; } = null;
+        public DateTime? DateReturned { get; set; } = null;
     }
 }

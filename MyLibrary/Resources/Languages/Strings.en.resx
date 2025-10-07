@@ -313,13 +313,16 @@
   <data name="Borrows_Failed_To_Borrow" xml:space="preserve">
     <value>Book borrow failed.</value>
   </data>
-  <data name="Borrows_Missing_Book" xml:space="preserve">
-    <value>For some reason the book was not selected.</value>
+  <data name="Errors_Borrows_AlreadyBorrowed" xml:space="preserve">
+    <value>The book is already borrowed.</value>
   </data>
   <data name="Errors_Book_Already_Returned" xml:space="preserve">
     <value>Book is already returned, or not borrowed at all.</value>
   </data>
   <data name="Return_Book_Returned_Successfully" xml:space="preserve">
     <value>Book returned successfully.</value>
+  </data>
+  <data name="BookService_Errors_BookDoesntExist" xml:space="preserve">
+    <value>There is no book with such ID.</value>
   </data>
 </root>

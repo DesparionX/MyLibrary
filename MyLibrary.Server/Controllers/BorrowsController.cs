@@ -20,7 +20,6 @@ namespace MyLibrary.Server.Controllers
             _resultHandler = resultHandler;
         }
 
-        [Authorize]
         [HttpGet("getAllBorrows")]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status200OK)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status302Found)]
@@ -34,7 +33,6 @@ namespace MyLibrary.Server.Controllers
             return _resultHandler.ReadResult(result);
         }
 
-        [Authorize]
         [HttpGet("getUserBorrows/{userId}")]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status200OK)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status302Found)]
@@ -53,7 +51,6 @@ namespace MyLibrary.Server.Controllers
             return _resultHandler.ReadResult(result);
         }
 
-        [Authorize]
         [HttpGet("getBooksBorrows/{bookId}+{isReturned}")]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status200OK)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status302Found)]

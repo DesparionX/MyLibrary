@@ -68,11 +68,6 @@ namespace MyLibrary.ViewModels
                 return;
             }
 
-            BorrowerId = await GetBorrowerIdAsync(bookId);
-
-            if (string.IsNullOrWhiteSpace(BorrowerId))
-                return;
-
             var result = await _bookService.FindBookByIdAsync(bookId) as BookTaskResult;
             if (result is null)
             {
@@ -82,10 +77,15 @@ namespace MyLibrary.ViewModels
 
             if (!result.Succeeded)
             {
-                Errors += result.Message + Environment.NewLine;
+                Errors += Strings.BookService_Errors_BookDoesntExist + Environment.NewLine;
                 return;
             }
-            
+
+            BorrowerId = await GetBorrowerIdAsync(bookId);
+
+            if (string.IsNullOrWhiteSpace(BorrowerId))
+                return;
+
             BorrowedBook = result.Book;
         }
 
@@ -108,7 +108,10 @@ namespace MyLibrary.ViewModels
             }
 
             if (!result.Succeeded)
+            {
                 Errors += result.Message + Environment.NewLine;
+                return;
+            }
 
             _notificationService.ShowSuccess(title: Strings.CustomDialog_Title_Success, message: Strings.Return_Book_Returned_Successfully);
             _navigationService.BackToHomeView();
