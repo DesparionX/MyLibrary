@@ -22,7 +22,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border x:Name="Content" Style="{StaticResource ReturnViewWindow}">
+    <Border x:Name="Content" Style="{DynamicResource MainPage}">
         <Grid HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />

@@ -22,7 +22,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border x:Name="BorrowViewContent" Style="{DynamicResource BorrowViewWindow}">
+    <Border x:Name="BorrowViewContent" Style="{DynamicResource MainPage}">
         <Grid HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
@@ -52,7 +52,7 @@
                     materialDesign:HintAssist.Hint="{x:Static resx:Strings.TextBoxes_BookID}"
                     Focusable="True"
                     Style="{DynamicResource MaterialDesignOutlinedTextBox}"
-                    Text="{Binding BookId}"
+                    Text="{Binding BookId, UpdateSourceTrigger=PropertyChanged}"
                     TextAlignment="Center"
                     TextWrapping="Wrap" />
                 <TextBlock
@@ -88,7 +88,7 @@
                     materialDesign:HintAssist.Hint="{x:Static resx:Strings.TextBoxes_BookID}"
                     Focusable="True"
                     Style="{DynamicResource MaterialDesignOutlinedTextBox}"
-                    Text="{Binding BorrowerId}"
+                    Text="{Binding BorrowerId, UpdateSourceTrigger=PropertyChanged}"
                     TextAlignment="Center"
                     TextWrapping="Wrap" />
                 <TextBlock

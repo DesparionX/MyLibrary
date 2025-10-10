@@ -23,7 +23,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border x:Name="MainBorder" Style="{StaticResource SellViewWindow}">
+    <Border x:Name="MainBorder" Style="{DynamicResource MainPage}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -267,7 +267,7 @@
                     <DataGrid.Columns>
                         <DataGridTemplateColumn
                             Header="{x:Static resx:Strings.Recipe_Header_ISBN}"
-                            HeaderStyle="{StaticResource HeaderCenter}"
+                            HeaderStyle="{DynamicResource HeaderCenter}"
                             IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -280,7 +280,7 @@
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn
                             Header="{x:Static resx:Strings.Recipe_Header_Name}"
-                            HeaderStyle="{StaticResource HeaderCenter}"
+                            HeaderStyle="{DynamicResource HeaderCenter}"
                             IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -293,7 +293,7 @@
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn
                             Header="{x:Static resx:Strings.Recipe_Header_Price}"
-                            HeaderStyle="{StaticResource HeaderRight}"
+                            HeaderStyle="{DynamicResource HeaderCenter}"
                             IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -306,7 +306,7 @@
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn
                             Header="{x:Static resx:Strings.Recipe_Header_Quantity}"
-                            HeaderStyle="{StaticResource HeaderCenter}"
+                            HeaderStyle="{DynamicResource HeaderCenter}"
                             IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -319,7 +319,7 @@
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn
                             Header="{x:Static resx:Strings.Recipe_Header_Total}"
-                            HeaderStyle="{StaticResource HeaderRight}"
+                            HeaderStyle="{DynamicResource HeaderRight}"
                             IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -342,7 +342,7 @@
                                         HorizontalAlignment="Right"
                                         Command="{Binding DataContext.DeleteItemFromReceiptCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                         CommandParameter="{Binding ItemId}"
-                                        Style="{StaticResource DeleteButton}" />
+                                        Style="{DynamicResource DeleteButton}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

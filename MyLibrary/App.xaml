@@ -20,6 +20,8 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.BlueGrey.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Resources/Styles/Styles.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Resources/Styles/CustomButtons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/Styles/CustomPages.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/Styles/CustomGrids.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

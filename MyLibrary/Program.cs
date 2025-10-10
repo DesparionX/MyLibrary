@@ -10,6 +10,8 @@ using MyLibrary.Views.Pages;
 using MyLibrary.Views.Pages.Return;
 using MyLibrary.Views.Pages.Borrow;
 using MyLibrary.Views.Pages.Sell;
+using MyLibrary.Views.Pages.Books;
+using MyLibrary.Views.Pages.Books.EditBook;
 
 namespace MyLibrary
 {
@@ -66,13 +68,15 @@ namespace MyLibrary
                     services.AddTransient<LogIn>();
                     services.AddTransient<MainWindow>();
                     services.AddScoped<AddItemToReceiptWindow>();
-
+                    
                     // Views
                     services.AddTransient<HomeView>();
                     services.AddTransient<NotFoundView>();
                     services.AddScoped<ReturnView>();
                     services.AddScoped<SellView>();
                     services.AddTransient<BorrowView>();
+                    services.AddScoped<BooksView>();
+                    services.AddScoped<EditBookView>();
 
                     // View Models
                     services.AddTransient<ChangeLanguageViewModel>();
@@ -84,6 +88,8 @@ namespace MyLibrary
                     services.AddScoped<ReturnViewModel>();
                     services.AddTransient<BorrowViewModel>();
                     services.AddScoped<AddItemToReceiptViewModel>();
+                    services.AddScoped<BookViewModel>();
+                    services.AddScoped<EditBookViewModel>();
                 });
     }
 }

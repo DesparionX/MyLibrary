@@ -129,16 +129,15 @@
     <Page Update="Resources\Styles\CustomButtons.xaml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Page>
+    <Page Update="Resources\Styles\CustomPages.xaml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Page>
     <Page Update="Resources\Styles\Styles.xaml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Page>
     <Page Update="Views\Pages\Return\ReturnView.Style.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Pages\Books\" />
   </ItemGroup>
 
 </Project>

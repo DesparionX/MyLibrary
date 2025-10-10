@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using MyLibrary.Resources.Languages;
 using MyLibrary.Views.Pages;
+using MyLibrary.Views.Pages.Books;
 using MyLibrary.Views.Pages.Borrow;
 using MyLibrary.Views.Pages.Return;
 using MyLibrary.Views.Pages.Sell;
@@ -37,6 +38,7 @@ namespace MyLibrary.Services.Api
                     "borrow" => serviceProvider.GetRequiredService<BorrowView>(),
                     "sell" => serviceProvider.GetRequiredService<SellView>(),
                     "return" => serviceProvider.GetRequiredService<ReturnView>(),
+                    "books" => serviceProvider.GetRequiredService<BooksView>(),
                     _ => serviceProvider.GetRequiredService<NotFoundView>()
                 };
             }

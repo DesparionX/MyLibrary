@@ -79,9 +79,26 @@ namespace MyLibrary.Services.Api
             }
         }
 
-        public Task<ITaskResult> GetAllBooksAsync()
+        public async Task<ITaskResult> GetAllBooksAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var requestUrl = _apiSettings.BaseUrl + _apiSettings.Controllers.Books.GetAllBooks;
+                var response = await _httpClient.GetFromJsonAsync<BookTaskResult>(requestUrl);
+
+                if (response is null)
+                {
+                    _notificationService.ShowError(title: Strings.Error, message: Strings.Errors_Api_NullResponse);
+                    return new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status500InternalServerError, message: Strings.Errors_Api_NullResponse);
+                }
+
+                return response;
+            }
+            catch (Exception err)
+            {
+                _notificationService.ShowError(title: Strings.Error, message: $"{Strings.BookService_Errors_BookDoesntExist} \n {err.Message}");
+                return new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status500InternalServerError, message: err.Message);
+            }
         }
 
         public Task<ITaskResult> UpdateBookAsync(IBookDTO bookDto)

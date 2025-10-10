@@ -1,0 +1,181 @@
+﻿<UserControl
+    x:Class="MyLibrary.Views.Pages.Books.BooksView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MyLibrary.Views.Pages.Books"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resx="clr-namespace:MyLibrary.Resources.Languages"
+    xmlns:viewmodels="clr-namespace:MyLibrary.ViewModels"
+    MaxWidth="1200"
+    MaxHeight="800"
+    d:DataContext="{d:DesignInstance Type=viewmodels:BookViewModel}"
+    FontFamily="Jura Bold"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="BooksView.Style.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border x:Name="BooksViewContent" Style="{DynamicResource MainPage}">
+        <Grid HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <StackPanel
+                x:Name="SearchSection"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+                <TextBox
+                    x:Name="Filter"
+                    Width="Auto"
+                    Height="50"
+                    MinWidth="300"
+                    Margin="20"
+                    HorizontalAlignment="Center"
+                    materialDesign:HintAssist.Hint="{Binding FilterButtonText}"
+                    Focusable="True"
+                    Style="{DynamicResource MaterialDesignOutlinedTextBox}"
+                    Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap" />
+                <Button
+                    Width="Auto"
+                    Height="50"
+                    MinWidth="100"
+                    Margin="10"
+                    VerticalAlignment="Center"
+                    materialDesign:ButtonAssist.CornerRadius="20"
+                    Command="{Binding ChangeFilterCommand}"
+                    Content="{Binding FilterButtonText}"
+                    FontSize="16"
+                    Style="{DynamicResource LogInButton}" />
+            </StackPanel>
+            <DataGrid
+                x:Name="BooksGrid"
+                Grid.Row="1"
+                Grid.Column="0"
+                Width="auto"
+                Margin="0,30"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                CanUserDeleteRows="False"
+                CanUserReorderColumns="False"
+                CanUserResizeColumns="False"
+                CanUserSortColumns="False"
+                FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Mode=Self}}"
+                Focusable="True"
+                FontSize="16"
+                GridLinesVisibility="Horizontal"
+                HeadersVisibility="All"
+                Initialized="LoadBooks"
+                IsReadOnly="True"
+                ItemsSource="{Binding FilteredBooks, UpdateSourceTrigger=PropertyChanged}"
+                KeyboardNavigation.DirectionalNavigation="Continue"
+                SelectionMode="Single"
+                SelectionUnit="FullRow">
+                <DataGrid.Resources>
+                    <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                        <Setter Property="Focusable" Value="False" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                    </Style>
+                    <Style BasedOn="{StaticResource MaterialDesignDataGridRow}" TargetType="DataGridRow">
+                        <Setter Property="Focusable" Value="True" />
+                        <Setter Property="SnapsToDevicePixels" Value="True" />
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn
+                        Header="Title"
+                        HeaderStyle="{StaticResource HeaderCenter}"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Title}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Header="Author"
+                        HeaderStyle="{StaticResource HeaderCenter}"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Author}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Header="Genre"
+                        HeaderStyle="{StaticResource HeaderCenter}"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Genre}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Header="{x:Static resx:Strings.Recipe_Header_ISBN}"
+                        HeaderStyle="{StaticResource HeaderCenter}"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding ISBN}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Header="{x:Static resx:Strings.Recipe_Header_Price}"
+                        HeaderStyle="{StaticResource HeaderRight}"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding BasePrice, StringFormat=C2}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                    x:Name="Delete"
+                                    Height="40"
+                                    Margin="20,0,0,0"
+                                    HorizontalAlignment="Right"
+                                    Command="{Binding DataContext.OpenBookDetailsCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                    CommandParameter="{Binding}"
+                                    Style="{DynamicResource ViewButton}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </Grid>
+    </Border>
+</UserControl>
