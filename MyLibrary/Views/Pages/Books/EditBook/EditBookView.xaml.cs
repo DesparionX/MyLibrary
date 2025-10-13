@@ -25,5 +25,21 @@ namespace MyLibrary.Views.Pages.Books.EditBook
             InitializeComponent();
             DataContext = _viewModel;
         }
+
+        private void Back(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+
+            Close();
+        }
+
+        private async void SaveChanges(object sender, RoutedEventArgs e)
+        {
+            if (!await _viewModel.SaveChangesAsync()) return;
+
+            DialogResult = true;
+
+            Close();
+        }
     }
 }

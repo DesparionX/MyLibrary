@@ -38,11 +38,6 @@ namespace MyLibrary.ViewModels
         [ObservableProperty]
         private ObservableCollection<IBookDTO> _filteredBooks = [];
 
-        [ObservableProperty]
-        private IBookDTO? _selectedBook;
-
-        
-
         public BookViewModel(
             IBookService bookService,
             INotificationService notificationService,

@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
 
+    <!--  Buttons styles  -->
     <Style x:Key="LogInButton" TargetType="Button">
         <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesign.Brush.TextBox.OutlineBorder}" />
@@ -59,6 +60,40 @@
                         VerticalAlignment="Center"
                         Foreground="{TemplateBinding Foreground}"
                         Kind="WindowClose" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Primary.Light}" />
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect
+                            BlurRadius="5"
+                            Direction="0"
+                            Opacity="1"
+                            ShadowDepth="0"
+                            Color="Black" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="CustomButton" TargetType="Button">
+        <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Primary.Dark}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <materialDesign:PackIcon
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="{TemplateBinding Foreground}"
+                        Kind="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -399,6 +434,34 @@
                     Opacity="1"
                     ShadowDepth="1"
                     Color="Black" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  ToggleButton Style  -->
+    <Style
+        x:Key="CustomToggle"
+        BasedOn="{StaticResource MaterialDesignActionToggleButton}"
+        TargetType="ToggleButton">
+        <Setter Property="Content">
+            <Setter.Value>
+                <materialDesign:PackIcon
+                    Width="auto"
+                    Height="auto"
+                    Margin="10"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ToggleButton}}"
+                    Kind="{Binding Tag, RelativeSource={RelativeSource AncestorType=ToggleButton}}" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect
+                    BlurRadius="10"
+                    Opacity="1"
+                    ShadowDepth="1"
+                    Color="#FF000000" />
             </Setter.Value>
         </Setter>
     </Style>

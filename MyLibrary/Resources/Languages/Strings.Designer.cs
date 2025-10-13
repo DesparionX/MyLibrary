@@ -61,7 +61,7 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Author:.
+        ///   Looks up a localized string similar to Author.
         /// </summary>
         public static string Book_Details_Author {
             get {
@@ -70,7 +70,7 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Borrower:.
+        ///   Looks up a localized string similar to Borrower.
         /// </summary>
         public static string Book_Details_Borrower {
             get {
@@ -79,7 +79,7 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description:.
+        ///   Looks up a localized string similar to Description.
         /// </summary>
         public static string Book_Details_Description {
             get {
@@ -88,7 +88,7 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Genre:.
+        ///   Looks up a localized string similar to Genre.
         /// </summary>
         public static string Book_Details_Genre {
             get {
@@ -97,7 +97,7 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ID:.
+        ///   Looks up a localized string similar to ID.
         /// </summary>
         public static string Book_Details_ID {
             get {
@@ -106,7 +106,7 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ISBN:.
+        ///   Looks up a localized string similar to ISBN.
         /// </summary>
         public static string Book_Details_ISBN {
             get {
@@ -115,7 +115,25 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Publisher:.
+        ///   Looks up a localized string similar to Pages.
+        /// </summary>
+        public static string Book_Details_Pages {
+            get {
+                return ResourceManager.GetString("Book_Details_Pages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        public static string Book_Details_PriceEUR {
+            get {
+                return ResourceManager.GetString("Book_Details_PriceEUR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Publisher.
         /// </summary>
         public static string Book_Details_Publisher {
             get {
@@ -124,7 +142,7 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title:.
+        ///   Looks up a localized string similar to Title.
         /// </summary>
         public static string Book_Details_Title {
             get {
@@ -484,6 +502,24 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OFF.
+        /// </summary>
+        public static string OFF {
+            get {
+                return ResourceManager.GetString("OFF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ON.
+        /// </summary>
+        public static string ON {
+            get {
+                return ResourceManager.GetString("ON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The book is either not found, or out of stock..
         /// </summary>
         public static string Receipt_AddNewItem_NotFoundOrNotAvailable {
@@ -642,6 +678,15 @@ namespace MyLibrary.Resources.Languages {
         public static string TextBoxes_BookID {
             get {
                 return ResourceManager.GetString("TextBoxes_BookID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editor mode:.
+        /// </summary>
+        public static string Toggles_EditorMode {
+            get {
+                return ResourceManager.GetString("Toggles_EditorMode", resourceCulture);
             }
         }
         

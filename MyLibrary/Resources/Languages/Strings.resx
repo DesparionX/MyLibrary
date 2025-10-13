@@ -206,22 +206,22 @@
     <value>Error fetching book by ISBN.</value>
   </data>
   <data name="Book_Details_ID" xml:space="preserve">
-    <value>ID:</value>
+    <value>ID</value>
   </data>
   <data name="Book_Details_ISBN" xml:space="preserve">
-    <value>ISBN:</value>
+    <value>ISBN</value>
   </data>
   <data name="Book_Details_Title" xml:space="preserve">
-    <value>Title:</value>
+    <value>Title</value>
   </data>
   <data name="Book_Details_Genre" xml:space="preserve">
-    <value>Genre:</value>
+    <value>Genre</value>
   </data>
   <data name="Book_Details_Author" xml:space="preserve">
-    <value>Author:</value>
+    <value>Author</value>
   </data>
   <data name="Book_Details_Publisher" xml:space="preserve">
-    <value>Publisher:</value>
+    <value>Publisher</value>
   </data>
   <data name="Recipe_Header_ISBN" xml:space="preserve">
     <value>ISBN</value>
@@ -236,7 +236,7 @@
     <value>Quantity</value>
   </data>
   <data name="Book_Details_Description" xml:space="preserve">
-    <value>Description:</value>
+    <value>Description</value>
   </data>
   <data name="Recipe_Header_Total" xml:space="preserve">
     <value>Total</value>
@@ -278,7 +278,7 @@
     <value>The book is either not found, or out of stock.</value>
   </data>
   <data name="Book_Details_Borrower" xml:space="preserve">
-    <value>Borrower:</value>
+    <value>Borrower</value>
   </data>
   <data name="Buttons_Find" xml:space="preserve">
     <value>Find</value>
@@ -324,5 +324,20 @@
   </data>
   <data name="BookService_Errors_BookDoesntExist" xml:space="preserve">
     <value>There is no book with such ID.</value>
+  </data>
+  <data name="OFF" xml:space="preserve">
+    <value>OFF</value>
+  </data>
+  <data name="ON" xml:space="preserve">
+    <value>ON</value>
+  </data>
+  <data name="Toggles_EditorMode" xml:space="preserve">
+    <value>Editor mode:</value>
+  </data>
+  <data name="Book_Details_Pages" xml:space="preserve">
+    <value>Pages</value>
+  </data>
+  <data name="Book_Details_PriceEUR" xml:space="preserve">
+    <value>Price</value>
   </data>
 </root>

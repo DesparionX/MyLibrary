@@ -206,22 +206,22 @@
     <value>Грешка при намирането на книга по ISBN.</value>
   </data>
   <data name="Book_Details_ID" xml:space="preserve">
-    <value>ИН:</value>
+    <value>ИН</value>
   </data>
   <data name="Book_Details_ISBN" xml:space="preserve">
-    <value>ISBN:</value>
+    <value>ISBN</value>
   </data>
   <data name="Book_Details_Title" xml:space="preserve">
-    <value>Заглавие:</value>
+    <value>Заглавие</value>
   </data>
   <data name="Book_Details_Genre" xml:space="preserve">
-    <value>Жанр:</value>
+    <value>Жанр</value>
   </data>
   <data name="Book_Details_Author" xml:space="preserve">
-    <value>Автор:</value>
+    <value>Автор</value>
   </data>
   <data name="Book_Details_Publisher" xml:space="preserve">
-    <value>Издател:</value>
+    <value>Издател</value>
   </data>
   <data name="Recipe_Header_ISBN" xml:space="preserve">
     <value>ISBN</value>
@@ -236,7 +236,7 @@
     <value>Количество</value>
   </data>
   <data name="Book_Details_Description" xml:space="preserve">
-    <value>Описание:</value>
+    <value>Описание</value>
   </data>
   <data name="Recipe_Header_Total" xml:space="preserve">
     <value>Общо</value>
@@ -278,7 +278,7 @@
     <value>Книгата не съществува или не е налична.</value>
   </data>
   <data name="Book_Details_Borrower" xml:space="preserve">
-    <value>Ползвател:</value>
+    <value>Ползвател</value>
   </data>
   <data name="Buttons_Find" xml:space="preserve">
     <value>Търси</value>
@@ -324,5 +324,20 @@
   </data>
   <data name="BookService_Errors_BookDoesntExist" xml:space="preserve">
     <value>Не съществува книга с този ИН.</value>
+  </data>
+  <data name="OFF" xml:space="preserve">
+    <value>ИЗКЛ</value>
+  </data>
+  <data name="ON" xml:space="preserve">
+    <value>ВКЛ</value>
+  </data>
+  <data name="Toggles_EditorMode" xml:space="preserve">
+    <value>Режим на редактиране:</value>
+  </data>
+  <data name="Book_Details_Pages" xml:space="preserve">
+    <value>Страници</value>
+  </data>
+  <data name="Book_Details_PriceEUR" xml:space="preserve">
+    <value>Цена</value>
   </data>
 </root>
