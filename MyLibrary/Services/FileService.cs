@@ -47,9 +47,9 @@ namespace MyLibrary.Services
 
         public string GetImageUrl(string? imageName)
         {
-            return _apiService.ApiSettings.BaseUrl + _apiService.ApiSettings.Images + 
-                (!string.IsNullOrWhiteSpace(imageName) ?
-                imageName : "default.png");
+            return !string.IsNullOrWhiteSpace(imageName)
+                ? imageName
+                : _apiService.ApiSettings.BaseUrl + _apiService.ApiSettings.Images + "default.png";
         }
 
         // Validates the image file for type and size.

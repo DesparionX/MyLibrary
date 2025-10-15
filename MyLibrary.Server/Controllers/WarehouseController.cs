@@ -22,13 +22,13 @@ namespace MyLibrary.Server.Controllers
             _resultHandler = resultHandler;
         }
 
-        [HttpGet("getStock")]
+        [HttpGet("getStock/{isbn}")]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status200OK)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status400BadRequest)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status404NotFound)]
         [ProducesResponseType<ITaskResult>(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetStock([FromQuery] string isbn)
+        public async Task<IActionResult> GetStock([FromRoute] string isbn)
         {
             if(string.IsNullOrWhiteSpace(isbn))
             {

@@ -70,6 +70,15 @@ namespace MyLibrary.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Available copies:.
+        /// </summary>
+        public static string Book_Details_AvailableCopies {
+            get {
+                return ResourceManager.GetString("Book_Details_AvailableCopies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Borrower.
         /// </summary>
         public static string Book_Details_Borrower {
@@ -174,6 +183,24 @@ namespace MyLibrary.Resources.Languages {
         public static string BookService_Errors_ErrorFetchingBookByISBN {
             get {
                 return ResourceManager.GetString("BookService_Errors_ErrorFetchingBookByISBN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to update the book..
+        /// </summary>
+        public static string BookService_Errors_ErrorUpdatingBook {
+            get {
+                return ResourceManager.GetString("BookService_Errors_ErrorUpdatingBook", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Book updated successfully..
+        /// </summary>
+        public static string BookService_SuccessfullyUpdated {
+            get {
+                return ResourceManager.GetString("BookService_SuccessfullyUpdated", resourceCulture);
             }
         }
         
@@ -786,6 +813,24 @@ namespace MyLibrary.Resources.Languages {
         public static string Validators_Username_NullOrEmpty {
             get {
                 return ResourceManager.GetString("Validators_Username_NullOrEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISBN cannot be null or empty..
+        /// </summary>
+        public static string WarehouseService_Errors_EmptyISBN {
+            get {
+                return ResourceManager.GetString("WarehouseService_Errors_EmptyISBN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot find a stock with given ISBN..
+        /// </summary>
+        public static string WarehouseService_Errors_NotFound {
+            get {
+                return ResourceManager.GetString("WarehouseService_Errors_NotFound", resourceCulture);
             }
         }
     }

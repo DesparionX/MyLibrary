@@ -340,4 +340,19 @@
   <data name="Book_Details_PriceEUR" xml:space="preserve">
     <value>Price</value>
   </data>
+  <data name="Book_Details_AvailableCopies" xml:space="preserve">
+    <value>Available copies:</value>
+  </data>
+  <data name="WarehouseService_Errors_EmptyISBN" xml:space="preserve">
+    <value>ISBN cannot be null or empty.</value>
+  </data>
+  <data name="WarehouseService_Errors_NotFound" xml:space="preserve">
+    <value>Cannot find a stock with given ISBN.</value>
+  </data>
+  <data name="BookService_Errors_ErrorUpdatingBook" xml:space="preserve">
+    <value>Failed to update the book.</value>
+  </data>
+  <data name="BookService_SuccessfullyUpdated" xml:space="preserve">
+    <value>Book updated successfully.</value>
+  </data>
 </root>

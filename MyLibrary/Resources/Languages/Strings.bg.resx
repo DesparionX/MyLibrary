@@ -340,4 +340,19 @@
   <data name="Book_Details_PriceEUR" xml:space="preserve">
     <value>Цена</value>
   </data>
+  <data name="Book_Details_AvailableCopies" xml:space="preserve">
+    <value>Налични бройки:</value>
+  </data>
+  <data name="WarehouseService_Errors_EmptyISBN" xml:space="preserve">
+    <value>ISBN не може да е празен.</value>
+  </data>
+  <data name="WarehouseService_Errors_NotFound" xml:space="preserve">
+    <value>Не е намерена стока с този ISBN.</value>
+  </data>
+  <data name="BookService_Errors_ErrorUpdatingBook" xml:space="preserve">
+    <value>Неуспешно актуализиране на книгата.</value>
+  </data>
+  <data name="BookService_SuccessfullyUpdated" xml:space="preserve">
+    <value>Книгата е актуализирана успешно.</value>
+  </data>
 </root>

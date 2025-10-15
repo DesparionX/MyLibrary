@@ -101,9 +101,28 @@ namespace MyLibrary.Services.Api
             }
         }
 
-        public Task<ITaskResult> UpdateBookAsync(IBookDTO bookDto)
+        public async Task<ITaskResult> UpdateBookAsync(IBookDTO bookDto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var requestUrl = _apiSettings.BaseUrl + _apiSettings.Controllers.Books.UpdateBook;
+
+                var response = await _httpClient.PutAsJsonAsync(requestUrl, bookDto)
+                    ?? throw new ArgumentNullException(Strings.Errors_Api_NullResponse);
+
+                var responseContent = await response.Content.ReadFromJsonAsync<BookTaskResult>()
+                    ?? throw new ArgumentNullException(Strings.Errors_Api_NullResponse);
+
+                return responseContent;
+            }
+            catch (ArgumentNullException)
+            {
+                return new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status500InternalServerError, message: Strings.Errors_Api_NullResponse);
+            }
+            catch (Exception)
+            {
+                return new BookTaskResult(succeeded: false, statusCode: StatusCodes.Status500InternalServerError, message: Strings.BookService_Errors_ErrorUpdatingBook);
+            }
         }
     }
 }

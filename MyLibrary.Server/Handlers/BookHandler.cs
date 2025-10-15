@@ -159,12 +159,11 @@ namespace MyLibrary.Server.Handlers
                     // Converting BookDTO to Book just in case there are different property names or special mapping.
                     var convertedBook = _mapper.Map<Book>(bookDto);
 
-                    // Preventing overriding the ID of the book.
+                    // Preventing overriding the ID of the book and its availability.
                     convertedBook.Id = book.Id;
+                    convertedBook.IsAvailable = book.IsAvailable; 
 
                     _context.Entry(book).CurrentValues.SetValues(convertedBook);
-
-
                 }
                 var result = await _context.SaveChangesAsync();
                 if (result == 0)

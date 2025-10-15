@@ -159,7 +159,8 @@
                     <Grid
                         Grid.Row="1"
                         Grid.Column="0"
-                        HorizontalAlignment="Center">
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
@@ -170,9 +171,14 @@
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
                         <Border
                             Grid.Row="0"
+                            Grid.Column="0"
                             Width="180"
                             Height="230"
                             Background="{DynamicResource MaterialDesign.Brush.Secondary.Dark}"
@@ -187,112 +193,154 @@
                                 </Border.Background>
                             </Border>
                         </Border>
+                        <TextBlock
+                            x:Name="BookID"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="10"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            FontSize="14"
+                            Style="{StaticResource ShadowEffect}">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Source="{x:Static resx:Strings.Book_Details_AvailableCopies}" />
+                                    <Binding Path="AvailableCopies" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
                         <TextBox
                             x:Name="ISBN"
-                            Grid.Row="1"
+                            Grid.Row="2"
+                            Grid.Column="0"
                             Height="50"
-                            MinWidth="300"
+                            MinWidth="200"
                             Margin="10"
-                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
                             materialDesign:HintAssist.Hint="{x:Static resx:Strings.Book_Details_ISBN}"
                             Focusable="True"
-                            IsEnabled="{Binding EditorMode}"
+                            IsEnabled="False"
                             Style="{DynamicResource MaterialDesignOutlinedTextBox}"
                             Text="{Binding Book.ISBN}"
                             TextAlignment="Center"
                             TextWrapping="Wrap" />
                         <TextBox
                             x:Name="Title"
-                            Grid.Row="2"
+                            Grid.Row="3"
+                            Grid.Column="0"
                             Height="50"
-                            MinWidth="300"
+                            MinWidth="200"
                             Margin="10"
-                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
                             materialDesign:HintAssist.Hint="{x:Static resx:Strings.Book_Details_Title}"
                             Focusable="True"
+                            IsEnabled="{Binding EditorMode}"
                             Style="{DynamicResource MaterialDesignOutlinedTextBox}"
                             Text="{Binding Book.Title}"
                             TextAlignment="Center"
                             TextWrapping="Wrap" />
                         <TextBox
                             x:Name="Author"
-                            Grid.Row="3"
+                            Grid.Row="4"
+                            Grid.Column="0"
                             Height="50"
-                            MinWidth="300"
+                            MinWidth="200"
                             Margin="10"
-                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
                             materialDesign:HintAssist.Hint="{x:Static resx:Strings.Book_Details_Author}"
                             Focusable="True"
+                            IsEnabled="{Binding EditorMode}"
                             Style="{DynamicResource MaterialDesignOutlinedTextBox}"
                             Text="{Binding Book.Author}"
                             TextAlignment="Center"
                             TextWrapping="Wrap" />
                         <TextBox
                             x:Name="Publisher"
-                            Grid.Row="4"
+                            Grid.Row="5"
+                            Grid.Column="0"
                             Height="50"
-                            MinWidth="300"
+                            MinWidth="200"
                             Margin="10"
-                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
                             materialDesign:HintAssist.Hint="{x:Static resx:Strings.Book_Details_Publisher}"
                             Focusable="True"
+                            IsEnabled="{Binding EditorMode}"
                             Style="{DynamicResource MaterialDesignOutlinedTextBox}"
                             Text="{Binding Book.Publisher}"
                             TextAlignment="Center"
                             TextWrapping="Wrap" />
                         <TextBox
                             x:Name="Genre"
-                            Grid.Row="5"
+                            Grid.Row="6"
+                            Grid.Column="0"
                             Height="50"
-                            MinWidth="300"
+                            MinWidth="200"
                             Margin="10"
-                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
                             materialDesign:HintAssist.Hint="{x:Static resx:Strings.Book_Details_Genre}"
                             Focusable="True"
+                            IsEnabled="{Binding EditorMode}"
                             Style="{DynamicResource MaterialDesignOutlinedTextBox}"
                             Text="{Binding Book.Genre}"
                             TextAlignment="Center"
                             TextWrapping="Wrap" />
-                        <TextBox
+                        <materialDesign:NumericUpDown
                             x:Name="Pages"
-                            Grid.Row="6"
+                            Grid.Row="7"
+                            Grid.Column="0"
+                            Width="150"
                             Height="50"
-                            MinWidth="300"
                             Margin="10"
-                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
                             materialDesign:HintAssist.Hint="{x:Static resx:Strings.Book_Details_Pages}"
                             Focusable="True"
-                            Style="{DynamicResource MaterialDesignOutlinedTextBox}"
-                            Text="{Binding Book.Pages}"
-                            TextAlignment="Center"
-                            TextWrapping="Wrap" />
+                            IsEnabled="{Binding EditorMode}"
+                            Maximum="9999"
+                            Minimum="0"
+                            Style="{DynamicResource MaterialDesignOutlinedNumericUpDown}"
+                            ValueStep="1"
+                            Value="{Binding Book.Pages}" />
                         <TextBox
                             x:Name="Description"
-                            Grid.Row="7"
+                            Grid.Row="8"
+                            Grid.Column="0"
                             MinWidth="300"
-                            MinHeight="50"
+                            MinHeight="100"
+                            MaxHeight="150"
                             Margin="10"
-                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            VerticalContentAlignment="Top"
                             materialDesign:HintAssist.Hint="{x:Static resx:Strings.Book_Details_Description}"
                             AcceptsReturn="true"
                             Focusable="True"
+                            IsEnabled="{Binding EditorMode}"
                             Style="{DynamicResource MaterialDesignOutlinedTextBox}"
                             Text="{Binding Book.Description}"
                             TextAlignment="Center"
                             TextWrapping="Wrap" />
-                        <materialDesign:NumericUpDown
+                        <materialDesign:DecimalUpDown
                             x:Name="Price"
-                            Grid.Row="8"
+                            Grid.Row="9"
+                            Grid.Column="0"
                             Width="150"
                             Height="50"
-                            Margin="10"
-                            VerticalAlignment="Center"
-                            HorizontalContentAlignment="Center"
+                            Margin="0,10,0,50"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
                             materialDesign:HintAssist.Hint="{x:Static resx:Strings.Book_Details_PriceEUR}"
                             materialDesign:TextFieldAssist.SuffixText="€"
+                            IsEnabled="{Binding EditorMode}"
                             Maximum="9999"
                             Minimum="0"
-                            Style="{StaticResource MaterialDesignOutlinedNumericUpDown}"
+                            Style="{StaticResource MaterialDesignOutlinedDecimalUpDown}"
+                            ValueStep="0.01"
                             Value="{Binding Book.BasePrice}" />
                     </Grid>
                 </Grid>
